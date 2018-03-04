@@ -136,7 +136,7 @@ Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS)
 void setup() {
   Serial.begin(9600);
   checkOpen = false;
-  seguridad = true; //SEGURIDAD ACTIVADA
+  seguridad = true; //SEGURIDAD Activada
 
   //Setup Al_1
   buttonState = false;
@@ -161,21 +161,13 @@ void loop() {
 
   char customKey;
   //Si alguien entró a la casa en un periodo de tiempo no permitido
-  if(accesoIlegal){
-    Serial.println("A:" + AL_4 + ":" + ID + ":" + APTO + ":" + TORRE);
-  }
   
   //Si la puerta no se encuentra abierta
   if (!open) {
     //Si la seguridad se encuentra desactivada
     if(seguridad && !accesoIlegal){
-      if(presencia){
-        Serial.println("A:" + AL_3 + ":" + ID + ":" + APTO + ":" + TORRE);
-      }
-
-      else{
       securityActive();
-      }
+      
     }
    
     //Llama al método de abrir la puerta manualmente
@@ -255,6 +247,8 @@ void openManually() {
      if(seguridad){
         accesoIlegal = true;
         presencia = false;
+        Serial.println("A:" + AL_4 + ":" + ID + ":" + APTO + ":" + TORRE);
+        digitalWrite(ledPin, LOW);
      }
     
     }
@@ -277,6 +271,7 @@ void checkTimeOpened(boolean check) {
   if (check && (millis() - currTime) >= 10000) {
     setColor(255, 0, 0);
     Serial.println("A:" + AL_1 + ":" + ID + ":" + APTO + ":" + TORRE);
+    checkOpen = false;
   }
 }
 
@@ -348,6 +343,7 @@ void securityActive(){
             presentTime = 0;
             pirState = LOW;
             restante = 60;
+            Serial.println("A:" + AL_3 + ":" + ID + ":" + APTO + ":" + TORRE);
         }
      }
   }
@@ -357,13 +353,16 @@ void securityActive(){
     
     if(pirState == HIGH){
       
-      //Se esperan 5 segundos para verificar que la persona ya no esté en la puerta
+      //Se esperan 10 segundos para verificar que la persona ya no esté en la puerta
+      Serial.println("Confirmando presencia...");
       delay(10000);
       val = digitalRead(pirPin);
       if(val == LOW){
         presentTime = 0;
         pirState = LOW;
         restante = 60;
+        digitalWrite(ledPin, LOW);
+        Serial.println("No se detecta movimiento.");
       }
     }
   }
