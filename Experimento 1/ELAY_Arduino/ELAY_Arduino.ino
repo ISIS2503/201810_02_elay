@@ -165,7 +165,7 @@ void loop() {
   //Si la puerta no se encuentra abierta
   if (!open) {
     //Si la seguridad se encuentra desactivada
-    if(seguridad && !accesoIlegal){
+    if(seguridad){
       securityActive();
       
     }
@@ -247,6 +247,9 @@ void openManually() {
      if(seguridad){
         accesoIlegal = true;
         presencia = false;
+        presentTime = 0;
+        pirState = LOW;
+        restante = 60;
         Serial.println("A:" + AL_4 + ":" + ID + ":" + APTO + ":" + TORRE);
         digitalWrite(ledPin, LOW);
      }
