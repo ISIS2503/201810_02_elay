@@ -29,6 +29,9 @@ const String AL_2 = "2";
 //Constante que indica una persona se acercó a la cerradura, en un horario no permitido.
 const String AL_3 = "3";
 
+//Constante que indica que una persona entró a la casa, en un horario no permitido. 
+const String AL_4 = "4";
+
 //Specified password
 const String KEY = "1234";
 
@@ -83,6 +86,12 @@ String currentKey;
 //Door state
 boolean open;
 
+//Indica si alguien sospechoso esta detras de la puerta más del tiempo limite
+boolean presencia;
+
+//Alarma si la puerta fue abierta en un horario no permitido;ç
+boolean accesoIlegal;
+
 //Indica si la seguridad debe estar activa;
 boolean seguridad;
 
@@ -127,7 +136,7 @@ Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS)
 void setup() {
   Serial.begin(9600);
   checkOpen = false;
-  seguridad = false; //SEGURIDAD ACTIVADA
+  seguridad = true; //SEGURIDAD ACTIVADA
 
   //Setup Al_1
   buttonState = false;
@@ -151,22 +160,42 @@ void setup() {
 void loop() {
 
   char customKey;
-
+  //Si alguien entró a la casa en un periodo de tiempo no permitido
+  if(accesoIlegal){
+    Serial.println("A:" + AL_4 + ":" + ID + ":" + APTO + ":" + TORRE);
+  }
+  
   //Si la puerta no se encuentra abierta
   if (!open) {
     //Si la seguridad se encuentra desactivada
-    if(!seguridad){  
+    if(seguridad && !accesoIlegal){
+      if(presencia){
+        Serial.println("A:" + AL_3 + ":" + ID + ":" + APTO + ":" + TORRE);
+      }
+
+      else{
+      securityActive();
+      }
+    }
+   
     //Llama al método de abrir la puerta manualmente
     openManually();
 
     //Si la puerta no está bloqueada
     if (!block) {
 
+      //Solo se permite abrir la puerta con el teclado númerico
+      //si y solo sí, la seguridad esta desactivada
+      if(!seguridad){
+      
       //Selecciona la tecla presionada
       customKey = customKeypad.getKey();
 
       //Llama al método de abrir la puerta con el teclado númerico
+      if(!accesoIlegal){
       openWithKeypad(customKey);
+      }
+      }
     }
     else {
 
@@ -179,12 +208,7 @@ void loop() {
         }
       }
     }
-   }
-
-   else{
-      securityActive();
-   }
-
+   
   }
   else {
 
@@ -227,6 +251,12 @@ void openManually() {
       Serial.println(ABIERTA);
       block = false;
       checkOpen = true;
+
+     if(seguridad){
+        accesoIlegal = true;
+        presencia = false;
+     }
+    
     }
   }
 }
@@ -314,9 +344,10 @@ void securityActive(){
       }
     
         if(millis()-presentTime >= 60000){
-            while(true){
-            Serial.println("Intruso!");
-            }
+            presencia = true;
+            presentTime = 0;
+            pirState = LOW;
+            restante = 60;
         }
      }
   }
