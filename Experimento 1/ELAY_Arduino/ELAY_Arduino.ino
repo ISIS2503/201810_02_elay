@@ -136,7 +136,7 @@ Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS)
 void setup() {
   Serial.begin(9600);
   checkOpen = false;
-  seguridad = true; //SEGURIDAD Activada
+  seguridad = false; //SEGURIDAD Activada
 
   //Setup Al_1
   buttonState = false;
