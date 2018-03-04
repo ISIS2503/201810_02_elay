@@ -1,1 +1,383 @@
-[{"id":"fdcfc88d.6fdb88","type":"tab","label":"ELAY_EXP1","disabled":false,"info":""},{"id":"a4deb1e4.ef36","type":"subflow","name":"Subflow 1","info":"","in":[],"out":[]},{"id":"bd7df655.9260e8","type":"mongodb","z":"","hostname":"127.0.0.1","port":"27017","db":"rediot","name":""},{"id":"e4af8b1e.269e08","type":"serial-port","z":"","serialport":"COM4","serialbaud":"9600","databits":"8","parity":"none","stopbits":"1","newline":"\\n","bin":"false","out":"char","addchar":true},{"id":"530739d1.d6af28","type":"serial-port","z":"","serialport":"COM4","serialbaud":"9600","databits":"8","parity":"none","stopbits":"1","newline":"\\n","bin":"false","out":"char","addchar":false},{"id":"f2d0b7d8.477038","type":"ui_tab","z":"","name":"Home","icon":"dashboard"},{"id":"da3ee238.a2ab3","type":"ui_group","z":"","name":"Estado del Deposito [Home]","tab":"f2d0b7d8.477038","disp":true,"width":"6","collapse":false},{"id":"21eee409.934d8c","type":"ui_group","z":"","name":"Default","tab":"f2d0b7d8.477038","disp":true,"width":"6","collapse":false},{"id":"e514d9ec.6bcee8","type":"ui_base","theme":{"name":"theme-light","lightTheme":{"default":"#0094CE","baseColor":"#0094CE","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif","edited":true,"reset":false},"darkTheme":{"default":"#097479","baseColor":"#097479","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif","edited":false},"customTheme":{"name":"Untitled Theme 1","default":"#4B7930","baseColor":"#4B7930","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"},"themeState":{"base-color":{"default":"#0094CE","value":"#0094CE","edited":false},"page-titlebar-backgroundColor":{"value":"#0094CE","edited":false},"page-backgroundColor":{"value":"#fafafa","edited":false},"page-sidebar-backgroundColor":{"value":"#ffffff","edited":false},"group-textColor":{"value":"#1bbfff","edited":false},"group-borderColor":{"value":"#ffffff","edited":false},"group-backgroundColor":{"value":"#ffffff","edited":false},"widget-textColor":{"value":"#111111","edited":false},"widget-backgroundColor":{"value":"#0094ce","edited":false},"widget-borderColor":{"value":"#ffffff","edited":false},"base-font":{"value":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"}}},"site":{"name":"Node-RED Dashboard","hideToolbar":"false","allowSwipe":"false","dateFormat":"DD/MM/YYYY","sizes":{"sx":48,"sy":48,"gx":6,"gy":6,"cx":6,"cy":6,"px":0,"py":0}}},{"id":"a02b9f7c.a0eb8","type":"serial-port","z":"","serialport":"COM3","serialbaud":"9600","databits":"8","parity":"none","stopbits":"1","newline":"\\n","bin":"false","out":"char","addchar":true},{"id":"bf70524e.c7c1c","type":"mongodb","z":"","hostname":"127.0.0.1","port":"27017","db":"rediot","name":""},{"id":"f793c74f.77a5a8","type":"ui_tab","z":"","name":"Home","icon":"dashboard"},{"id":"b4ddef3d.3b78b","type":"ui_group","z":"","name":"Estado del deposito","tab":"f793c74f.77a5a8","disp":true,"width":"12","collapse":false},{"id":"60b2a7fe.eeca88","type":"ui_base","theme":{"name":"theme-light","lightTheme":{"default":"#0094CE","baseColor":"#0094CE","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif","edited":true,"reset":false},"darkTheme":{"default":"#097479","baseColor":"#097479","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif","edited":false},"customTheme":{"name":"Untitled Theme 1","default":"#4B7930","baseColor":"#4B7930","baseFont":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"},"themeState":{"base-color":{"default":"#0094CE","value":"#0094CE","edited":false},"page-titlebar-backgroundColor":{"value":"#0094CE","edited":false},"page-backgroundColor":{"value":"#fafafa","edited":false},"page-sidebar-backgroundColor":{"value":"#ffffff","edited":false},"group-textColor":{"value":"#1bbfff","edited":false},"group-borderColor":{"value":"#ffffff","edited":false},"group-backgroundColor":{"value":"#ffffff","edited":false},"widget-textColor":{"value":"#111111","edited":false},"widget-backgroundColor":{"value":"#0094ce","edited":false},"widget-borderColor":{"value":"#ffffff","edited":false},"base-font":{"value":"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"}}},"site":{"name":"Node-RED Dashboard","hideToolbar":"false","allowSwipe":"false","dateFormat":"DD/MM/YYYY","sizes":{"sx":48,"sy":48,"gx":6,"gy":6,"cx":6,"cy":6,"px":0,"py":0}}},{"id":"6ec6d313.b2df1c","type":"mqtt-broker","z":"","name":"","broker":"172.24.42.23","port":"8083","clientid":"","usetls":false,"compatmode":true,"keepalive":"60","cleansession":true,"willTopic":"","willQos":"0","willPayload":"","birthTopic":"","birthQos":"0","birthPayload":""},{"id":"d4507573.40eec8","type":"serial-port","z":"","serialport":"COM4","serialbaud":"9600","databits":"8","parity":"none","stopbits":"1","newline":"","bin":"false","out":"char","addchar":false},{"id":"c469d53e.c3d7d8","type":"http request","z":"a4deb1e4.ef36","name":"GET temp/sec/find","method":"GET","ret":"obj","url":"/temperature/sec/find","tls":"","x":190,"y":60,"wires":[["a7c67ced.a8d04"]]},{"id":"1db93688.560cb9","type":"http request","z":"a4deb1e4.ef36","name":"Get temp/min/find","method":"GET","ret":"obj","url":"/temperature/min/find","tls":"","x":190,"y":140,"wires":[["9712519f.a6ba4"]]},{"id":"54e88809.2dc9b8","type":"http request","z":"a4deb1e4.ef36","name":"GET Temp/sec/count","method":"GET","ret":"txt","url":"/temperature/sec/count","tls":"","x":220,"y":240,"wires":[["433ad71c.5b4548"]]},{"id":"d8711945.e39d68","type":"http request","z":"a4deb1e4.ef36","name":"GET Temp/min/count","method":"GET","ret":"txt","url":"/temperature/min/count","tls":"","x":202,"y":276,"wires":[["9537f7f5.465228"]]},{"id":"24f17b45.5d8594","type":"function","z":"a4deb1e4.ef36","name":"Content Type","func":"msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;","outputs":1,"noerr":0,"x":598,"y":64,"wires":[["94111f46.504da"]]},{"id":"bfb55515.797428","type":"function","z":"a4deb1e4.ef36","name":"Content Type","func":"msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;","outputs":1,"noerr":0,"x":586,"y":125,"wires":[["fbbeca8e.6c1c08"]]},{"id":"94111f46.504da","type":"http response","z":"a4deb1e4.ef36","name":"http find/temp/sec","statusCode":"","headers":{},"x":853.5,"y":54,"wires":[]},{"id":"fbbeca8e.6c1c08","type":"http response","z":"a4deb1e4.ef36","name":"http find/temp/min","statusCode":"","headers":{},"x":850.5,"y":130,"wires":[]},{"id":"ac69c583.a707c8","type":"debug","z":"a4deb1e4.ef36","name":"temperature/secs","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":408,"y":362,"wires":[]},{"id":"49720cfb.ff9374","type":"debug","z":"a4deb1e4.ef36","name":"temperature/mins","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":420,"y":641,"wires":[]},{"id":"2f3228de.71e758","type":"function","z":"a4deb1e4.ef36","name":"Format 4 Secs","func":"var input = msg.payload;\nvar time = null;\nvar temperature = 0;\nvar res1 = {payload:null};\nvar res2 = {payload:null};\n\ntime = input.room.sensetime;\ntemp = input.room.temperature.data;\n\nres1.payload = temp;\nres1.topic = \"temperature\";\nres2.payload = time;\nres2.topic = \"time\";\n\nreturn [res1, res2];","outputs":1,"noerr":0,"x":423,"y":413,"wires":[["2935eda1.7f3732","37fad3d0.180e8c","6891bffa.538a6","dfca0c20.5aa25","3cb60323.14471c"]]},{"id":"77596e1e.1bdd2","type":"function","z":"a4deb1e4.ef36","name":"formatForMins","func":"var input = msg.payload;\nvar time = null;\nvar temperature = 0;\nvar res1 = {payload:null};\nvar res2 = {payload:null};\n\ntime = input.room.sensetime;\ntemp = input.room.temperature.data;\n\nres1.payload = temp;\nres1.topic = \"temperature\";\nres2.payload = time;\nres2.topic = \"time\";\n\nreturn [res1, res2];","outputs":1,"noerr":0,"x":420,"y":692,"wires":[["2501f551.049e3a","79a19351.f3486c","626ae2fd.7c729c","b208edce.3b15","a2881764.91cf18"]]},{"id":"1419e05e.e0f9a","type":"function","z":"a4deb1e4.ef36","name":"Content Type","func":"msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;","outputs":1,"noerr":0,"x":695,"y":206,"wires":[["c1cb36d1.e30878"]]},{"id":"13ea4ae5.7ae545","type":"function","z":"a4deb1e4.ef36","name":"Content Type","func":"msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;","outputs":1,"noerr":0,"x":683,"y":267,"wires":[["bf965c31.b6875"]]},{"id":"c1cb36d1.e30878","type":"http response","z":"a4deb1e4.ef36","name":"HTTP count/temp/sec","statusCode":"","headers":{},"x":960.5,"y":196,"wires":[]},{"id":"bf965c31.b6875","type":"http response","z":"a4deb1e4.ef36","name":"HTTP count/temp/min","statusCode":"","headers":{},"x":957.5,"y":272,"wires":[]},{"id":"2935eda1.7f3732","type":"ui_chart","z":"a4deb1e4.ef36","name":"Temperature Sec Chart","group":"da3ee238.a2ab3","order":0,"width":"0","height":"0","label":"Historico de Temperatura[sec]","chartType":"line","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"Sin datos!!!","dot":false,"ymin":"0","ymax":"35","removeOlder":"5","removeOlderPoints":"","removeOlderUnit":"60","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"x":715,"y":407,"wires":[[],[]]},{"id":"6891bffa.538a6","type":"ui_text","z":"a4deb1e4.ef36","group":"da3ee238.a2ab3","order":0,"width":0,"height":0,"name":"SenseTime","label":"text","format":"{{msg.payload}}","layout":"row-spread","x":671,"y":450,"wires":[]},{"id":"37fad3d0.180e8c","type":"debug","z":"a4deb1e4.ef36","name":"temperature","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":672,"y":353,"wires":[]},{"id":"dfca0c20.5aa25","type":"ui_gauge","z":"a4deb1e4.ef36","name":"Instant sec Temperature","group":"da3ee238.a2ab3","order":0,"width":0,"height":0,"gtype":"gage","title":"Temperatura Actual","label":"units","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","x":732,"y":508,"wires":[]},{"id":"3cb60323.14471c","type":"debug","z":"a4deb1e4.ef36","name":"timestamp","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":664,"y":552,"wires":[]},{"id":"2b344581.77332a","type":"link in","z":"a4deb1e4.ef36","name":"","links":[],"x":224,"y":393,"wires":[["ac69c583.a707c8","2f3228de.71e758"]]},{"id":"b208edce.3b15","type":"ui_text","z":"a4deb1e4.ef36","group":"da3ee238.a2ab3","order":0,"width":0,"height":0,"name":"SenseTimeMin","label":"text","format":"{{msg.payload}}","layout":"row-spread","x":736,"y":757,"wires":[]},{"id":"2501f551.049e3a","type":"debug","z":"a4deb1e4.ef36","name":"temperature","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":710,"y":640,"wires":[]},{"id":"a2881764.91cf18","type":"ui_gauge","z":"a4deb1e4.ef36","name":"Instant min Temperature","group":"da3ee238.a2ab3","order":0,"width":0,"height":0,"gtype":"gage","title":"Temperatura Promedio","label":"units","format":"{{value}}","min":0,"max":10,"colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","x":765,"y":810,"wires":[]},{"id":"79a19351.f3486c","type":"debug","z":"a4deb1e4.ef36","name":"timestamp","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":719,"y":859,"wires":[]},{"id":"68df6ae9.fcf3b4","type":"link in","z":"a4deb1e4.ef36","name":"","links":[],"x":240,"y":680,"wires":[["49720cfb.ff9374","77596e1e.1bdd2"]]},{"id":"9712519f.a6ba4","type":"mongodb in","z":"a4deb1e4.ef36","mongodb":"bd7df655.9260e8","name":"Find Tpmin","collection":"tpmin","operation":"find","x":390,"y":120,"wires":[["bfb55515.797428"]]},{"id":"a7c67ced.a8d04","type":"mongodb in","z":"a4deb1e4.ef36","mongodb":"bd7df655.9260e8","name":"Find Tpsec","collection":"temperaturespec","operation":"find","x":410,"y":60,"wires":[["24f17b45.5d8594"]]},{"id":"433ad71c.5b4548","type":"mongodb in","z":"a4deb1e4.ef36","mongodb":"bd7df655.9260e8","name":"Count Tpsec","collection":"temperaturespec","operation":"count","x":470,"y":200,"wires":[["1419e05e.e0f9a"]]},{"id":"9537f7f5.465228","type":"mongodb in","z":"a4deb1e4.ef36","mongodb":"bd7df655.9260e8","name":"Count Tpmin","collection":"tpmin","operation":"count","x":470,"y":260,"wires":[["13ea4ae5.7ae545"]]},{"id":"626ae2fd.7c729c","type":"ui_chart","z":"a4deb1e4.ef36","name":"Temperature min chart","group":"da3ee238.a2ab3","order":0,"width":"0","height":"0","label":"Historico de Temperatura[min]","chartType":"line","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"Sin datos!!!","dot":false,"ymin":"0","ymax":"35","removeOlder":"5","removeOlderPoints":"","removeOlderUnit":"60","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"x":760,"y":700,"wires":[[],[]]},{"id":"c3c9d1d3.427c6","type":"inject","z":"fdcfc88d.6fdb88","name":"Sensor time","topic":"time","payload":"","payloadType":"date","repeat":"1","crontab":"","once":true,"onceDelay":"","x":170,"y":240,"wires":[["ad3df198.4cb07"]]},{"id":"ad3df198.4cb07","type":"function","z":"fdcfc88d.6fdb88","name":"Timestamp","func":"var res = {};\n\n\nres.payload = new Date(msg.payload);\nres.topic = msg.topic;\n\nreturn res;","outputs":1,"noerr":0,"x":450,"y":240,"wires":[["5f9112f3.e29c3c","e1e6363b.d7cbb8"]]},{"id":"5f9112f3.e29c3c","type":"function","z":"fdcfc88d.6fdb88","name":"Mezcla de los mensajes","func":"context.data = context.data || {};\n\nswitch (msg.topic) \n{\n    case \"time\":\n        context.data.timestamp = msg.payload;\n        msg = null;\n        break;\n    case \"infoArduino\":\n        context.data.info = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.timestamp != null && context.data.info != null) \n{\n\tres = {};\n    res.payload = JSON.stringify(context.data);\n    res.topic = \"InfoAlert\";\n    context.data = null;\n\treturn res;\n}","outputs":1,"noerr":0,"x":750,"y":200,"wires":[["d6128c8.674b77","ae10d3f4.e755b"]]},{"id":"d6128c8.674b77","type":"debug","z":"fdcfc88d.6fdb88","name":"Mensaje mezclado","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":1050,"y":260,"wires":[]},{"id":"ae10d3f4.e755b","type":"json","z":"fdcfc88d.6fdb88","name":"Formato JSON","property":"payload","action":"","pretty":false,"x":1040,"y":200,"wires":[["8528532b.61a8a","8f61beb1.fae52"]]},{"id":"8528532b.61a8a","type":"debug","z":"fdcfc88d.6fdb88","name":"Formateo del mensaje a JSON","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":1310,"y":140,"wires":[]},{"id":"b6e8f23d.d13d3","type":"mqtt out","z":"fdcfc88d.6fdb88","name":"Cola Propietario","topic":"propietario/1/1","qos":"0","retain":"true","broker":"6ec6d313.b2df1c","x":2000,"y":60,"wires":[]},{"id":"233d89d9.f4a2e6","type":"function","z":"fdcfc88d.6fdb88","name":"Análisis de alertas","func":"var mensaje = \"\";\nvar ret = {};\nvar input = [];\n\ntemp = msg.payload;\ninput = temp.split(\":\");\n// A:idAlarma:idDispositivo:torre:apto\nif(input[0] == \"A\") {\n    switch (input[1]) \n    {\n        case \"1\":\n            mensaje = \"La puerta lleva abierta un largo periodo de tiempo.\";\n            break;\n        case \"2\":\n            mensaje = \"Intento de apertura sospechoso. Alguien ha ingresado la clave más de 3 veces de forma errónea\";\n            break;\n        case \"3\":\n            mensaje = \"Se detectó la presencia de una persona cerca de la cerradura, en un horario no permitido\";\n            break;\n        default:\n            mensaje = \"El error no puede ser identificado\";\n        \tbreak;\n    }\n\n    ret.topic = \"infoArduino\";\n    ret.payload = {\n        \"alertaId\":input[1],\n        \"mensajeAlerta\":mensaje,\n        \"idDispositivo\":input[2],\n        \"torre\":input[3],\n        \"apto\":input[4]\n    };\n    context.data.values = [];\n    return ret;\n}    ","outputs":1,"noerr":0,"x":470,"y":160,"wires":[["d5b8e7aa.61de48","5f9112f3.e29c3c"]]},{"id":"d5b8e7aa.61de48","type":"debug","z":"fdcfc88d.6fdb88","name":"Mensaje de alerta","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":770,"y":140,"wires":[]},{"id":"ee64cc87.318bf","type":"debug","z":"fdcfc88d.6fdb88","name":"Mensaje recibido por el Arduino","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":510,"y":80,"wires":[]},{"id":"e1e6363b.d7cbb8","type":"debug","z":"fdcfc88d.6fdb88","name":"Fecha calculada","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":760,"y":260,"wires":[]},{"id":"8f61beb1.fae52","type":"function","z":"fdcfc88d.6fdb88","name":"Asignación de usuarios","func":"var user = [0,0,0,0];\n// 0 -> propietario\n// 1 -> seguridad\n// 2 -> administrador\n// 3 -> yale\nif(msg.payload.info.alertaId == 1) {\n    user[0] = 1;\n    usser[1] = 1;\n}\nif(msg.payload.info.alertaId == 2) {\n    user[0] = 1;\n    user[1] = 1;\n}\nif(msg.payload.info.alertaId == 3) {\n    usser[0] = 1;\n    usser[1] = 1;\n}\nmsg.payload.user = user;\nreturn msg;","outputs":1,"noerr":0,"x":1290,"y":200,"wires":[["cd13e53e.3a8b18","8f9a1e38.78f27"]]},{"id":"cd13e53e.3a8b18","type":"debug","z":"fdcfc88d.6fdb88","name":"Mensaje después de tener a los usuarios","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":1620,"y":320,"wires":[]},{"id":"8f9a1e38.78f27","type":"function","z":"fdcfc88d.6fdb88","name":"Redistribucon para la cola","func":"var ret=[undefined, undefined, undefined, undefined]\n\nfor(var i = 0;  i < 4; i++) {\n    if(msg.payload.user[i] == 1) {\n        ret[i] = {payload:msg.payload};\n    }    \n}\n\nreturn ret;","outputs":4,"noerr":0,"x":1570,"y":200,"wires":[["7296ba64.680694","b6e8f23d.d13d3"],["345d0189.51d4fe","29db730f.6de64c"],["8d590a03.f30538","b8168881.7cc9a8"],["ceaffc6.2b466","3c067766.5ecf78"]]},{"id":"7296ba64.680694","type":"debug","z":"fdcfc88d.6fdb88","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","x":1990,"y":20,"wires":[]},{"id":"ceaffc6.2b466","type":"debug","z":"fdcfc88d.6fdb88","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":1990,"y":320,"wires":[]},{"id":"8d590a03.f30538","type":"debug","z":"fdcfc88d.6fdb88","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":1990,"y":220,"wires":[]},{"id":"345d0189.51d4fe","type":"debug","z":"fdcfc88d.6fdb88","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":1990,"y":120,"wires":[]},{"id":"29db730f.6de64c","type":"mqtt out","z":"fdcfc88d.6fdb88","name":"Cola Seguridad","topic":"seguridad/1/1","qos":"0","retain":"true","broker":"6ec6d313.b2df1c","x":2000,"y":160,"wires":[]},{"id":"b8168881.7cc9a8","type":"mqtt out","z":"fdcfc88d.6fdb88","name":"Cola Administrador","topic":"administrador/1/1","qos":"0","retain":"true","broker":"6ec6d313.b2df1c","x":2010,"y":260,"wires":[]},{"id":"3c067766.5ecf78","type":"mqtt out","z":"fdcfc88d.6fdb88","name":"Cola Yale","topic":"yale/1/1","qos":"0","retain":"true","broker":"6ec6d313.b2df1c","x":1980,"y":360,"wires":[]},{"id":"dd42d1be.26da4","type":"serial in","z":"fdcfc88d.6fdb88","name":"Arduino","serial":"d4507573.40eec8","x":160,"y":140,"wires":[["233d89d9.f4a2e6","ee64cc87.318bf"]]}]
+[
+    {
+        "id": "132d9507.a47a6b",
+        "type": "tab",
+        "label": "ELAY_EXP1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9549c59b.2d98b",
+        "type": "inject",
+        "z": "132d9507.a47a6b",
+        "name": "Sensor time",
+        "topic": "time",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "a832c507.1914a8"
+            ]
+        ]
+    },
+    {
+        "id": "a832c507.1914a8",
+        "type": "function",
+        "z": "132d9507.a47a6b",
+        "name": "Timestamp",
+        "func": "var res = {};\n\n\nres.payload = new Date(msg.payload);\nres.topic = msg.topic;\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 240,
+        "wires": [
+            [
+                "e146f9ef.453ed",
+                "7a6a7188.06ede"
+            ]
+        ]
+    },
+    {
+        "id": "e146f9ef.453ed",
+        "type": "function",
+        "z": "132d9507.a47a6b",
+        "name": "Mezcla de los mensajes",
+        "func": "context.data = context.data || {};\n\nswitch (msg.topic) \n{\n    case \"time\":\n        context.data.timestamp = msg.payload;\n        msg = null;\n        break;\n    case \"infoArduino\":\n        context.data.info = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.timestamp != null && context.data.info != null) \n{\n\tres = {};\n    res.payload = JSON.stringify(context.data);\n    res.topic = \"InfoAlert\";\n    context.data = null;\n\treturn res;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 200,
+        "wires": [
+            [
+                "ad2ce181.f6e2d",
+                "7441c71b.aa35f"
+            ]
+        ]
+    },
+    {
+        "id": "ad2ce181.f6e2d",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "Mensaje mezclado",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1050,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "7441c71b.aa35f",
+        "type": "json",
+        "z": "132d9507.a47a6b",
+        "name": "Formato JSON",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1040,
+        "y": 200,
+        "wires": [
+            [
+                "50848b4.b220a74",
+                "c336732f.a4eca8"
+            ]
+        ]
+    },
+    {
+        "id": "50848b4.b220a74",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "Formateo del mensaje a JSON",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1310,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "dced6538.cd5de",
+        "type": "mqtt out",
+        "z": "132d9507.a47a6b",
+        "name": "Cola Propietario",
+        "topic": "propietario/1/1",
+        "qos": "0",
+        "retain": "true",
+        "broker": "4a9e2097.8339d8",
+        "x": 2000,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "35ea56f4.b2acd2",
+        "type": "function",
+        "z": "132d9507.a47a6b",
+        "name": "Análisis de alertas",
+        "func": "var mensaje = \"\";\nvar ret = {};\nvar input = [];\n\ntemp = msg.payload;\ninput = temp.split(\":\");\n// A:idAlarma:idDispositivo:torre:apto\nif(input[0] == \"A\") {\n    switch (input[1]) \n    {\n        case \"1\":\n            mensaje = \"La puerta lleva abierta un largo periodo de tiempo.\";\n            break;\n        case \"2\":\n            mensaje = \"Intento de apertura sospechoso. Alguien ha ingresado la clave más de 3 veces de forma errónea\";\n            break;\n        case \"3\":\n            mensaje = \"Se detectó la presencia de una persona cerca de la cerradura, en un horario no permitido\";\n            break;\n        case \"4\":\n            mensaje = \"Ingreso sospechoso. Alguien entró al inmueble en un horario no permitido\";\n            break;\n        default:\n        \n            mensaje = \"El error no puede ser identificado\";\n        \tbreak;\n    }\n\n    ret.topic = \"infoArduino\";\n    ret.payload = {\n        \"alertaId\":input[1],\n        \"mensajeAlerta\":mensaje,\n        \"idDispositivo\":input[2],\n        \"torre\":input[3],\n        \"apto\":input[4]\n    };\n    return ret;\n}    ",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 160,
+        "wires": [
+            [
+                "39728184.78976e",
+                "e146f9ef.453ed"
+            ]
+        ]
+    },
+    {
+        "id": "39728184.78976e",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "Mensaje de alerta",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "77adf278.f475ac",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "Mensaje recibido por el Arduino",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 510,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7a6a7188.06ede",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "Fecha calculada",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 760,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c336732f.a4eca8",
+        "type": "function",
+        "z": "132d9507.a47a6b",
+        "name": "Asignación de usuarios",
+        "func": "var user = [0,0,0,0];\n// 0 -> propietario\n// 1 -> seguridad\n// 2 -> administrador\n// 3 -> yale\nif(msg.payload.info.alertaId == 1) {\n    user[0] = 1;\n    user[1] = 1;\n}\nif(msg.payload.info.alertaId == 2) {\n    user[0] = 1;\n    user[1] = 1;\n}\nif(msg.payload.info.alertaId == 3) {\n    user[0] = 1;\n    user[1] = 1;\n}\nmsg.payload.user = user;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1290,
+        "y": 200,
+        "wires": [
+            [
+                "98a3be7.261054",
+                "cc2ce462.1f0a5"
+            ]
+        ]
+    },
+    {
+        "id": "98a3be7.261054",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "Mensaje después de tener a los usuarios",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1620,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "cc2ce462.1f0a5",
+        "type": "function",
+        "z": "132d9507.a47a6b",
+        "name": "Redistribucon para la cola",
+        "func": "var ret=[undefined, undefined, undefined, undefined]\n\nfor(var i = 0;  i < 4; i++) {\n    if(msg.payload.user[i] == 1) {\n        ret[i] = {payload:msg.payload};\n    }    \n}\n\nreturn ret;",
+        "outputs": 4,
+        "noerr": 0,
+        "x": 1570,
+        "y": 200,
+        "wires": [
+            [
+                "6de09a5f.3f20bc",
+                "dced6538.cd5de"
+            ],
+            [
+                "6880376b.467a38",
+                "5c925e5.2e92ca"
+            ],
+            [
+                "52e37c9c.405054",
+                "f4eeae5a.a1501"
+            ],
+            [
+                "d17ab62d.58f73",
+                "ebdbc4c1.2b67c8"
+            ]
+        ]
+    },
+    {
+        "id": "6de09a5f.3f20bc",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1990,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "d17ab62d.58f73",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1990,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "52e37c9c.405054",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1990,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6880376b.467a38",
+        "type": "debug",
+        "z": "132d9507.a47a6b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1990,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5c925e5.2e92ca",
+        "type": "mqtt out",
+        "z": "132d9507.a47a6b",
+        "name": "Cola Seguridad",
+        "topic": "seguridad/1/1",
+        "qos": "0",
+        "retain": "true",
+        "broker": "4a9e2097.8339d8",
+        "x": 2000,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f4eeae5a.a1501",
+        "type": "mqtt out",
+        "z": "132d9507.a47a6b",
+        "name": "Cola Administrador",
+        "topic": "administrador/1/1",
+        "qos": "0",
+        "retain": "true",
+        "broker": "4a9e2097.8339d8",
+        "x": 2010,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ebdbc4c1.2b67c8",
+        "type": "mqtt out",
+        "z": "132d9507.a47a6b",
+        "name": "Cola Yale",
+        "topic": "yale/1/1",
+        "qos": "0",
+        "retain": "true",
+        "broker": "4a9e2097.8339d8",
+        "x": 1980,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "44319609.76e54",
+        "type": "serial in",
+        "z": "132d9507.a47a6b",
+        "name": "Arduino",
+        "serial": "f3e4b69e.3c404",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "35ea56f4.b2acd2",
+                "77adf278.f475ac"
+            ]
+        ]
+    },
+    {
+        "id": "4a9e2097.8339d8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "172.24.42.23",
+        "port": "8083",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    },
+    {
+        "id": "f3e4b69e.3c404",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "COM4",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    }
+]
