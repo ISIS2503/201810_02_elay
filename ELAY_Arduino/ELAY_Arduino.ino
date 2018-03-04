@@ -1,24 +1,7 @@
 #include <Keypad.h>
 
-//Formato de mensaje "A:idAlarma:idDispositivo:torre:apartamento"
-
 //Id del dispositivo
 const String ID = "ELAY";
-
-//Número de la torre
-const String TORRE = "3";
-
-//Número de apartamento
-const String APTO = "704";
-
-//Pin en el que se encuentra el sensor de movimiento PIR
-byte pirPin = 2;
-
-//Pin digital en el que está el LED rojo
-int ledPin = A0;
-
-//Indica el estado del sensor de movimiento
-int pirState = LOW;
 
 //Constante que indica que la puerta ha estado abierta por más de 10 segundos.
 const String AL_1 = "1";
@@ -44,29 +27,16 @@ const int G_LED_PIN = 12;
 //B LED pin
 const int B_LED_PIN = 10;
 
-//Indica que la puerta ha sido abierta
-const String ABIERTA = "La puerta ha sido abierta";
-
-//Indica que la puerta ha sido cerrada
-const String CERRADA = "La puerta ha sido cerrada";
-
 //Attribute that defines the button state
 boolean buttonState;
 
-//Boolean que indica si es necesario verificar el tiempo que lleva abierta la puerta
 boolean checkOpen;
 
-//Current time when the door is opened
+//Current time when the button is tapped
 long currTime;
-
-//Current time when someone is in front of the door
-long presentTime;
 
 //Number of current attempts
 byte attempts;
-
-//Tiempo restante de presencia de alguna persona
-int restante = 60;
 
 //Keypad rows
 const byte ROWS = 4;
@@ -83,14 +53,8 @@ String currentKey;
 //Door state
 boolean open;
 
-//Indica si la seguridad debe estar activa;
-boolean seguridad;
-
 //If the number of current attempts exceeds the maximum allowed
 boolean block;
-
-//La alarma que se imprime
-String alarma = "";
 
 //Keypad mapping matrix
 char hexaKeys[ROWS][COLS] = {
@@ -127,8 +91,7 @@ Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS)
 void setup() {
   Serial.begin(9600);
   checkOpen = false;
-  seguridad = true; //SEGURIDAD ACTIVADA
-
+  
   //Setup Al_1
   buttonState = false;
   pinMode(R_LED_PIN, OUTPUT);
@@ -142,35 +105,23 @@ void setup() {
   open = false;
   attempts = 0;
   block = false;
-
-  //Setup Sensor de movimiento
-  pinMode(ledPin, OUTPUT);
-  pinMode(pirPin, INPUT);
 }
 
 void loop() {
 
   char customKey;
 
-  //Si la puerta no se encuentra abierta
   if (!open) {
-    //Si la seguridad se encuentra desactivada
-    if(!seguridad){  
-    //Llama al método de abrir la puerta manualmente
+
     openManually();
 
-    //Si la puerta no está bloqueada
     if (!block) {
-
-      //Selecciona la tecla presionada
+      //Selected key parsed;
       customKey = customKeypad.getKey();
 
-      //Llama al método de abrir la puerta con el teclado númerico
       openWithKeypad(customKey);
     }
     else {
-
-      //Si la puerta está bloqueda
       if (block) {
         setColor(255, 0, 0);
         //Espera a que la puerta se abra manualmente
@@ -179,43 +130,34 @@ void loop() {
         }
       }
     }
-   }
-
-   else{
-      securityActive();
-   }
 
   }
   else {
 
-    //Si el botón ha sido presionado, llama al método de la pulsación
     if (buttonState) {
       checkDoorOpened();
     }
     else {
-
-      //Selecciona la tecla presionada
+      //Selected key parsed;
       customKey = customKeypad.getKey();
 
-      //Si la tecla presionada es "*", la puerta se cierra
       if (customKey == '*') {
         open = false;
         currentKey = "";
         setColor(0, 255, 255);
         checkOpen = false;
-        Serial.println(CERRADA);
+        Serial.println("Door closed");
       }
     }
-
-    //Verifica el tiempo que la puerta lleva abierta
+    
     checkTimeOpened(checkOpen);
   }
 
   delay(100);
 }
 
-//Método que permite abrir la puerta por medio del pulsador
 void openManually() {
+
   if (!buttonState) {
     if (digitalRead(CONTACT_PIN)) {
       currTime = millis();
@@ -224,33 +166,30 @@ void openManually() {
       open = true;
       attempts = 0;
       currentKey = "";
-      Serial.println(ABIERTA);
+      Serial.println("Door opened!!");
       block = false;
       checkOpen = true;
     }
   }
+
 }
 
-//Método que verifica si la puerta está abierta por medio de la pulsación del pulsador
 void checkDoorOpened() {
   if (!digitalRead(CONTACT_PIN)) {
     setColor(0, 0, 255);
     open = false;
     checkOpen = false;
     buttonState = false;
-    Serial.println(CERRADA);
-  }
+    Serial.println("Door closed!!");
+  } 
 }
 
-//Método que verifica si la puerta lleva abierta más de 10 segundos
-void checkTimeOpened(boolean check) {
+void checkTimeOpened(boolean check){
   if (check && (millis() - currTime) >= 10000) {
-    setColor(255, 0, 0);
-    Serial.println("A:" + AL_1 + ":" + ID + ":" + APTO + ":" + TORRE);
-  }
+      setColor(255, 0, 0);
+    }
 }
 
-//Método que permite que la puerta sea abierta por medio del teclado númerico
 void openWithKeypad(char customKey) {
 
   //Verification of input and appended value
@@ -262,14 +201,14 @@ void openWithKeypad(char customKey) {
   //If the current key contains '#' reset attempt
   if (currentKey.endsWith("#") && currentKey.length() <= KEY.length()) {
     currentKey = "";
-    Serial.println("Intento borrado");
+    Serial.println("Attempt deleted");
   }
 
   //If current key matches the key length
   if (currentKey.length() == KEY.length()) {
     if (currentKey == KEY) {
       open = true;
-      Serial.println(ABIERTA);
+      Serial.println("Door opened!!");
       attempts = 0;
       setColor(0, 255, 0);
       currTime = millis();
@@ -278,64 +217,14 @@ void openWithKeypad(char customKey) {
     else {
       attempts++;
       currentKey = "";
-      Serial.println("Número de intentos: " + String(attempts));
+      Serial.println("Number of attempts: " + String(attempts));
     }
   }
 
   if (attempts >= maxAttempts) {
     block = true;
-    Serial.println("A:" + AL_2 + ":" + ID + ":" + APTO + ":" + TORRE);
   }
 
-}
-
-//Metodo que controla que nadie este en la puerta mientras la seguridad está activada. 
-void securityActive(){
-  int val = digitalRead(pirPin);
-  if(val == HIGH){
-     digitalWrite(ledPin, HIGH); 
-     if(pirState == LOW){
-       Serial.println("¡Movimiento detectado!");
-       pirState = HIGH;
-       presentTime = millis();
-       
-     }
-
-     else{
-      
-      int calculoRestante = 60 - ((millis()-presentTime)/1000);
-
-      if(calculoRestante != restante){
-      Serial.print("Tiempo restante de: ");
-      Serial.print(restante);
-      Serial.println(" segundos.");
-      restante = calculoRestante;
-      
-      }
-    
-        if(millis()-presentTime >= 60000){
-            while(true){
-            Serial.println("Intruso!");
-            }
-        }
-     }
-  }
-
-  else{
-    digitalWrite(ledPin, LOW);
-    
-    if(pirState == HIGH){
-      
-      //Se esperan 5 segundos para verificar que la persona ya no esté en la puerta
-      delay(10000);
-      val = digitalRead(pirPin);
-      if(val == LOW){
-        presentTime = 0;
-        pirState = LOW;
-        restante = 60;
-      }
-    }
-  }
 }
 
 //Method that outputs the RGB specified color
