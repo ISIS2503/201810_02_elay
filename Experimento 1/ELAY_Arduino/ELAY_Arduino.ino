@@ -87,8 +87,8 @@ String currentKey;
 boolean open;
 
 //Indica si alguien sospechoso esta detras de la puerta más del tiempo limite
-boolean presencia;
-
+boolean confirmandoPresencia = true;
+long temporizador;
 //Alarma si la puerta fue abierta en un horario no permitido;ç
 boolean accesoIlegal;
 
@@ -246,7 +246,6 @@ void openManually() {
 
      if(seguridad){
         accesoIlegal = true;
-        presencia = false;
         presentTime = 0;
         pirState = LOW;
         restante = 60;
@@ -338,11 +337,12 @@ void securityActive(){
       Serial.print(restante);
       Serial.println(" segundos.");
       restante = calculoRestante;
+      temporizador = 0;
+      confirmandoPresencia = true;
       
       }
     
         if(millis()-presentTime >= 60000){
-            presencia = true;
             presentTime = 0;
             pirState = LOW;
             restante = 60;
@@ -357,15 +357,20 @@ void securityActive(){
     if(pirState == HIGH){
       
       //Se esperan 10 segundos para verificar que la persona ya no esté en la puerta
-      Serial.println("Confirmando presencia...");
-      delay(10000);
+      if(confirmandoPresencia){
+        Serial.println("Confirmando presencia...");
+        temporizador = millis();
+        confirmandoPresencia = false;
+      }
       val = digitalRead(pirPin);
-      if(val == LOW){
+      if(val == LOW && millis() - temporizador >= 10000 && !confirmandoPresencia){
         presentTime = 0;
         pirState = LOW;
         restante = 60;
         digitalWrite(ledPin, LOW);
         Serial.println("No se detecta movimiento.");
+        temporizador = 0;
+        confirmandoPresencia = true;
       }
     }
   }
