@@ -119,6 +119,12 @@ double batteryCharge;
 //Indicates that the battery is low
 boolean lowBattery;
 
+//Counter of time that indicates when the buzzer must sound
+long lowBatFrec;
+
+//Indicates that the buzzer is making a sound
+boolean buzzerSound;
+
 //Keypad mapping matrix
 char hexaKeys[ROWS][COLS] = {
   {
@@ -193,15 +199,31 @@ void loop() {
   //Measured value comparison with min voltage required
   if (batteryCharge <= MIN_VOLTAGE) {
     digitalWrite(BATTERY_LED, HIGH);
-    if(!lowBattery){
+    if (!lowBattery) {
       Serial.println("A:" + AL_5 + ":" + ID + ":" + APTO + ":" + TORRE);
+      lowBatFrec = millis();
+      setColor(255, 0, 0);
+      buzzerSound = true;
     }
     lowBattery = true;
-    
+
   }
   else {
     digitalWrite(BATTERY_LED, LOW);
     lowBattery = false;
+    stopBuzzer();
+  }
+
+  if (lowBattery) {
+    long actual = millis() - lowBatFrec;
+    if (buzzerSound && actual >= 2000) {
+      stopBuzzer();
+    }
+    else if (!buzzerSound && actual >= 30000) {
+      lowBatFrec = millis();
+      setColor(255, 0, 0);
+      buzzerSound = true;
+    }
   }
 
   //Si la puerta no se encuentra abierta
@@ -425,5 +447,15 @@ void setColor(int redValue, int greenValue, int blueValue) {
   analogWrite(R_LED_PIN, redValue);
   analogWrite(G_LED_PIN, greenValue);
   analogWrite(B_LED_PIN, blueValue);
+}
+
+void stopBuzzer() {
+  if (open) {
+    setColor(0, 255, 0);
+  }
+  else {
+    setColor(0, 0, 255);
+  }
+  buzzerSound = false;
 }
 
