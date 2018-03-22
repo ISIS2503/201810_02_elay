@@ -43,6 +43,7 @@ import com.google.gson.JsonParser;
 import com.sun.mail.smtp.SMTPTransport;
 
 
+
 public class Client {
 
 	public static ArrayList<LinkedList<Countent>> lista;
@@ -80,8 +81,7 @@ public class Client {
 	}
 
 	private void add(String topic, Countent temp) {
-		try { MailSender.enviarCorreo("Mensajed de alerta", "ws.duarte@uniandes.edu.co", temp.info.mensajeAlerta); }
-		catch (Exception e) { e.printStackTrace(); }
+		new EnvialMail(temp).start();
 		String[] s = topic.split("/");
 		if(s[0].equals("propietario")) {
 			lista.get(0).add(temp);
@@ -100,6 +100,16 @@ public class Client {
 			new Agregar(3,temp).start();
 		}
 		System.out.println(s[0].toUpperCase()+": \n"+temp.toText());
+	}
+
+	public static class EnvialMail extends Thread{
+		private Countent c;
+		public EnvialMail(Countent c) { this.c = c; }
+		@Override
+		public void run() {
+			try { MailSender.enviarCorreo("Mensajed de alerta", "ws.duarte@uniandes.edu.co", c.info.mensajeAlerta); }
+			catch (Exception e) { e.printStackTrace(); }
+		}
 	}
 
 	public static class Countent {
@@ -194,72 +204,73 @@ public class Client {
 			});
 			return ret;
 		}
-	}
 
-	@SuppressWarnings("serial")
-	public static class Detalle extends JFrame {
-		public Detalle(Countent c) {
-			setSize(370,200);
-			setResizable(true);
-			setTitle("Observatorio de colas.");
-			setLocationRelativeTo(null);
-			getContentPane().setBackground(Color.WHITE);
-			this.add(new JLabel("<html><body>Fecha y hora: "+c.timestamp+
-					"<br>Información de la alerta:<br>"
-					+ "&nbsp &nbsp Id de la alerta: "+c.info.alertaId
-					+ "<br> &nbsp &nbsp	Mensaje de alerta: "+c.info.mensajeAlerta
-					+ "<br> &nbsp &nbsp Dispositivo: "+c.info.idDispositivo
-					+ "<br> &nbsp &nbsp Ubicación:"
-					+ "<br> &nbsp &nbsp &nbsp &nbsp Torre: "+c.info.torre
-					+ "<br> &nbsp &nbsp &nbsp &nbsp Apartamento: "+c.info.apto+"</html></body>"));
-			setVisible(true);
-			this.addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) { dispose(); }
-				@Override
-				public void focusGained(FocusEvent e) {}
-			});
+		@SuppressWarnings("serial")
+		public class Detalle extends JFrame {
+			public Detalle(Countent c) {
+				setSize(370,200);
+				setResizable(true);
+				setTitle("Observatorio de colas.");
+				setLocationRelativeTo(null);
+				getContentPane().setBackground(Color.WHITE);
+				this.add(new JLabel("<html><body>Fecha y hora: "+c.timestamp+
+						"<br>Informaciï¿½n de la alerta:<br>"
+						+ "&nbsp &nbsp Id de la alerta: "+c.info.alertaId
+						+ "<br> &nbsp &nbsp	Mensaje de alerta: "+c.info.mensajeAlerta
+						+ "<br> &nbsp &nbsp Dispositivo: "+c.info.idDispositivo
+						+ "<br> &nbsp &nbsp Ubicaciï¿½n:"
+						+ "<br> &nbsp &nbsp &nbsp &nbsp Torre: "+c.info.torre
+
+						+ "<br> &nbsp &nbsp &nbsp &nbsp Apartamento: "+c.info.apto+"</html></body>"));
+				setVisible(true);
+				this.addFocusListener(new FocusListener() {
+					@Override
+					public void focusLost(FocusEvent e) { dispose(); }
+					@Override
+					public void focusGained(FocusEvent e) {}
+				});
+			}
 		}
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		new Client(new Interfaz());
 	}
-	
-	// El código no es mio, pero no encuentro el Link de donde lo saque.
-	public static class MailSender{
-		
-		public static void enviarCorreo(String asunto, String destinatarios,  String contenido) throws Exception {
-	        Properties properties = new Properties();
-	        properties.load(new FileReader(new File("./data/hotmail.properties")));
-	        Session session = Session.getInstance(properties, null);
-	        Message mensaje = new MimeMessage(session);
-	        mensaje.setFrom(new InternetAddress(properties.getProperty("mail.from")));
-	        StringTokenizer emailsSt = new StringTokenizer(destinatarios,";,");
-	        while (emailsSt.hasMoreTokens()) {
-	        	String email=emailsSt.nextToken();
-	        	try{
-	        		mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-	        	}catch(Exception ex){ex.printStackTrace();}
-	        }
-	        mensaje.setSubject(asunto);
-	        mensaje.setSentDate(new Date(1,1,1)); 
-	        BodyPart messageBodyPart = new MimeBodyPart();
-	        messageBodyPart.setText(contenido);
-	        Multipart multipart = new MimeMultipart();
-	        multipart.addBodyPart(messageBodyPart);
 
-	        mensaje.setContent(multipart);
-	        SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
-	        try {
-	        	//conectar al servidor
-	            transport.connect(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
-	            //enviar el mensaje
-	            transport.sendMessage(mensaje, mensaje.getAllRecipients());
-	        } finally {
-	        	//cerrar la conexión 
-	            transport.close();
-	        }
-	    }
+	// El cÃ³digo no es mio, pero no encuentro el Link de donde lo saque.
+	public static class MailSender{
+
+		public static void enviarCorreo(String asunto, String destinatarios,  String contenido) throws Exception {
+			Properties properties = new Properties();
+			properties.load(new FileReader(new File("./data/hotmail.properties")));
+			Session session = Session.getInstance(properties, null);
+			Message mensaje = new MimeMessage(session);
+			mensaje.setFrom(new InternetAddress(properties.getProperty("mail.from")));
+			StringTokenizer emailsSt = new StringTokenizer(destinatarios,";,");
+			while (emailsSt.hasMoreTokens()) {
+				String email=emailsSt.nextToken();
+				try{
+					mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+				}catch(Exception ex){ex.printStackTrace();}
+			}
+			mensaje.setSubject(asunto);
+			mensaje.setSentDate(new Date(1,1,1)); 
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setText(contenido);
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageBodyPart);
+
+			mensaje.setContent(multipart);
+			SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
+			try {
+				//conectar al servidor
+				transport.connect(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
+				//enviar el mensaje
+				transport.sendMessage(mensaje, mensaje.getAllRecipients());
+			} finally {
+				//cerrar la conexiÃ³n 
+				transport.close();
+			}
+		}
 	}
 }
