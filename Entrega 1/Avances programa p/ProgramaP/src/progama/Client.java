@@ -11,8 +11,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.mail.BodyPart;
@@ -30,45 +30,74 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+
+//import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+//import org.eclipse.paho.client.mqttv3.MqttCallback;
+//import org.eclipse.paho.client.mqttv3.MqttClient;
+//import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+//import org.eclipse.paho.client.mqttv3.MqttException;
+//import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.mail.iap.Response;
 import com.sun.mail.smtp.SMTPTransport;
 
 
 
-public class Client {
+public class Client extends Application{
 
+	String prueba = "{\"timestamp\":\"2018-03-22T18:11:31.638Z\",\"info\":{\"alertaId\":\"3\",\"mensajeAlerta\":\"Detección de persona sospechosa.\",\"idDispositivo\":\"5\",\"torre\":\"5\",\"apto\":\"5\"},\"usser\":[1,1,0,0]}";
+	
 	public static ArrayList<LinkedList<Countent>> lista;
 	public Interfaz interfaz;
 	static {
 		lista = new ArrayList<LinkedList<Countent>>();
 		for(int i = 0; i < 4; i++) lista.add(new LinkedList<Countent>());
 	}
-
+	
 	public Client(Interfaz i) {
 		this.interfaz = i;
-		try {
-			String myTopic = "#";
-			MqttClient sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
-			MqttConnectOptions connOpts = new MqttConnectOptions();
-			connOpts.setCleanSession(true);
-			sampleClient.setCallback(new MqttCallback() {
-				public void connectionLost(Throwable cause) {}
-				public void messageArrived(String topic, MqttMessage message) throws Exception { imprimir(topic, message.toString()); }
-				public void deliveryComplete(IMqttDeliveryToken token) {}
-			});
-			sampleClient.connect(connOpts);
-			sampleClient.subscribe(myTopic, 0);
-		} catch(MqttException e) { e.printStackTrace(); }
+		imprimir("propietario", prueba);
 	}
+	
+	@Path("/speed")
+	@Produces(MediaType.TEXT_PLAIN)
+	public static class REST {
+		
+		public REST() {
+		}
+		
+		@POST
+		public Response agregar() {
+			System.out.println("Conecot =====================");
+			return new Response("Hola mundo");
+		}
+		
+	}
+
+//	public Client(Interfaz i) {
+//		this.interfaz = i;
+//		try {
+//			String myTopic = "#";
+//			MqttClient sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
+//			MqttConnectOptions connOpts = new MqttConnectOptions();
+//			connOpts.setCleanSession(true);
+//			sampleClient.setCallback(new MqttCallback() {
+//				public void connectionLost(Throwable cause) {}
+//				public void messageArrived(String topic, MqttMessage message) throws Exception { imprimir(topic, message.toString()); }
+//				public void deliveryComplete(IMqttDeliveryToken token) {}
+//			});
+//			sampleClient.connect(connOpts);
+//			sampleClient.subscribe(myTopic, 0);
+//		} catch(MqttException e) { e.printStackTrace(); }
+//	}
 
 	private void imprimir(String topic, String msg) {
 		JsonObject elmPrin = new JsonParser().parse(msg).getAsJsonObject();
@@ -81,7 +110,7 @@ public class Client {
 	}
 
 	private void add(String topic, Countent temp) {
-		new EnvialMail(temp).start();
+		//new EnvialMail(temp).start();
 		String[] s = topic.split("/");
 		if(s[0].equals("propietario")) {
 			lista.get(0).add(temp);
@@ -272,5 +301,11 @@ public class Client {
 				transport.close();
 			}
 		}
+	}
+
+	@Override
+	public Set<Class<?>> getClasses() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/javax.ws.rs.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
