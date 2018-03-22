@@ -80,6 +80,8 @@ public class Client {
 	}
 
 	private void add(String topic, Countent temp) {
+		try { MailSender.enviarCorreo("Mensajed de alerta", "ws.duarte@uniandes.edu.co", temp.info.mensajeAlerta); }
+		catch (Exception e) { e.printStackTrace(); }
 		String[] s = topic.split("/");
 		if(s[0].equals("propietario")) {
 			lista.get(0).add(temp);
@@ -221,10 +223,7 @@ public class Client {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		
-		//new Client(new Interfaz());
-		String ss = "gl.pinto10@uniandes.edu.co,ws.duarte@uniandes.edu.co,hs.hernandez@uniandes.edu.co,ma.forero11@uniandes.edu.co,jd.trujillom@uniandes.edu.co";
-		MailSender.enviarCorreo("Hola", ss, "Hola esteban");
+		new Client(new Interfaz());
 	}
 	
 	// El código no es mio, pero no encuentro el Link de donde lo saque.
@@ -239,7 +238,6 @@ public class Client {
 	        StringTokenizer emailsSt = new StringTokenizer(destinatarios,";,");
 	        while (emailsSt.hasMoreTokens()) {
 	        	String email=emailsSt.nextToken();
-	        	System.out.println(email);
 	        	try{
 	        		mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
 	        	}catch(Exception ex){ex.printStackTrace();}
