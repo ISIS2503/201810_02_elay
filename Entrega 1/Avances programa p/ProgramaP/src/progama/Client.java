@@ -62,6 +62,10 @@ public class Client extends Application{
 		for(int i = 0; i < 4; i++) lista.add(new LinkedList<Countent>());
 	}
 	
+	public Client() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Client(Interfaz i) {
 		this.interfaz = i;
 		imprimir("propietario", prueba);
