@@ -1,4 +1,4 @@
-/*
+  /*
  * The MIT License
  *
  * Copyright 2018 ws.duarte.
@@ -33,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
@@ -77,7 +78,7 @@ public class MailSender extends Thread{
                 String email = emailsSt.nextToken();
                 try {
                     mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-                } catch (Exception ex) {
+                } catch (MessagingException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -87,16 +88,12 @@ public class MailSender extends Thread{
             messageBodyPart.setText(contenido);
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
-
             mensaje.setContent(multipart);
             SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
             try {
-                //conectar al servidor
                 transport.connect(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
-                //enviar el mensaje
                 transport.sendMessage(mensaje, mensaje.getAllRecipients());
             } finally {
-                //cerrar la conexión 
                 transport.close();
             }
         }
