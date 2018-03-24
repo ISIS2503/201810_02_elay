@@ -32,7 +32,7 @@ const String AL_3 = "3";
 //Constante que indica que una persona entró a la casa, en un horario no permitido.
 const String AL_4 = "4";
 
-//Constante que indica que una persona
+//Constante que indica que la batería se encuentra en estado crítico
 const String AL_5 = "5";
 
 //Specified password
@@ -92,7 +92,7 @@ boolean open;
 //Indica si alguien sospechoso esta detras de la puerta más del tiempo limite
 boolean confirmandoPresencia = true;
 long temporizador;
-//Alarma si la puerta fue abierta en un horario no permitido;ç
+//Alarma si la puerta fue abierta en un horario no permitido
 boolean accesoIlegal;
 
 //Indica si la seguridad debe estar activa;
@@ -102,7 +102,7 @@ boolean seguridad;
 boolean block;
 
 //La alarma que se imprime
-String alarma = "";
+boolean alarma;
 
 //Minimum voltage required for an alert
 const double MIN_VOLTAGE = 1.2;
@@ -161,6 +161,7 @@ void setup() {
   Serial.begin(9600);
   checkOpen = false;
   seguridad = false; //SEGURIDAD Activada
+  alarma = false;
 
   //Setup Al_1
   buttonState = false;
@@ -169,6 +170,7 @@ void setup() {
   pinMode(B_LED_PIN, OUTPUT);
   pinMode(CONTACT_PIN, INPUT);
   setColor(0, 255, 255);
+
 
   //Setup AL_2
   currentKey = "";
@@ -283,6 +285,7 @@ void loop() {
         currentKey = "";
         setColor(0, 255, 255);
         checkOpen = false;
+        alarma = false;
         Serial.println(CERRADA);
       }
     }
@@ -300,13 +303,16 @@ void openManually() {
     if (digitalRead(CONTACT_PIN)) {
       currTime = millis();
       buttonState = true;
-      setColor(0, 255, 0);
+      if(!alarma){
+        setColor(0, 255, 0);
+      }
       open = true;
       attempts = 0;
       currentKey = "";
       Serial.println(ABIERTA);
       block = false;
       checkOpen = true;
+      alarma = false;
 
       if (seguridad) {
         accesoIlegal = true;
@@ -315,6 +321,7 @@ void openManually() {
         restante = 60;
         Serial.println("A:" + AL_4 + ":" + ID + ":" + APTO + ":" + TORRE);
         setColor(255, 0, 0);
+        alarma = true;
         digitalWrite(ledPin, LOW);
       }
 
@@ -325,9 +332,13 @@ void openManually() {
 //Método que verifica si la puerta está abierta por medio de la pulsación del pulsador
 void checkDoorOpened() {
   if (!digitalRead(CONTACT_PIN)) {
-    setColor(0, 0, 255);
+    if(!alarma){
+      setColor(0, 0, 255);
+    }
+    
     open = false;
     checkOpen = false;
+    alarma = false;
     buttonState = false;
     Serial.println(CERRADA);
   }
@@ -336,9 +347,10 @@ void checkDoorOpened() {
 //Método que verifica si la puerta lleva abierta más de 30 segundos
 void checkTimeOpened(boolean check) {
   if (check && (millis() - currTime) >= 30000) {
-    setColor(255, 0, 0);
     Serial.println("A:" + AL_1 + ":" + ID + ":" + APTO + ":" + TORRE);
     checkOpen = false;
+    alarma = true;
+    setColor(255, 0, 0);
   }
 }
 
@@ -363,7 +375,9 @@ void openWithKeypad(char customKey) {
       open = true;
       Serial.println(ABIERTA);
       attempts = 0;
-      setColor(0, 255, 0);
+      if(!alarma){
+        setColor(0, 255, 0);
+      }
       currTime = millis();
       checkOpen = true;
     }
@@ -377,6 +391,7 @@ void openWithKeypad(char customKey) {
   if (attempts >= maxAttempts) {
     block = true;
     Serial.println("A:" + AL_2 + ":" + ID + ":" + APTO + ":" + TORRE);
+    alarma = true;
   }
 
 }
@@ -413,6 +428,7 @@ void securityActive() {
         restante = 60;
         Serial.println("A:" + AL_3 + ":" + ID + ":" + APTO + ":" + TORRE);
         setColor(255, 0, 0);
+        alarma = true;
       }
     }
   }
@@ -450,10 +466,10 @@ void setColor(int redValue, int greenValue, int blueValue) {
 }
 
 void stopBuzzer() {
-  if (open) {
+  if (open && !alarma) {
     setColor(0, 255, 0);
   }
-  else {
+  else if (!alarma) {
     setColor(0, 0, 255);
   }
   buzzerSound = false;
