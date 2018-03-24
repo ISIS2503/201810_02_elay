@@ -257,6 +257,15 @@ public class Disparador {
 			}
 		}
 	}
+	/*
+	 * "info": {
+        "alertaId": "3",
+        "mensajeAlerta": "Detección de persona sospechosa.",
+        "idDispositivo": "5",
+        "torre": "5",
+        "apto": "5"
+    },
+	 */
 
 	public static void main(String[] args) throws Exception {
 		new Disparador(new Interfaz());

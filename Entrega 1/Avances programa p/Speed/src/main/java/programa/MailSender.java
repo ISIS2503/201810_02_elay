@@ -55,8 +55,6 @@ public class MailSender extends Thread{
         this.contenido = contenido;
     }
     
-    
-
     @Override
     public void run() {
         try {

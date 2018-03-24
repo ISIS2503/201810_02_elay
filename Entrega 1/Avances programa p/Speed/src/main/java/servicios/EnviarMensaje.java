@@ -50,12 +50,13 @@ public class EnviarMensaje extends Application {
     }
 
     @POST
-    //@Path("{rol}")
+    @Path("/{rol}")
     public String envioCorreo(String j, @PathParam("rol") String rol) {
         try {
             JsonObject info = new JsonParser().parse(j).getAsJsonObject().get("info").getAsJsonObject();
+            String[] ss = darValues(rol, info);
             new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
-                    "ws.duarte@uniandes.edu.co", info.get("mensajeAlerta").getAsString()).start();
+                    ss[0], ss[1]).start();
         } catch (JsonSyntaxException ex) {
             Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,10 +65,10 @@ public class EnviarMensaje extends Application {
     
     private String[] darValues(String rol, JsonObject msg) {
         switch(rol) {
-            case "propietario": return new String[]{"ws.duarte@misena.edu.co",msg.get("mensajeAlerta").getAsString()}; 
-            case "seguridad": return new String[]{"wsduarte7@misena.edu.co",msg.get("mensajeAlerta").getAsString()};
-            case "yale": return new String[]{"wsduarte7@misena.edu.co",msg.get("mensajeAlerta").getAsString()};
-            case "administrador": return new String[]{"wsduarte7@misena.edu.co",msg.get("mensajeAlerta").getAsString()};
+            case "propietario": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()}; 
+            case "seguridad": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()+"\nTorre: "+msg.get("torre").getAsString()+"\nApartamento: "+msg.get("apto").getAsString()};
+            case "yale": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()+"\nTorre: "+msg.get("torre").getAsString()+"\nApartamento: "+msg.get("apto").getAsString()+"\n"+msg.get("idDispositivo").getAsString()};
+            case "administrador": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()+"\nTorre "+msg.get("torre").getAsString()+"\nApartamento: "+msg.get("apto").getAsString()+"\nID Dispositivo: "+msg.get("idDispositivo").getAsString()};
             default: return null;
         }
     }

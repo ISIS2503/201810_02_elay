@@ -91,7 +91,8 @@ public class Client extends Application{
 		this.interfaz = i;
 		try {
 			String myTopic = "#";
-			MqttClient sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
+			//MqttClient sampleClient = new MqttClient("tcp://172.24.42.94:9092", "0");
+			MqttClient sampleClient = new MqttClient("tcp://172.24.42.94:9092", "0");
 			MqttConnectOptions connOpts = new MqttConnectOptions();
 			connOpts.setCleanSession(true);
 			sampleClient.setCallback(new MqttCallback() {
