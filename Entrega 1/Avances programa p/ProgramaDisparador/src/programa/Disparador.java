@@ -60,7 +60,7 @@ public class Disparador {
 			sampleClient.setCallback(new MqttCallback() {
 				public void connectionLost(Throwable cause) {}
 				public void messageArrived(String topic, MqttMessage message) throws Exception {
-					new Speed(message.toString()).start();
+					new Speed(topic.split("/")[0],message.toString()).start();
 					imprimir(topic, message.toString()); 
 				}
 				public void deliveryComplete(IMqttDeliveryToken token) {}
@@ -222,18 +222,18 @@ public class Disparador {
 	}
 
 	public static class Speed extends Thread{
-		private String msg;
-		public Speed(String msg) { this.msg = msg; }
+		private String msg, rol;
+		public Speed(String rol, String msg) { this.msg = msg; this.rol = rol; }
 		@Override
-		public void run() {	HTTP.post(msg); }
+		public void run() {	HTTP.post(rol, msg); }
 	}
 
 	public static class HTTP {
 		private static final String URL_SPEED = "http://172.24.42.23:8080/speed";
 		private static final String URL_BATCH = "";
-		public static void post (String msg) {
+		public static void post (String rol, String msg) {
 			try {
-				URL url = new URL(URL_SPEED);
+				URL url = new URL(URL_SPEED+rol);
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
 				con.setRequestMethod("POST");
 				con.setRequestProperty("Content-Type", "application/json");
