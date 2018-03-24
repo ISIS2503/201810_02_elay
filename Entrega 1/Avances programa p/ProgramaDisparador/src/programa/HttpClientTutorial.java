@@ -57,7 +57,7 @@ public class HttpClientTutorial {
 
 		      System.out.println("Response Code :" + responseCode);
 		      BufferedReader reader = null;
-			    String json = null;
+			  String json = null;
 		      reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		      StringBuilder jsonSb = new StringBuilder();
 		      String line = null;

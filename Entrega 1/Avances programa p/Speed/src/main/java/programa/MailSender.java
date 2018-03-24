@@ -76,11 +76,8 @@ public class MailSender extends Thread{
             StringTokenizer emailsSt = new StringTokenizer(destinatarios, ";,");
             while (emailsSt.hasMoreTokens()) {
                 String email = emailsSt.nextToken();
-                try {
-                    mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
-                } catch (MessagingException ex) {
-                    ex.printStackTrace();
-                }
+                try { mensaje.setRecipient(Message.RecipientType.TO, new InternetAddress(email)); }
+                catch (MessagingException ex) { ex.printStackTrace(); }
             }
             mensaje.setSubject(asunto);
             mensaje.setSentDate(new Date(1, 1, 1));
@@ -93,8 +90,6 @@ public class MailSender extends Thread{
             try {
                 transport.connect(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
                 transport.sendMessage(mensaje, mensaje.getAllRecipients());
-            } finally {
-                transport.close();
-            }
+            } finally { transport.close(); }
         }
 }

@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -49,7 +50,8 @@ public class EnviarMensaje extends Application {
     }
 
     @POST
-    public String envioCorreo(String j) {
+    //@Path("{rol}")
+    public String envioCorreo(String j, @PathParam("rol") String rol) {
         try {
             JsonObject info = new JsonParser().parse(j).getAsJsonObject().get("info").getAsJsonObject();
             new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
@@ -58,5 +60,15 @@ public class EnviarMensaje extends Application {
             Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
         return j;
-    }          
+    }    
+    
+    private String[] darValues(String rol, JsonObject msg) {
+        switch(rol) {
+            case "propietario": return new String[]{"ws.duarte@misena.edu.co",msg.get("mensajeAlerta").getAsString()}; 
+            case "seguridad": return new String[]{"wsduarte7@misena.edu.co",msg.get("mensajeAlerta").getAsString()};
+            case "yale": return new String[]{"wsduarte7@misena.edu.co",msg.get("mensajeAlerta").getAsString()};
+            case "administrador": return new String[]{"wsduarte7@misena.edu.co",msg.get("mensajeAlerta").getAsString()};
+            default: return null;
+        }
+    }
 }

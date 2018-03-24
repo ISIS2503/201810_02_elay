@@ -79,7 +79,7 @@ public class Disparador {
 				info.get("torre").getAsInt(),
 				info.get("apto").getAsInt())));
 	}
-
+	
 	private void add(String topic, Countent temp) {
 		String[] s = topic.split("/");
 		if(s[0].equals("propietario")) {
@@ -209,7 +209,6 @@ public class Disparador {
 						+ "<br> &nbsp &nbsp Dispositivo: "+c.info.idDispositivo
 						+ "<br> &nbsp &nbsp Ubicaci�n:"
 						+ "<br> &nbsp &nbsp &nbsp &nbsp Torre: "+c.info.torre
-
 						+ "<br> &nbsp &nbsp &nbsp &nbsp Apartamento: "+c.info.apto+"</html></body>"));
 				setVisible(true);
 				this.addFocusListener(new FocusListener() {
