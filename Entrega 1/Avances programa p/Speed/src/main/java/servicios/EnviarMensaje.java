@@ -27,9 +27,9 @@ package servicios;
  *
  * @author ws.duarte
  */
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -38,37 +38,25 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
-import programa.Countent;
 import programa.MailSender;
-
-
 
 @Path("speed")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class EnviarMensaje extends Application {
 
-	
-	public EnviarMensaje() {
-	}
-	
-	@POST
-	public String envioCorreo(String j) {
-		 try {
-                JsonObject elmPrin = new JsonParser().parse(j).getAsJsonObject();
-		JsonObject info = elmPrin.get("info").getAsJsonObject();
-                Countent json = new Countent("", elmPrin.get("timestamp").getAsString(), 
-				info.get("alertaId").getAsInt(), 
-				info.get("mensajeAlerta").getAsString(), 
-				info.get("idDispositivo").getAsInt(), 
-				info.get("torre").getAsInt(), 
-				info.get("apto").getAsInt());
-                MailSender.enviarCorreo("Mensaje de alerta"+json.alertaId, "ws.duarte@uniandes.edu.co", json.mensajeAlerta);
-            } catch (Exception ex) {
-                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                 return j;
-	}
-        
-        //           
+    public EnviarMensaje() {
+    }
+
+    @POST
+    public String envioCorreo(String j) {
+        try {
+            JsonObject info = new JsonParser().parse(j).getAsJsonObject().get("info").getAsJsonObject();
+            new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
+                    "ws.duarte@uniandes.edu.co", info.get("mensajeAlerta").getAsString()).start();
+        } catch (JsonSyntaxException ex) {
+            Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return j;
+    }          
 }

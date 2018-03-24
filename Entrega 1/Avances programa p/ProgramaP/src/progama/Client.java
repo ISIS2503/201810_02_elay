@@ -30,12 +30,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
+
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 //import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 //import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -46,7 +48,6 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.mail.iap.Response;
 import com.sun.mail.smtp.SMTPTransport;
 
 
@@ -66,42 +67,42 @@ public class Client extends Application{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Client(Interfaz i) {
-		this.interfaz = i;
-		imprimir("propietario", prueba);
-	}
-	
-	@Path("/speed")
-	@Produces(MediaType.TEXT_PLAIN)
-	public static class REST {
-		
-		public REST() {
-		}
-		
-		@POST
-		public Response agregar() {
-			System.out.println("Conecot =====================");
-			return new Response("Hola mundo");
-		}
-		
-	}
-
 //	public Client(Interfaz i) {
 //		this.interfaz = i;
-//		try {
-//			String myTopic = "#";
-//			MqttClient sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
-//			MqttConnectOptions connOpts = new MqttConnectOptions();
-//			connOpts.setCleanSession(true);
-//			sampleClient.setCallback(new MqttCallback() {
-//				public void connectionLost(Throwable cause) {}
-//				public void messageArrived(String topic, MqttMessage message) throws Exception { imprimir(topic, message.toString()); }
-//				public void deliveryComplete(IMqttDeliveryToken token) {}
-//			});
-//			sampleClient.connect(connOpts);
-//			sampleClient.subscribe(myTopic, 0);
-//		} catch(MqttException e) { e.printStackTrace(); }
+//		imprimir("propietario", prueba);
 //	}
+	
+//	@Path("/speed")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public static class REST {
+//		
+//		public REST() {
+//		}
+//		
+//		@POST
+//		public Response agregar() {
+//			System.out.println("Conecot =====================");
+//			return new Response("Hola mundo");
+//		}
+//		
+//	}
+
+	public Client(Interfaz i) {
+		this.interfaz = i;
+		try {
+			String myTopic = "#";
+			MqttClient sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
+			MqttConnectOptions connOpts = new MqttConnectOptions();
+			connOpts.setCleanSession(true);
+			sampleClient.setCallback(new MqttCallback() {
+				public void connectionLost(Throwable cause) {}
+				public void messageArrived(String topic, MqttMessage message) throws Exception { imprimir(topic, message.toString()); }
+				public void deliveryComplete(IMqttDeliveryToken token) {}
+			});
+			sampleClient.connect(connOpts);
+			sampleClient.subscribe(myTopic, 0);
+		} catch(MqttException e) { e.printStackTrace(); }
+	}
 
 	private void imprimir(String topic, String msg) {
 		JsonObject elmPrin = new JsonParser().parse(msg).getAsJsonObject();

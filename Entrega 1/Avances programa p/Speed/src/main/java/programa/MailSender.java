@@ -29,6 +29,8 @@ import java.io.FileReader;
 import java.util.Date;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -42,8 +44,29 @@ import javax.mail.internet.MimeMultipart;
  *
  * @author ws.duarte
  */
-public class MailSender {
-    public static void enviarCorreo(String asunto, String destinatarios, String contenido) throws Exception {
+public class MailSender extends Thread{
+    
+    private String asunto,destinatarios,contenido;
+
+    public MailSender(String asunto, String destinatarios, String contenido) {
+        this.asunto = asunto;
+        this.destinatarios = destinatarios;
+        this.contenido = contenido;
+    }
+    
+    
+
+    @Override
+    public void run() {
+        try {
+            enviarCorreo();
+        } catch (Exception ex) {
+            Logger.getLogger(MailSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void enviarCorreo() throws Exception {
             Properties properties = new Properties();
             properties.load(new FileReader(new File("./data/hotmail.properties")));
             Session session = Session.getInstance(properties, null);
