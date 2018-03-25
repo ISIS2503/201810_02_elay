@@ -60,8 +60,10 @@ public class Disparador {
 			sampleClient.setCallback(new MqttCallback() {
 				public void connectionLost(Throwable cause) {}
 				public void messageArrived(String topic, MqttMessage message) throws Exception {
-					new Speed(topic.split("/")[0],message.toString()).start();
-					imprimir(topic, message.toString()); 
+					if(validarTopico(topic)) {
+						new Speed(topic.split("/")[0],message.toString()).start();
+						imprimir(topic, message.toString());
+					}
 				}
 				public void deliveryComplete(IMqttDeliveryToken token) {}
 			});
@@ -79,6 +81,8 @@ public class Disparador {
 				info.get("torre").getAsInt(),
 				info.get("apto").getAsInt())));
 	}
+	
+	private boolean validarTopico(String t) { return t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"); }
 	
 	private void add(String topic, Countent temp) {
 		String[] s = topic.split("/");
