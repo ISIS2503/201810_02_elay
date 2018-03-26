@@ -1,6 +1,6 @@
 [
     {
-        "id": "a38136ee.73dde8",
+        "id": "eb742b27.be1ae8",
         "type": "tab",
         "label": "ELAY_Flujo_Entrega_1",
         "disabled": false,
@@ -18,6 +18,22 @@
         "id": "1fc867ac.d99678",
         "type": "subflow",
         "name": "Subflow 1 (2)",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "5ccdc2cc.127ffc",
+        "type": "subflow",
+        "name": "Subflow 1 (3)",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "c3767ad4.95e768",
+        "type": "subflow",
+        "name": "Subflow 1 (2) (2)",
         "info": "",
         "in": [],
         "out": []
@@ -1603,9 +1619,1133 @@
         ]
     },
     {
-        "id": "4c1a5837.1a92c8",
+        "id": "b01f838a.074d",
+        "type": "http request",
+        "z": "5ccdc2cc.127ffc",
+        "name": "GET temp/sec/find",
+        "method": "GET",
+        "ret": "obj",
+        "url": "/temperature/sec/find",
+        "tls": "",
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "9233f879.692a28"
+            ]
+        ]
+    },
+    {
+        "id": "c97c2a43.d8c308",
+        "type": "http request",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Get temp/min/find",
+        "method": "GET",
+        "ret": "obj",
+        "url": "/temperature/min/find",
+        "tls": "",
+        "x": 190,
+        "y": 140,
+        "wires": [
+            [
+                "d462dbcd.f32338"
+            ]
+        ]
+    },
+    {
+        "id": "41d7c48f.0f56ec",
+        "type": "http request",
+        "z": "5ccdc2cc.127ffc",
+        "name": "GET Temp/sec/count",
+        "method": "GET",
+        "ret": "txt",
+        "url": "/temperature/sec/count",
+        "tls": "",
+        "x": 220,
+        "y": 240,
+        "wires": [
+            [
+                "43c78939.ef6108"
+            ]
+        ]
+    },
+    {
+        "id": "b8357a72.cbf468",
+        "type": "http request",
+        "z": "5ccdc2cc.127ffc",
+        "name": "GET Temp/min/count",
+        "method": "GET",
+        "ret": "txt",
+        "url": "/temperature/min/count",
+        "tls": "",
+        "x": 202,
+        "y": 276,
+        "wires": [
+            [
+                "3bf31ef3.8396b2"
+            ]
+        ]
+    },
+    {
+        "id": "19a2afbc.87c4f",
+        "type": "function",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 598,
+        "y": 64,
+        "wires": [
+            [
+                "6c102b8b.97a2f4"
+            ]
+        ]
+    },
+    {
+        "id": "4923d218.1192ec",
+        "type": "function",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 586,
+        "y": 125,
+        "wires": [
+            [
+                "3d0645d0.72846a"
+            ]
+        ]
+    },
+    {
+        "id": "6c102b8b.97a2f4",
+        "type": "http response",
+        "z": "5ccdc2cc.127ffc",
+        "name": "http find/temp/sec",
+        "statusCode": "",
+        "headers": {},
+        "x": 853.5,
+        "y": 54,
+        "wires": []
+    },
+    {
+        "id": "3d0645d0.72846a",
+        "type": "http response",
+        "z": "5ccdc2cc.127ffc",
+        "name": "http find/temp/min",
+        "statusCode": "",
+        "headers": {},
+        "x": 850.5,
+        "y": 130,
+        "wires": []
+    },
+    {
+        "id": "f5b588b0.10b8b8",
+        "type": "debug",
+        "z": "5ccdc2cc.127ffc",
+        "name": "temperature/secs",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 408,
+        "y": 362,
+        "wires": []
+    },
+    {
+        "id": "d61993c7.2daae",
+        "type": "debug",
+        "z": "5ccdc2cc.127ffc",
+        "name": "temperature/mins",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 420,
+        "y": 641,
+        "wires": []
+    },
+    {
+        "id": "9d83ed87.d23ee",
+        "type": "function",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Format 4 Secs",
+        "func": "var input = msg.payload;\nvar time = null;\nvar temperature = 0;\nvar res1 = {payload:null};\nvar res2 = {payload:null};\n\ntime = input.room.sensetime;\ntemp = input.room.temperature.data;\n\nres1.payload = temp;\nres1.topic = \"temperature\";\nres2.payload = time;\nres2.topic = \"time\";\n\nreturn [res1, res2];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 423,
+        "y": 413,
+        "wires": [
+            [
+                "eb6608c5.b75588",
+                "e2245d2d.87754",
+                "782591e1.d73c4",
+                "77a6d00e.241d8",
+                "5592c879.d1f048"
+            ]
+        ]
+    },
+    {
+        "id": "7e965c9c.17ee94",
+        "type": "function",
+        "z": "5ccdc2cc.127ffc",
+        "name": "formatForMins",
+        "func": "var input = msg.payload;\nvar time = null;\nvar temperature = 0;\nvar res1 = {payload:null};\nvar res2 = {payload:null};\n\ntime = input.room.sensetime;\ntemp = input.room.temperature.data;\n\nres1.payload = temp;\nres1.topic = \"temperature\";\nres2.payload = time;\nres2.topic = \"time\";\n\nreturn [res1, res2];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 692,
+        "wires": [
+            [
+                "19944456.39199c",
+                "6304df33.4e1ae",
+                "fc7fc8bd.857bd8",
+                "cb1c6903.d0eef8",
+                "1122787d.04d158"
+            ]
+        ]
+    },
+    {
+        "id": "3ec9634c.cebf8c",
+        "type": "function",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 695,
+        "y": 206,
+        "wires": [
+            [
+                "1a89d961.7f7c87"
+            ]
+        ]
+    },
+    {
+        "id": "8709c72.567d238",
+        "type": "function",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 683,
+        "y": 267,
+        "wires": [
+            [
+                "a070aca9.70014"
+            ]
+        ]
+    },
+    {
+        "id": "1a89d961.7f7c87",
+        "type": "http response",
+        "z": "5ccdc2cc.127ffc",
+        "name": "HTTP count/temp/sec",
+        "statusCode": "",
+        "headers": {},
+        "x": 960.5,
+        "y": 196,
+        "wires": []
+    },
+    {
+        "id": "a070aca9.70014",
+        "type": "http response",
+        "z": "5ccdc2cc.127ffc",
+        "name": "HTTP count/temp/min",
+        "statusCode": "",
+        "headers": {},
+        "x": 957.5,
+        "y": 272,
+        "wires": []
+    },
+    {
+        "id": "eb6608c5.b75588",
+        "type": "ui_chart",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Temperature Sec Chart",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "label": "Historico de Temperatura[sec]",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Sin datos!!!",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "35",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 715,
+        "y": 407,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "782591e1.d73c4",
+        "type": "ui_text",
+        "z": "5ccdc2cc.127ffc",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "SenseTime",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 671,
+        "y": 450,
+        "wires": []
+    },
+    {
+        "id": "e2245d2d.87754",
+        "type": "debug",
+        "z": "5ccdc2cc.127ffc",
+        "name": "temperature",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 672,
+        "y": 353,
+        "wires": []
+    },
+    {
+        "id": "77a6d00e.241d8",
+        "type": "ui_gauge",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Instant sec Temperature",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura Actual",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 732,
+        "y": 508,
+        "wires": []
+    },
+    {
+        "id": "5592c879.d1f048",
+        "type": "debug",
+        "z": "5ccdc2cc.127ffc",
+        "name": "timestamp",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 664,
+        "y": 552,
+        "wires": []
+    },
+    {
+        "id": "9c015678.e4d288",
+        "type": "link in",
+        "z": "5ccdc2cc.127ffc",
+        "name": "",
+        "links": [],
+        "x": 224,
+        "y": 393,
+        "wires": [
+            [
+                "f5b588b0.10b8b8",
+                "9d83ed87.d23ee"
+            ]
+        ]
+    },
+    {
+        "id": "cb1c6903.d0eef8",
+        "type": "ui_text",
+        "z": "5ccdc2cc.127ffc",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "SenseTimeMin",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 736,
+        "y": 757,
+        "wires": []
+    },
+    {
+        "id": "19944456.39199c",
+        "type": "debug",
+        "z": "5ccdc2cc.127ffc",
+        "name": "temperature",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 710,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "1122787d.04d158",
+        "type": "ui_gauge",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Instant min Temperature",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura Promedio",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 765,
+        "y": 810,
+        "wires": []
+    },
+    {
+        "id": "6304df33.4e1ae",
+        "type": "debug",
+        "z": "5ccdc2cc.127ffc",
+        "name": "timestamp",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 719,
+        "y": 859,
+        "wires": []
+    },
+    {
+        "id": "5e3cb9e1.1bc8a8",
+        "type": "link in",
+        "z": "5ccdc2cc.127ffc",
+        "name": "",
+        "links": [],
+        "x": 240,
+        "y": 680,
+        "wires": [
+            [
+                "d61993c7.2daae",
+                "7e965c9c.17ee94"
+            ]
+        ]
+    },
+    {
+        "id": "d462dbcd.f32338",
+        "type": "mongodb in",
+        "z": "5ccdc2cc.127ffc",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Find Tpmin",
+        "collection": "tpmin",
+        "operation": "find",
+        "x": 390,
+        "y": 120,
+        "wires": [
+            [
+                "4923d218.1192ec"
+            ]
+        ]
+    },
+    {
+        "id": "9233f879.692a28",
+        "type": "mongodb in",
+        "z": "5ccdc2cc.127ffc",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Find Tpsec",
+        "collection": "temperaturespec",
+        "operation": "find",
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "19a2afbc.87c4f"
+            ]
+        ]
+    },
+    {
+        "id": "43c78939.ef6108",
+        "type": "mongodb in",
+        "z": "5ccdc2cc.127ffc",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Count Tpsec",
+        "collection": "temperaturespec",
+        "operation": "count",
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "3ec9634c.cebf8c"
+            ]
+        ]
+    },
+    {
+        "id": "3bf31ef3.8396b2",
+        "type": "mongodb in",
+        "z": "5ccdc2cc.127ffc",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Count Tpmin",
+        "collection": "tpmin",
+        "operation": "count",
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "8709c72.567d238"
+            ]
+        ]
+    },
+    {
+        "id": "fc7fc8bd.857bd8",
+        "type": "ui_chart",
+        "z": "5ccdc2cc.127ffc",
+        "name": "Temperature min chart",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "label": "Historico de Temperatura[min]",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Sin datos!!!",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "35",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 760,
+        "y": 700,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "641a20cb.a0066",
+        "type": "http request",
+        "z": "c3767ad4.95e768",
+        "name": "GET temp/sec/find",
+        "method": "GET",
+        "ret": "obj",
+        "url": "/temperature/sec/find",
+        "tls": "",
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "3148400b.fb8c9"
+            ]
+        ]
+    },
+    {
+        "id": "fbe2a55a.5317a8",
+        "type": "http request",
+        "z": "c3767ad4.95e768",
+        "name": "Get temp/min/find",
+        "method": "GET",
+        "ret": "obj",
+        "url": "/temperature/min/find",
+        "tls": "",
+        "x": 190,
+        "y": 140,
+        "wires": [
+            [
+                "c893fdf6.bbd89"
+            ]
+        ]
+    },
+    {
+        "id": "3f9464d0.5462dc",
+        "type": "http request",
+        "z": "c3767ad4.95e768",
+        "name": "GET Temp/sec/count",
+        "method": "GET",
+        "ret": "txt",
+        "url": "/temperature/sec/count",
+        "tls": "",
+        "x": 220,
+        "y": 240,
+        "wires": [
+            [
+                "c53a52d0.66535"
+            ]
+        ]
+    },
+    {
+        "id": "e497cac4.0cef28",
+        "type": "http request",
+        "z": "c3767ad4.95e768",
+        "name": "GET Temp/min/count",
+        "method": "GET",
+        "ret": "txt",
+        "url": "/temperature/min/count",
+        "tls": "",
+        "x": 202,
+        "y": 276,
+        "wires": [
+            [
+                "e6843461.d20608"
+            ]
+        ]
+    },
+    {
+        "id": "5c61356a.c938fc",
+        "type": "function",
+        "z": "c3767ad4.95e768",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 598,
+        "y": 64,
+        "wires": [
+            [
+                "111d2335.a9192d"
+            ]
+        ]
+    },
+    {
+        "id": "f3d7d2f8.53569",
+        "type": "function",
+        "z": "c3767ad4.95e768",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 586,
+        "y": 125,
+        "wires": [
+            [
+                "11e45e0f.da18f2"
+            ]
+        ]
+    },
+    {
+        "id": "111d2335.a9192d",
+        "type": "http response",
+        "z": "c3767ad4.95e768",
+        "name": "http find/temp/sec",
+        "statusCode": "",
+        "headers": {},
+        "x": 853.5,
+        "y": 54,
+        "wires": []
+    },
+    {
+        "id": "11e45e0f.da18f2",
+        "type": "http response",
+        "z": "c3767ad4.95e768",
+        "name": "http find/temp/min",
+        "statusCode": "",
+        "headers": {},
+        "x": 850.5,
+        "y": 130,
+        "wires": []
+    },
+    {
+        "id": "ac06ab69.956bd8",
+        "type": "debug",
+        "z": "c3767ad4.95e768",
+        "name": "temperature/secs",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 408,
+        "y": 362,
+        "wires": []
+    },
+    {
+        "id": "930f3deb.bb597",
+        "type": "debug",
+        "z": "c3767ad4.95e768",
+        "name": "temperature/mins",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 420,
+        "y": 641,
+        "wires": []
+    },
+    {
+        "id": "fa559116.fdc24",
+        "type": "function",
+        "z": "c3767ad4.95e768",
+        "name": "Format 4 Secs",
+        "func": "var input = msg.payload;\nvar time = null;\nvar temperature = 0;\nvar res1 = {payload:null};\nvar res2 = {payload:null};\n\ntime = input.room.sensetime;\ntemp = input.room.temperature.data;\n\nres1.payload = temp;\nres1.topic = \"temperature\";\nres2.payload = time;\nres2.topic = \"time\";\n\nreturn [res1, res2];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 423,
+        "y": 413,
+        "wires": [
+            [
+                "94a3f551.2f8cb8",
+                "2b000ead.67c152",
+                "2fc11566.ff32ca",
+                "5aaa8041.665bf",
+                "fe6b13dc.76f1c"
+            ]
+        ]
+    },
+    {
+        "id": "c1c4a931.5389d8",
+        "type": "function",
+        "z": "c3767ad4.95e768",
+        "name": "formatForMins",
+        "func": "var input = msg.payload;\nvar time = null;\nvar temperature = 0;\nvar res1 = {payload:null};\nvar res2 = {payload:null};\n\ntime = input.room.sensetime;\ntemp = input.room.temperature.data;\n\nres1.payload = temp;\nres1.topic = \"temperature\";\nres2.payload = time;\nres2.topic = \"time\";\n\nreturn [res1, res2];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 692,
+        "wires": [
+            [
+                "e47f1e9f.806de",
+                "dac865b8.6a9858",
+                "772ecb2.60c5234",
+                "12cf5260.98abfe",
+                "dc7275ef.b84de8"
+            ]
+        ]
+    },
+    {
+        "id": "1a6869d.6a6f096",
+        "type": "function",
+        "z": "c3767ad4.95e768",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 695,
+        "y": 206,
+        "wires": [
+            [
+                "93fc96d6.3ab368"
+            ]
+        ]
+    },
+    {
+        "id": "10ae88e.d515077",
+        "type": "function",
+        "z": "c3767ad4.95e768",
+        "name": "Content Type",
+        "func": "msg.headers = {\"Content-Type\":\"application/json\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 683,
+        "y": 267,
+        "wires": [
+            [
+                "9141bc32.05ca3"
+            ]
+        ]
+    },
+    {
+        "id": "93fc96d6.3ab368",
+        "type": "http response",
+        "z": "c3767ad4.95e768",
+        "name": "HTTP count/temp/sec",
+        "statusCode": "",
+        "headers": {},
+        "x": 960.5,
+        "y": 196,
+        "wires": []
+    },
+    {
+        "id": "9141bc32.05ca3",
+        "type": "http response",
+        "z": "c3767ad4.95e768",
+        "name": "HTTP count/temp/min",
+        "statusCode": "",
+        "headers": {},
+        "x": 957.5,
+        "y": 272,
+        "wires": []
+    },
+    {
+        "id": "94a3f551.2f8cb8",
+        "type": "ui_chart",
+        "z": "c3767ad4.95e768",
+        "name": "Temperature Sec Chart",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "label": "Historico de Temperatura[sec]",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Sin datos!!!",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "35",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 715,
+        "y": 407,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "2fc11566.ff32ca",
+        "type": "ui_text",
+        "z": "c3767ad4.95e768",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "SenseTime",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 671,
+        "y": 450,
+        "wires": []
+    },
+    {
+        "id": "2b000ead.67c152",
+        "type": "debug",
+        "z": "c3767ad4.95e768",
+        "name": "temperature",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 672,
+        "y": 353,
+        "wires": []
+    },
+    {
+        "id": "5aaa8041.665bf",
+        "type": "ui_gauge",
+        "z": "c3767ad4.95e768",
+        "name": "Instant sec Temperature",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura Actual",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 732,
+        "y": 508,
+        "wires": []
+    },
+    {
+        "id": "fe6b13dc.76f1c",
+        "type": "debug",
+        "z": "c3767ad4.95e768",
+        "name": "timestamp",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 664,
+        "y": 552,
+        "wires": []
+    },
+    {
+        "id": "c1673bc1.b5ac48",
+        "type": "link in",
+        "z": "c3767ad4.95e768",
+        "name": "",
+        "links": [],
+        "x": 224,
+        "y": 393,
+        "wires": [
+            [
+                "ac06ab69.956bd8",
+                "fa559116.fdc24"
+            ]
+        ]
+    },
+    {
+        "id": "12cf5260.98abfe",
+        "type": "ui_text",
+        "z": "c3767ad4.95e768",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "SenseTimeMin",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 736,
+        "y": 757,
+        "wires": []
+    },
+    {
+        "id": "e47f1e9f.806de",
+        "type": "debug",
+        "z": "c3767ad4.95e768",
+        "name": "temperature",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 710,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "dc7275ef.b84de8",
+        "type": "ui_gauge",
+        "z": "c3767ad4.95e768",
+        "name": "Instant min Temperature",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura Promedio",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 765,
+        "y": 810,
+        "wires": []
+    },
+    {
+        "id": "dac865b8.6a9858",
+        "type": "debug",
+        "z": "c3767ad4.95e768",
+        "name": "timestamp",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 719,
+        "y": 859,
+        "wires": []
+    },
+    {
+        "id": "a20e4036.3f59e",
+        "type": "link in",
+        "z": "c3767ad4.95e768",
+        "name": "",
+        "links": [],
+        "x": 240,
+        "y": 680,
+        "wires": [
+            [
+                "930f3deb.bb597",
+                "c1c4a931.5389d8"
+            ]
+        ]
+    },
+    {
+        "id": "c893fdf6.bbd89",
+        "type": "mongodb in",
+        "z": "c3767ad4.95e768",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Find Tpmin",
+        "collection": "tpmin",
+        "operation": "find",
+        "x": 390,
+        "y": 120,
+        "wires": [
+            [
+                "f3d7d2f8.53569"
+            ]
+        ]
+    },
+    {
+        "id": "3148400b.fb8c9",
+        "type": "mongodb in",
+        "z": "c3767ad4.95e768",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Find Tpsec",
+        "collection": "temperaturespec",
+        "operation": "find",
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "5c61356a.c938fc"
+            ]
+        ]
+    },
+    {
+        "id": "c53a52d0.66535",
+        "type": "mongodb in",
+        "z": "c3767ad4.95e768",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Count Tpsec",
+        "collection": "temperaturespec",
+        "operation": "count",
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "1a6869d.6a6f096"
+            ]
+        ]
+    },
+    {
+        "id": "e6843461.d20608",
+        "type": "mongodb in",
+        "z": "c3767ad4.95e768",
+        "mongodb": "bd7df655.9260e8",
+        "name": "Count Tpmin",
+        "collection": "tpmin",
+        "operation": "count",
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "10ae88e.d515077"
+            ]
+        ]
+    },
+    {
+        "id": "772ecb2.60c5234",
+        "type": "ui_chart",
+        "z": "c3767ad4.95e768",
+        "name": "Temperature min chart",
+        "group": "da3ee238.a2ab3",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "label": "Historico de Temperatura[min]",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Sin datos!!!",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "35",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 760,
+        "y": 700,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9c1bc0ef.90d01",
         "type": "inject",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Sensor time",
         "topic": "time",
         "payload": "",
@@ -1618,14 +2758,14 @@
         "y": 280,
         "wires": [
             [
-                "5748e2bb.9c7acc"
+                "6c1e5052.01b08"
             ]
         ]
     },
     {
-        "id": "5748e2bb.9c7acc",
+        "id": "6c1e5052.01b08",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Timestamp",
         "func": "var res = {};\n\n\nres.payload = new Date(msg.payload);\nres.topic = msg.topic;\n\nreturn res;",
         "outputs": 1,
@@ -1634,14 +2774,14 @@
         "y": 280,
         "wires": [
             [
-                "6bfdd2c6.719adc"
+                "ec807e3b.d45c6"
             ]
         ]
     },
     {
-        "id": "6bfdd2c6.719adc",
+        "id": "ec807e3b.d45c6",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Mezcla de los mensaje",
         "func": "context.data = context.data || {};\n\nswitch (msg.topic) \n{\n    case \"time\":\n        context.data.timestamp = msg.payload;\n        msg = null;\n        break;\n    case \"infoArduino\":\n        context.data.info = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.timestamp != null && context.data.info != null) \n{\n\tres = {};\n    res.payload = JSON.stringify(context.data);\n    res.topic = \"InfoAlert\";\n    context.data = null;\n\treturn res;\n}",
         "outputs": 1,
@@ -1650,14 +2790,14 @@
         "y": 240,
         "wires": [
             [
-                "802f4761.23ca78"
+                "f95d7d0b.43458"
             ]
         ]
     },
     {
-        "id": "802f4761.23ca78",
+        "id": "f95d7d0b.43458",
         "type": "json",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Formato JSON",
         "property": "payload",
         "action": "",
@@ -1666,14 +2806,14 @@
         "y": 240,
         "wires": [
             [
-                "7ff66104.b2fa1"
+                "347ff5da.87bdea"
             ]
         ]
     },
     {
-        "id": "56ae8384.21d0ec",
+        "id": "5e5cc96e.aa82b8",
         "type": "mqtt out",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Cola Propietario",
         "topic": "",
         "qos": "0",
@@ -1684,25 +2824,25 @@
         "wires": []
     },
     {
-        "id": "21745110.dabd1e",
+        "id": "7f851849.ab8c18",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Análisis alarma y generación mensaje",
-        "func": "var msgg = \"\";\nvar ret = {};\nvar input = [];\n\ntemp = msg.payload;\ninput = temp.split(\":\");\n// A:idAlarma:idDispositivo:torre:apto\nif(input[0] == \"A\") {\n    switch (input[1]) \n    {\n        case \"1\":\n            msgg = \"La puerta lleva abierta un largo periodo de tiempo.\";\n            break;\n        case \"2\":\n            msgg = \"Intento de apertura sospechoso. Alguien ha ingresado la clave más de 3 veces de forma errónea\";\n            break;\n        case \"3\":\n            msgg = \"Se detectó la presencia de una persona cerca de la cerradura, en un horario no permitido.\";\n            break;\n        case \"4\":\n            msgg = \"Ingreso sospechoso. Alguien entró al inmueble en un horario no permitido.\";\n            break;\n        case \"5\":\n            msgg = \"Nivel de batería crítico. Recargue la cerradura.\";\n            break;\n        default:\n            input[1] = 0;\n            msgg = \"El error no puede ser identificado\";\n        \tbreak;\n    }\n\n    ret.topic = \"infoArduino\";\n    ret.payload = {\n        \"alertaId\":input[1],\n        \"mensajeAlerta\":msgg,\n        \"idDispositivo\":input[2],\n        \"torre\":input[3],\n        \"apto\":input[4]\n    };\n    return ret;\n}    ",
+        "func": "var msgg = \"\";\nvar ret = {};\nvar input = [];\n\ntemp = msg.payload;\ninput = temp.split(\":\");\n// A:idAlarma:idDispositivo:torre:apto\nif(input[0] == \"A\") {\n    switch (input[1]) \n    {\n        case \"1\":\n            msgg = \"La puerta lleva abierta un largo periodo de tiempo.\";\n            break;\n        case \"2\":\n            msgg = \"Intento de apertura sospechoso. Alguien ha ingresado la clave más de 3 veces de forma errónea\";\n            break;\n        case \"3\":\n            msgg = \"Se detectó la presencia de una persona cerca de la cerradura, en un horario no permitido.\";\n            break;\n        case \"4\":\n            msgg = \"Ingreso sospechoso. Alguien entró al inmueble en un horario no permitido.\";\n            break;\n        case \"5\":\n            msgg = \"Nivel de batería crítico. Recargue la cerradura.\";\n            break;\n        default:\n            input[1] = 0;\n            msgg = \"El error no puede ser identificado\";\n        \tbreak;\n    }\n\n    ret.topic = \"infoArduino\";\n    ret.payload = {\n        \"alertaId\":input[1],\n        \"mensajeAlerta\":msgg,\n        \"idDispositivo\":input[2],\n        \"unidadResidencial\":input[3],\n        \"torre\":input[4],\n        \"apto\":input[5]\n    };\n    return ret;\n}    ",
         "outputs": 1,
         "noerr": 0,
         "x": 390,
         "y": 200,
         "wires": [
             [
-                "6bfdd2c6.719adc"
+                "ec807e3b.d45c6"
             ]
         ]
     },
     {
-        "id": "7ff66104.b2fa1",
+        "id": "347ff5da.87bdea",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Asignación de usuarios para tópicos",
         "func": "var usser = [0,0,0,0];\n// 0 -> propietario\n// 1 -> seguridad\n// 2 -> administrador\n// 3 -> yale\nif(msg.payload.info.alertaId == 0) {\n    usser[3] = 1;\n}\nif(msg.payload.info.alertaId == 1) {\n    usser[0] = 1;\n    usser[1] = 1;\n}\nif(msg.payload.info.alertaId == 2) {\n    usser[0] = 1;\n    usser[1] = 1;\n}\nif(msg.payload.info.alertaId == 3) {\n    usser[0] = 1;\n    usser[1] = 1;\n}\nif(msg.payload.info.alertaId == 4) {\n    usser[0] = 1;\n    usser[1] = 1;\n}\nif(msg.payload.info.alertaId == 5) {\n    usser[0] = 1;\n    usser[1] = 1;\n}\nmsg.payload.usser = usser;\nreturn msg;",
         "outputs": 1,
@@ -1711,14 +2851,14 @@
         "y": 240,
         "wires": [
             [
-                "4cc8c612.da3d98"
+                "c9ceb00b.2ba1f"
             ]
         ]
     },
     {
-        "id": "4cc8c612.da3d98",
+        "id": "c9ceb00b.2ba1f",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Distribución de alarmas para publicar",
         "func": "var ret=[undefined, undefined, undefined, undefined]\n\nfor(var i = 0;  i < 4; i++) {\n    if(msg.payload.usser[i] == 1) {\n        ret[i] = {\n            payload:msg.payload\n        };\n    }    \n}\n\nreturn ret;",
         "outputs": 4,
@@ -1727,27 +2867,27 @@
         "y": 240,
         "wires": [
             [
-                "e7a0a6c9.f67268",
-                "3abdf2b7.77ae8e"
+                "2b41f08.baad01",
+                "1aaebfa7.e139b"
             ],
             [
-                "e3043448.2a6048",
-                "56e4d1b8.ba595"
+                "c913608.bdcb9a",
+                "80f7fffe.07ee1"
             ],
             [
-                "ec8d9a0c.935fd8",
-                "b94d1f3.13113e"
+                "27458fb2.9b1d8",
+                "e492f126.0635c"
             ],
             [
-                "e20d658d.1fb578",
-                "fd370fec.10904"
+                "3e4286e.92ec87a",
+                "5728ea61.3da734"
             ]
         ]
     },
     {
-        "id": "e7a0a6c9.f67268",
+        "id": "2b41f08.baad01",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1759,9 +2899,9 @@
         "wires": []
     },
     {
-        "id": "e20d658d.1fb578",
+        "id": "3e4286e.92ec87a",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1773,9 +2913,9 @@
         "wires": []
     },
     {
-        "id": "ec8d9a0c.935fd8",
+        "id": "27458fb2.9b1d8",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1787,9 +2927,9 @@
         "wires": []
     },
     {
-        "id": "e3043448.2a6048",
+        "id": "c913608.bdcb9a",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "",
         "active": false,
         "tosidebar": true,
@@ -1801,9 +2941,9 @@
         "wires": []
     },
     {
-        "id": "129937be.d67be8",
+        "id": "594f83d3.13d2cc",
         "type": "mqtt out",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Cola Seguridad",
         "topic": "",
         "qos": "0",
@@ -1814,9 +2954,9 @@
         "wires": []
     },
     {
-        "id": "d20eb98e.4912c8",
+        "id": "48622401.22f4fc",
         "type": "mqtt out",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Cola Administrador",
         "topic": "",
         "qos": "0",
@@ -1827,9 +2967,9 @@
         "wires": []
     },
     {
-        "id": "49cc305f.98854",
+        "id": "f838fc6.9237b",
         "type": "mqtt out",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Cola Yale",
         "topic": "",
         "qos": "0",
@@ -1840,9 +2980,9 @@
         "wires": []
     },
     {
-        "id": "3abdf2b7.77ae8e",
+        "id": "1aaebfa7.e139b",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Topic Propietario",
         "func": "var rol = \"propietario\";\nvar input = msg.payload.info;\nmsg.topic = rol+\"/\"+input.torre+\"/\"+input.apto+\"/\"+input.alertaId;\nreturn msg;",
         "outputs": 1,
@@ -1851,15 +2991,15 @@
         "y": 100,
         "wires": [
             [
-                "56ae8384.21d0ec",
-                "c1d9ea91.856e38"
+                "5e5cc96e.aa82b8",
+                "dbf565cf.4397f8"
             ]
         ]
     },
     {
-        "id": "ac2cbd87.4c617",
+        "id": "90de591f.4da328",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Mensaje topic \"seguridad\"",
         "active": true,
         "tosidebar": true,
@@ -1871,9 +3011,9 @@
         "wires": []
     },
     {
-        "id": "56e4d1b8.ba595",
+        "id": "80f7fffe.07ee1",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Topic Seguridad",
         "func": "var rol = \"seguridad\";\nvar input = msg.payload.info;\nmsg.topic = rol+\"/\"+input.torre+\"/\"+input.apto+\"/\"+input.alertaId;\nreturn msg;",
         "outputs": 1,
@@ -1882,15 +3022,15 @@
         "y": 200,
         "wires": [
             [
-                "ac2cbd87.4c617",
-                "129937be.d67be8"
+                "90de591f.4da328",
+                "594f83d3.13d2cc"
             ]
         ]
     },
     {
-        "id": "4a8658c7.8832d8",
+        "id": "a6fe3d4.4685ec",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Mensaje topic \"administrador\"",
         "active": true,
         "tosidebar": true,
@@ -1902,9 +3042,9 @@
         "wires": []
     },
     {
-        "id": "b94d1f3.13113e",
+        "id": "e492f126.0635c",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Topic Administrador",
         "func": "var rol = \"adminisnitrador\";\nvar input = msg.payload.info;\nmsg.topic = rol+\"/\"+input.torre+\"/\"+input.apto+\"/\"+input.alertaId;\nreturn msg;",
         "outputs": 1,
@@ -1913,15 +3053,15 @@
         "y": 300,
         "wires": [
             [
-                "4a8658c7.8832d8",
-                "d20eb98e.4912c8"
+                "a6fe3d4.4685ec",
+                "48622401.22f4fc"
             ]
         ]
     },
     {
-        "id": "2b92194b.aeb9b6",
+        "id": "e6cbf9f0.62e478",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Mensaje cola \"yale\"",
         "active": true,
         "tosidebar": true,
@@ -1933,9 +3073,9 @@
         "wires": []
     },
     {
-        "id": "fd370fec.10904",
+        "id": "5728ea61.3da734",
         "type": "function",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Topic Yale",
         "func": "var rol = \"yale\";\nvar input = msg.payload.info;\nmsg.topic = rol+\"/\"+input.torre+\"/\"+input.apto+\"/\"+input.alertaId;\nreturn msg;",
         "outputs": 1,
@@ -1944,15 +3084,15 @@
         "y": 400,
         "wires": [
             [
-                "2b92194b.aeb9b6",
-                "49cc305f.98854"
+                "e6cbf9f0.62e478",
+                "f838fc6.9237b"
             ]
         ]
     },
     {
-        "id": "f6e9efce.f0eaf",
+        "id": "a61bcc7.b04563",
         "type": "mqtt in",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "",
         "topic": "alarmasCerradura",
         "qos": "2",
@@ -1961,14 +3101,14 @@
         "y": 200,
         "wires": [
             [
-                "21745110.dabd1e"
+                "7f851849.ab8c18"
             ]
         ]
     },
     {
-        "id": "c1d9ea91.856e38",
+        "id": "dbf565cf.4397f8",
         "type": "debug",
-        "z": "a38136ee.73dde8",
+        "z": "eb742b27.be1ae8",
         "name": "Mensaje topic \"propietario\"",
         "active": true,
         "tosidebar": true,

@@ -1,6 +1,6 @@
 #include <Keypad.h>
 
-//Formato de mensaje "A:idAlarma:idDispositivo:torre:apartamento"
+//Formato de mensaje "A:idAlarma:idDispositivo:unidadResidencialtorre:apartamento"
 
 //Id del dispositivo
 const String ID = "ELAY";
@@ -10,6 +10,9 @@ const String TORRE = "3";
 
 //Número de apartamento
 const String APTO = "704";
+
+//Unidad residencial
+const String UNIDAD = "Cipres";
 
 //Pin en el que se encuentra el sensor de movimiento PIR
 byte pirPin = 2;
@@ -202,7 +205,7 @@ void loop() {
   if (batteryCharge <= MIN_VOLTAGE) {
     digitalWrite(BATTERY_LED, HIGH);
     if (!lowBattery) {
-      Serial.println("A:" + AL_5 + ":" + ID + ":" + APTO + ":" + TORRE);
+      Serial.println("A:" + AL_5 + ":" + ID + ":" + UNIDAD + ":" + APTO + ":" + TORRE);
       lowBatFrec = millis();
       setColor(255, 0, 0);
       buzzerSound = true;
@@ -319,7 +322,7 @@ void openManually() {
         presentTime = 0;
         pirState = LOW;
         restante = 60;
-        Serial.println("A:" + AL_4 + ":" + ID + ":" + APTO + ":" + TORRE);
+        Serial.println("A:" + AL_4 + ":" + ID + ":" + UNIDAD + ":" + APTO + ":" + TORRE);
         setColor(255, 0, 0);
         alarma = true;
         digitalWrite(ledPin, LOW);
@@ -347,7 +350,7 @@ void checkDoorOpened() {
 //Método que verifica si la puerta lleva abierta más de 30 segundos
 void checkTimeOpened(boolean check) {
   if (check && (millis() - currTime) >= 30000) {
-    Serial.println("A:" + AL_1 + ":" + ID + ":" + APTO + ":" + TORRE);
+    Serial.println("A:" + AL_1 + ":" + ID + ":" + UNIDAD + ":" + APTO + ":" + TORRE);
     checkOpen = false;
     alarma = true;
     setColor(255, 0, 0);
@@ -390,7 +393,7 @@ void openWithKeypad(char customKey) {
 
   if (attempts >= maxAttempts) {
     block = true;
-    Serial.println("A:" + AL_2 + ":" + ID + ":" + APTO + ":" + TORRE);
+    Serial.println("A:" + AL_2 + ":" + ID + ":" + UNIDAD + ":"  + APTO + ":" + TORRE);
     alarma = true;
   }
 
@@ -426,7 +429,7 @@ void securityActive() {
         presentTime = 0;
         pirState = LOW;
         restante = 60;
-        Serial.println("A:" + AL_3 + ":" + ID + ":" + APTO + ":" + TORRE);
+        Serial.println("A:" + AL_3 + ":" + ID + ":" + UNIDAD + ":" + APTO + ":" + TORRE);
         setColor(255, 0, 0);
         alarma = true;
       }
