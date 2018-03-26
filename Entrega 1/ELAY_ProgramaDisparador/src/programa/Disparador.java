@@ -1,4 +1,4 @@
-package programa;
+﻿package programa;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -60,8 +60,12 @@ public class Disparador {
 			sampleClient.setCallback(new MqttCallback() {
 				public void connectionLost(Throwable cause) {}
 				public void messageArrived(String topic, MqttMessage message) throws Exception {
+					System.out.println(topic);
+					System.out.println(message.toString());
+					System.out.println(validarTopico(topic));
 					if(validarTopico(topic)) {
 						new Speed(topic.split("/")[0],message.toString()).start();
+						new Batch(message.toString()).start();
 						imprimir(topic, message.toString());
 					}
 				}
@@ -82,9 +86,11 @@ public class Disparador {
 				info.get("apto").getAsInt())));
 	}
 	
+	
 	private boolean validarTopico(String t) { return t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"); }
 	
 	private void add(String topic, Countent temp) {
+		System.out.println("ñlkfñlkdñlfsdfd");
 		String[] s = topic.split("/");
 		if(s[0].equals("propietario")) {
 			lista.get(0).add(temp);
@@ -229,13 +235,34 @@ public class Disparador {
 		private String msg, rol;
 		public Speed(String rol, String msg) { this.msg = msg; this.rol = rol; }
 		@Override
-		public void run() {	HTTP.post(rol, msg); }
+		public void run() {	HTTP.postSpeed(rol, msg); }
+	}
+	
+	public static class Batch extends Thread{
+		private String msg;
+		public Batch(String msg) { this.msg = msg; }
+		@Override
+		public void run() { HTTP.postBatch(generarJson(msg)); }
+		private String generarJson(String msg) {
+			JsonObject elmPrin = new JsonParser().parse(msg).getAsJsonObject();
+			JsonObject info = elmPrin.get("info").getAsJsonObject();
+			return "{\r\n" + 
+					"	\"timestamp\": \""+elmPrin.get("timestamp").getAsString()+"\",\r\n" + 
+					"	\"alertaID\": "+info.get("alertaId").getAsInt()+",\r\n" + 
+					"	\"mensajeAlerta\": \""+info.get("mensajeAlerta").getAsString()+"\",\r\n" + 
+					"	\"idDispositivo\": "+info.get("idDispositivo").getAsInt()+",\r\n" + 
+					"	\"torre\": "+info.get("torre").getAsInt()+",\r\n" + 
+					"	\"apto\": "+info.get("apto").getAsInt()+",	\r\n" + 
+					"   \"unidadResidencial\": "+info.get("unidadResindencial").getAsInt()+"\r\n" + 
+					"\r\n" + 
+					"}";
+		}
 	}
 
 	public static class HTTP {
 		private static final String URL_SPEED = "http://172.24.42.23:8080/speed";
-		private static final String URL_BATCH = "";
-		public static void post (String rol, String msg) {
+		private static final String URL_BATCH = "http://172.24.42.67:8080/ProgrmaP/service/alarmas/";
+		public static void postSpeed (String rol, String msg) {
 			try {
 				URL url = new URL(URL_SPEED+rol);
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -256,20 +283,32 @@ public class Disparador {
 				while ((line = reader.readLine()) != null) jsonSb.append(line);
 				json = jsonSb.toString();
 				System.out.println(json);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} catch (Exception e) {	e.printStackTrace(); }
+		}
+		public static void postBatch(String msg) {
+			try {
+				URL url = new URL(URL_BATCH);
+				HttpURLConnection con = (HttpURLConnection) url.openConnection();
+				con.setRequestMethod("POST");
+				con.setRequestProperty("Content-Type", "application/json");
+				con.setDoOutput(true);
+				OutputStream os = con.getOutputStream();
+				os.write(msg.getBytes());
+				os.flush();
+				os.close();
+				int responseCode = con.getResponseCode();
+				System.out.println("Response Code :" + responseCode);
+				BufferedReader reader = null;
+				String json = null;
+				reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				StringBuilder jsonSb = new StringBuilder();
+				String line = null;
+				while ((line = reader.readLine()) != null) jsonSb.append(line);
+				json = jsonSb.toString();
+				System.out.println(json);
+			} catch (Exception e) {	e.printStackTrace(); }
 		}
 	}
-	/*
-	 * "info": {
-        "alertaId": "3",
-        "mensajeAlerta": "Detección de persona sospechosa.",
-        "idDispositivo": "5",
-        "torre": "5",
-        "apto": "5"
-    },
-	 */
 
 	public static void main(String[] args) throws Exception {
 		new Disparador(new Interfaz());
