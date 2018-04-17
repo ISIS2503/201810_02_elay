@@ -89,17 +89,24 @@ public class UnidadResidencialService {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response updateUnidadResidencial(UnidadResidencialDTO dto) {
+    @Path("{nombre}")
+    public Response updateUnidadResidencial(UnidadResidencialDTO dto, @PathParam("nombre")String nombre) {
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
         Convert<UnidadResidencialDTO, UnidadResidencial> convert = new Convert<>(UnidadResidencialDTO.class, UnidadResidencial.class);
         UnidadResidencial unidadResidencial = convert.dtoToEntity(dto);
         
         
-        UnidadResidencial nuevo = URP.find(dto.getNombre());
+        UnidadResidencial nuevo = URP.find(nombre);
         UnidadResidencialDTO nuevoDTO = null;
         if (nuevo != null) {
             nuevoDTO = convert.entityToDto(URP.update(unidadResidencial));
         }
+        
+        else{
+            return Response.status(500).entity("No existe una unidad residencial"
+                    + "con ese nombre").build();
+        }
+        
         return Response.status(200).entity(nuevoDTO).build();
 
     }

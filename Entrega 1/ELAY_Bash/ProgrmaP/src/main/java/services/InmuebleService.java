@@ -7,9 +7,9 @@ package services;
 
 import convert.Convert;
 import dto.InmuebleDTO;
-import dto.UnidadResidencialDTO;
+import dto.InmuebleDTO;
 import entidad.Inmueble;
-import entidad.UnidadResidencial;
+import entidad.Inmueble;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
@@ -24,12 +24,13 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import persistencia.InmueblePersistence;
-import persistencia.UnidadResidencialPersistence;
+import persistencia.InmueblePersistence;
 
 /**
  *
  * @author jd.trujillom
  */
+@Path("inmuebles")
 public class InmuebleService {
     
     @Context
@@ -53,13 +54,13 @@ public class InmuebleService {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response createUnidadResidencual(UnidadResidencialDTO dto) {
-        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        Convert<UnidadResidencialDTO, UnidadResidencial> convert = new Convert<>(UnidadResidencialDTO.class, UnidadResidencial.class);
-        UnidadResidencial unidadResidencial = convert.dtoToEntity(dto);
+    public Response createInmueble(InmuebleDTO dto) {
+        InmueblePersistence URP = new InmueblePersistence();
+        Convert<InmuebleDTO, Inmueble> convert = new Convert<>(InmuebleDTO.class, Inmueble.class);
+        Inmueble inmueble = convert.dtoToEntity(dto);
 
-        UnidadResidencial nuevo = URP.add(unidadResidencial);
-        UnidadResidencialDTO nuevoDTO = null;
+        Inmueble nuevo = URP.add(inmueble);
+        InmuebleDTO nuevoDTO = null;
         if (nuevo != null) {
             nuevoDTO = convert.entityToDto(nuevo);
         }
@@ -71,15 +72,15 @@ public class InmuebleService {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{nombre}")
     public Response getUnidadResidencialPorNombre(@PathParam("nombre") String nombre) {
-        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        Convert<UnidadResidencialDTO, UnidadResidencial> convert = new Convert<>(UnidadResidencialDTO.class, UnidadResidencial.class);
+        InmueblePersistence URP = new InmueblePersistence();
+        Convert<InmuebleDTO, Inmueble> convert = new Convert<>(InmuebleDTO.class, Inmueble.class);
 
-        UnidadResidencial entity = URP.find(nombre);
+        Inmueble entity = URP.find(nombre);
         if (entity == null) {
             return Response.status(404).build();
         }
 
-        UnidadResidencialDTO dto = convert.entityToDto(entity);
+        InmuebleDTO dto = convert.entityToDto(entity);
 
         return Response.status(200).entity(dto).build();
     }
@@ -87,16 +88,17 @@ public class InmuebleService {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response updateUnidadResidencial(UnidadResidencialDTO dto) {
-        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        Convert<UnidadResidencialDTO, UnidadResidencial> convert = new Convert<>(UnidadResidencialDTO.class, UnidadResidencial.class);
-        UnidadResidencial unidadResidencial = convert.dtoToEntity(dto);
+    @Path("{id}")
+    public Response updateUnidadResidencial(InmuebleDTO dto, @PathParam("id") String id) {
+        InmueblePersistence URP = new InmueblePersistence();
+        Convert<InmuebleDTO, Inmueble> convert = new Convert<>(InmuebleDTO.class, Inmueble.class);
+        Inmueble Inmueble = convert.dtoToEntity(dto);
         
         
-        UnidadResidencial nuevo = URP.find(dto.getNombre());
-        UnidadResidencialDTO nuevoDTO = null;
+        Inmueble nuevo = URP.find(id);
+        InmuebleDTO nuevoDTO = null;
         if (nuevo != null) {
-            nuevoDTO = convert.entityToDto(URP.update(unidadResidencial));
+            nuevoDTO = convert.entityToDto(URP.update(Inmueble));
         }
         return Response.status(200).entity(nuevoDTO).build();
 
@@ -106,17 +108,17 @@ public class InmuebleService {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{nombre}/desactivar")
     public Response deleteUnidadResidencialPorNombre(@PathParam("nombre") String nombre) {
-        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        Convert<UnidadResidencialDTO, UnidadResidencial> convert = new Convert<>(UnidadResidencialDTO.class, UnidadResidencial.class);
+        InmueblePersistence URP = new InmueblePersistence();
+        Convert<InmuebleDTO, Inmueble> convert = new Convert<>(InmuebleDTO.class, Inmueble.class);
 
-        UnidadResidencial entity = URP.find(nombre);
+        Inmueble entity = URP.find(nombre);
         entity.setActivado(false);
         URP.update(entity);
         if (entity == null) {
             return Response.status(404).build();
         }
 
-        UnidadResidencialDTO dto = convert.entityToDto(entity);
+        InmuebleDTO dto = convert.entityToDto(entity);
 
         return Response.status(200).entity(dto).build();
     }

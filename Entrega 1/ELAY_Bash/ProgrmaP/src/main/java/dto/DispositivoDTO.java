@@ -10,7 +10,7 @@ package dto;
  * @author jd.trujillom
  */
 public class DispositivoDTO {
-    private Long id;
+    private String id;
    
     private Integer nivelCriticoBateria;
     
@@ -26,7 +26,7 @@ public class DispositivoDTO {
     
     private boolean activado;
 
-    public DispositivoDTO(Long id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado) {
+    public DispositivoDTO(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado) {
         this.id = id;
         this.nivelCriticoBateria = nivelCriticoBateria;
         this.tiempoMaximoAbierta = tiempoMaximoAbierta;
@@ -101,11 +101,11 @@ public class DispositivoDTO {
 
     
     
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

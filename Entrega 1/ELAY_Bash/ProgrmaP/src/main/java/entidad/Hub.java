@@ -24,7 +24,7 @@ public class Hub implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     
     //@Column("frecuenciaReporte")
     private Integer frecuenciaReporte;
@@ -36,7 +36,7 @@ public class Hub implements Serializable {
     private boolean activado;
 
     
-     public Hub(Long id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado) {
+     public Hub(String id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado) {
         this.id = id;
         this.frecuenciaReporte = frecuenciaReporte;
         this.numeroPerdidasToleradas = numeroPerdidasToleradas;
@@ -57,11 +57,11 @@ public class Hub implements Serializable {
     
     
     
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

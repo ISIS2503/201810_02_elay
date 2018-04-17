@@ -11,7 +11,7 @@ package dto;
  */
 public class HubDTO {
     
-    private Long id;
+    private String id;
     
     private Integer frecuenciaReporte;
 
@@ -20,7 +20,7 @@ public class HubDTO {
     private boolean activado;
 
     
-     public HubDTO(Long id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado) {
+     public HubDTO(String id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado) {
         this.id = id;
         this.frecuenciaReporte = frecuenciaReporte;
         this.numeroPerdidasToleradas = numeroPerdidasToleradas;
@@ -41,11 +41,11 @@ public class HubDTO {
     
     
     
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

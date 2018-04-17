@@ -23,7 +23,7 @@ public class Dispositivo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     
     //@Column("nivelCriticoBateria")
     private Integer nivelCriticoBateria;
@@ -46,7 +46,7 @@ public class Dispositivo implements Serializable {
     //@Column("activado")
     private boolean activado;
 
-    public Dispositivo(Long id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado) {
+    public Dispositivo(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado) {
         this.id = id;
         this.nivelCriticoBateria = nivelCriticoBateria;
         this.tiempoMaximoAbierta = tiempoMaximoAbierta;
@@ -120,11 +120,11 @@ public class Dispositivo implements Serializable {
 
     
     
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

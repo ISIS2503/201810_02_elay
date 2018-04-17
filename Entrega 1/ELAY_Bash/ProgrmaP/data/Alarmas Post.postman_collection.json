@@ -1,0 +1,447 @@
+{
+	"info": {
+		"_postman_id": "aeeb0aa8-c04c-4a44-9278-d8256d8c1926",
+		"name": "Alarmas Post",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"3\",\r\n\t\"timestamp\": \"1233456\",\r\n\t\"alertaID\": 1,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 3,\r\n\t\"torre\": 2,\r\n\t\"apto\": 401\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"4\",\r\n\t\"timestamp\": \"345436\",\r\n\t\"alertaID\": 2,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 2,\r\n\t\"torre\": 1,\r\n\t\"apto\": 302\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"5\",\r\n\t\"timestamp\": \"3455346\",\r\n\t\"alertaID\": 3,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 1,\r\n\t\"torre\": 4,\r\n\t\"apto\": 702\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"6\",\r\n\t\"timestamp\": \"64234\",\r\n\t\"alertaID\": 2,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 3,\r\n\t\"torre\": 7,\r\n\t\"apto\": 301\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"7\",\r\n\t\"timestamp\": \"245345\",\r\n\t\"alertaID\": 3,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 2,\r\n\t\"torre\": 1,\r\n\t\"apto\": 201\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"8\",\r\n\t\"timestamp\": \"245345\",\r\n\t\"alertaID\": 3,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 2,\r\n\t\"torre\": 1,\r\n\t\"apto\": 201\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"9\",\r\n\t\"timestamp\": \"23423324\",\r\n\t\"alertaID\": 2,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 1,\r\n\t\"torre\": 8,\r\n\t\"apto\": 502\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"10\",\r\n\t\"timestamp\": \"123123213\",\r\n\t\"alertaID\": 5,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 5,\r\n\t\"torre\": 8,\r\n\t\"apto\": 502\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"11\",\r\n\t\"timestamp\": \"563212425\",\r\n\t\"alertaID\": 1,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 2,\r\n\t\"torre\": 7,\r\n\t\"apto\": 203\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c2b5b9b0-9330-4e31-9de8-25a2c55b1700",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"id\": \"12\",\r\n\t\"timestamp\": \"5623411\",\r\n\t\"alertaID\": 5,\r\n\t\"mensajeAlera\": \"Hola\",\r\n\t\"idDispositivo\": 5,\r\n\t\"torre\": 2,\r\n\t\"apto\": 104\t\r\n}"
+				},
+				"url": {
+					"raw": "172.24.42.67:8080/ProgrmaP/service/alarmas/",
+					"host": [
+						"172",
+						"24",
+						"42",
+						"67"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"alarmas",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
