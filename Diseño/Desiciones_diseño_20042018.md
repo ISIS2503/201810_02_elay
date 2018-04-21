@@ -18,20 +18,20 @@ Para la realización de la gestión de las contraseñas, se realiza el envio de 
 
 ##### Adición de contraseñas 
 
-``` 00:<indice>:<contrasenia> ```, donde ``` <contrasenia> ``` representa la contraseña a adicionar e ``` <indice> ``` es la posición donde estala contraseña.
+``` 01:<indice>:<contrasenia> ```, donde ``` <contrasenia> ``` representa la contraseña a adicionar e ``` <indice> ``` es la posición donde estala contraseña.
 
 ##### Cambio de contraseña 
 
-``` 01:<indice>:<contraseniaAntigua>:<contrseniaNueva> ```, donde ``` <contraseniaAntigua> ``` representa la contaseña a modificar, ``` <contrseniaNueva> ``` representa la nueva contraseña e ``` <indice> ``` es la posición donde estala contraseña..
+``` 02:<indice>:<contrasenia> ```, donde ``` <contrasenia> ``` representa la nueva contraseña e ``` <indice> ``` es la posición donde estala contraseña.
 
 ##### Eliminación de una contraseña
 
-``` 02:<indice>:<contrasenia>  ```, donde ``` <contrasenia>  ``` es la contraseña a eliminar e ``` <indice> ``` es la posición donde estala contraseña..
+``` 03:<indice>:<contrasenia>  ```, donde ``` <contrasenia>  ``` es la contraseña a eliminar e ``` <indice> ``` es la posición donde estala contraseña.
 
 ##### Eliminar todas las contraseñas
 
-``` 03: ``` para la eliminación de todas las contraseñas temporales registradas.
+``` 04: ``` para la eliminación de todas las contraseñas temporales registradas.
 
 ### Protocolo de evio de contraseñas
 
-``` 04: ```  para el envió de todas las contraseñas del arduino.
+``` 05: ```  para el envió de todas las contraseñas del arduino.
