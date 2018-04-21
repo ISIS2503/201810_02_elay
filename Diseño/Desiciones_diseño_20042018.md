@@ -18,15 +18,15 @@ Para la realización de la gestión de las contraseñas, se realiza el envio de 
 
 ##### Adición de contraseñas 
 
-``` 0:<contraseña> ```, donde ``` <contraseña> ``` representa la contraseña a adicionar.
+``` 0:<contrasenia> ```, donde ``` <contrasenia> ``` representa la contraseña a adicionar.
 
 ##### Cambio de contraseña 
 
-``` 1:<contraseñaAntigua>:<contrseñaNueva> ```, donde ``` <contraseñaAntigua> ``` representa la contaseña a modificar y ``` <contrseñaNueva> ``` representa la nueva contraseña.
+``` 1:<contraseniaAntigua>:<contrseniaNueva> ```, donde ``` <contraseniaAntigua> ``` representa la contaseña a modificar y ``` <contrseniaNueva> ``` representa la nueva contraseña.
 
 ##### Eliminación de una contraseña
 
-``` 2:<contraseña>  ```, donde ``` <contraseña>  ``` es la contraseña a eliminar.
+``` 2:<contrasenia>  ```, donde ``` <contrasenia>  ``` es la contraseña a eliminar.
 
 ##### Eliminar todas las contraseñas
 
