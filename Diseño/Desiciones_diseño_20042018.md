@@ -26,7 +26,7 @@ Para la realización de la gestión de las contraseñas, se realiza el envio de 
 
 ##### Eliminación de una contraseña
 
-``` 03:<indice>:<contrasenia>  ```, donde ``` <contrasenia>  ``` es la contraseña a eliminar e ``` <indice> ``` es la posición donde estala contraseña.
+``` 03:<indice> ```, donde  ``` <indice> ``` es la posición donde estala contraseña a eliminar.
 
 ##### Eliminar todas las contraseñas
 
