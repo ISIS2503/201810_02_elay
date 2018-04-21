@@ -35,3 +35,14 @@ Para la realización de la gestión de las contraseñas, se realiza el envio de 
 ### Protocolo de evio de contraseñas
 
 ``` 05: ```  para el envió de todas las contraseñas del arduino.
+
+### Protocolo de respuestas
+
+En caso de que todo salga bien al momento de realizar la solicitud, el Arduino responde con:
+``` OK:<codigoProtocolo> ```, donde ``` <codigoProtocolo> ``` puede ser un valor entre 01-05.
+En el caso del prótocolo "05", se responde adicionalmente con las alarmas separadas por ":".
+
+### Errores
+
+Si se presenta un error, se responde así:
+``` ERROR:<codigoProtocolo> ```, donde ``` <codigoProtocolo> ``` puede ser un valor entre 01-05. 
