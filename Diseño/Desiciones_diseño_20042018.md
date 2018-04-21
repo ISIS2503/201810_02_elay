@@ -12,22 +12,26 @@ Para el manejo de comunicación entre la entidad física y la entidad virtual se
 Para el envio de peticiones a la entidad Física se usa el topico ``` entradasCerradura ```
 Para la recepción de peticiones a la entidad Física se usa el topico ``` alarmasCerradura ```
 
-### Protocolo de comunicación 
+### Protocolo de gestión de contraseñas 
 
 Para la realización de la gestión de las contraseñas, se realiza el envio de mensajes con un formato basado en códigos:
 
 ##### Adición de contraseñas 
 
-``` 0:<contrasenia> ```, donde ``` <contrasenia> ``` representa la contraseña a adicionar.
+``` 00:<indice>:<contrasenia> ```, donde ``` <contrasenia> ``` representa la contraseña a adicionar e ``` <indice> ``` es la posición donde estala contraseña.
 
 ##### Cambio de contraseña 
 
-``` 1:<contraseniaAntigua>:<contrseniaNueva> ```, donde ``` <contraseniaAntigua> ``` representa la contaseña a modificar y ``` <contrseniaNueva> ``` representa la nueva contraseña.
+``` 01:<indice>:<contraseniaAntigua>:<contrseniaNueva> ```, donde ``` <contraseniaAntigua> ``` representa la contaseña a modificar, ``` <contrseniaNueva> ``` representa la nueva contraseña e ``` <indice> ``` es la posición donde estala contraseña..
 
 ##### Eliminación de una contraseña
 
-``` 2:<contrasenia>  ```, donde ``` <contrasenia>  ``` es la contraseña a eliminar.
+``` 02:<indice>:<contrasenia>  ```, donde ``` <contrasenia>  ``` es la contraseña a eliminar e ``` <indice> ``` es la posición donde estala contraseña..
 
 ##### Eliminar todas las contraseñas
 
-``` 3: ``` para la eliminación de todas las contraseñas temporales registradas.
+``` 03: ``` para la eliminación de todas las contraseñas temporales registradas.
+
+### Protocolo de evio de contraseñas
+
+``` 04: ```  para el envió de todas las contraseñas del arduino.
