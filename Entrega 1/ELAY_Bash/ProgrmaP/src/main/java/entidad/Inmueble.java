@@ -33,12 +33,23 @@ public class Inmueble implements Serializable {
     
     //@Column("apartamento")
     private Integer apartamento;
+    
+    @PodamExclude
+    @ManyToOne
+    private UnidadResidencial unidadResidencial;
+    
+    @PodamExclude
+    @OneToOne
+    private Hub hub;
 
-       public Inmueble(String id, boolean activado, Integer torre, Integer apartamento) {
+       public Inmueble(String id, boolean activado, Integer torre, Integer apartamento,
+               UnidadResidencial unidadResidencial, Hub hub) {
         this.id = id;
         this.activado = activado;
         this.torre = torre;
         this.apartamento = apartamento;
+        this.unidadResidencial = unidadResidencial;
+        this.hub = hub;
     }
        
        public Inmueble(){
@@ -56,6 +67,22 @@ public class Inmueble implements Serializable {
 
     public boolean isActivado() {
         return activado;
+    }
+    
+    private Hub getHub(){
+        return hub;
+    }
+    
+    private void setHub(Hub hub){
+        this.hub = hub;
+    }
+    
+    public UnidadResidencial getUnidadResidencial(){
+        return unidadResidencial;
+    }
+    
+    public void setUnidadResidencial(UnidadResidencial unidadResidencial){
+        this.unidadResidencial = unidadResidencial;
     }
 
     public void setActivado(boolean activado) {

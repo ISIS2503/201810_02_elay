@@ -34,6 +34,10 @@ public class Hub implements Serializable {
     
     //@Column("activado")
     private boolean activado;
+    
+    @PodamExclude
+    @OneToMany(mappedBy=hub)
+    private List<Dispositivo> dispositivos = new ArrayList<Dispositivo>;
 
     
      public Hub(String id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado) {
@@ -55,7 +59,13 @@ public class Hub implements Serializable {
         this.activado = activado;
     }
     
+    public List<Dispositivo> getDispositivos(){
+        return dispositivos;
+    }
     
+    public void setDispositivos(List<Dispositivos> dispositivos){
+        this.dispositivos = dispositivos;
+    }
     
     public String getId() {
         return id;

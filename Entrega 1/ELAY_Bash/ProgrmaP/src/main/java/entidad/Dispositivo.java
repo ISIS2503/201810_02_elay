@@ -45,8 +45,14 @@ public class Dispositivo implements Serializable {
     
     //@Column("activado")
     private boolean activado;
+    
+    @PodamExclude
+    @OneToMany(mappedBy=dispositivo)
+    private Hub hub;
 
-    public Dispositivo(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado) {
+    public Dispositivo(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, 
+            Integer frecuenciaReporte, Integer cantidadIntentosFallidos,
+            Integer numeroIntentosTolerancia, String clave, boolean activado, Hub hub) {
         this.id = id;
         this.nivelCriticoBateria = nivelCriticoBateria;
         this.tiempoMaximoAbierta = tiempoMaximoAbierta;
@@ -55,6 +61,7 @@ public class Dispositivo implements Serializable {
         this.numeroIntentosTolerancia = numeroIntentosTolerancia;
         this.clave = clave;
         this.activado = activado;
+        this.hub = hub;
     }
     
     public Dispositivo(){
@@ -76,6 +83,14 @@ public class Dispositivo implements Serializable {
 
     public void setNivelCriticoBateria(Integer nivelCriticoBateria) {
         this.nivelCriticoBateria = nivelCriticoBateria;
+    }
+    
+    public Hub getHub(){
+        return hub;
+    }
+    
+    public void setHub(Hub hub){
+        this.hub = hub;
     }
 
     public Integer getTiempoMaximoAbierta() {

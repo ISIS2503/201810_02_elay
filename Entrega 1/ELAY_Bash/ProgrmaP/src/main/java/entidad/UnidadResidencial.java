@@ -33,6 +33,10 @@ public class UnidadResidencial implements Serializable {
     
     //@Column("activado")
     private boolean activado;
+    
+    @PodamExclude
+    @OneToMany(mappedBy="unidadResidencial")
+    private List<Inmueble> inmuebles = new ArrayList<Inmueble>; 
 
     public String getDireccion() {
         return direccion;
@@ -56,6 +60,14 @@ public class UnidadResidencial implements Serializable {
 
     public void setActivado(boolean activado) {
         this.activado = activado;
+    }
+    
+    public List<Inmueble> getInmuebles(){
+        return inmuebles;
+    }
+    
+    public void setInmuebles(List<Inmueble> inmuebles){
+        this.inmuebles = inmuebles;
     }
     
     public String getId() {
