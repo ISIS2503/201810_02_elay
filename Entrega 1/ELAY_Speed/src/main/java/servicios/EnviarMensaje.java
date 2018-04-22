@@ -52,14 +52,14 @@ public class EnviarMensaje extends Application {
     @POST
     @Path("/{rol}")
     public String envioCorreo(String j, @PathParam("rol") String rol) {
-//        try {
-//            JsonObject info = new JsonParser().parse(j).getAsJsonObject().get("info").getAsJsonObject();
-//            String[] ss = darValues(rol, info);
-//            new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
-//                    ss[0], ss[1]).start();
-//        } catch (JsonSyntaxException ex) {
-//            Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            JsonObject info = new JsonParser().parse(j).getAsJsonObject().get("info").getAsJsonObject();
+            String[] ss = darValues(rol, info);
+            new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
+                    ss[0], ss[1]).start();
+        } catch (JsonSyntaxException ex) {
+            Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return j;
     }    
     
