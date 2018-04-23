@@ -83,7 +83,8 @@ public class Disparador {
 				info.get("mensajeAlerta").getAsString(),
 				info.get("idDispositivo").getAsString(),
 				info.get("torre").getAsString(),
-				info.get("apto").getAsString())));
+				info.get("apto").getAsString(),
+				info.get("unidadResidencial").getAsString())));
 	}
 	
 	
@@ -126,13 +127,15 @@ public class Disparador {
 			String idDispositivo;
 			String torre;
 			String apto;
-			public Info(String alertaId, String mensajeAlerta, String idDispositivo, String torre, String apto) {
+			String unidadResidencial;
+			public Info(String alertaId, String mensajeAlerta, String idDispositivo, String torre, String apto, String unidadResidencial) {
 				super();
 				this.alertaId = alertaId;
 				this.mensajeAlerta = mensajeAlerta;
 				this.idDispositivo = idDispositivo;
 				this.torre = torre;
 				this.apto = apto;
+				this.unidadResidencial = unidadResidencial;
 			}
 			@Override
 			public String toString() { return mensajeAlerta; }
@@ -250,8 +253,8 @@ public class Disparador {
 					"	\"mensajeAlerta\": \""+info.get("mensajeAlerta").getAsString()+"\",\r\n" + 
 					"	\"idDispositivo\": \""+info.get("idDispositivo").getAsString()+"\",\r\n" + 
 					"	\"torre\": "+info.get("torre").getAsInt()+",\r\n" + 
-					"	\"apto\": "+info.get("apto").getAsString()+"\r\n" + 
-					"\r\n" + 
+					"	\"apto\": "+info.get("apto").getAsString()+",\r\n" + 
+					"	\"unidadResidencial\": \""+info.get("unidadResidencial").getAsString()+"\" \r\n" + 
 					"}";
 			
 		}

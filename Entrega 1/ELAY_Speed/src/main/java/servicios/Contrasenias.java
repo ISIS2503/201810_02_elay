@@ -25,22 +25,14 @@ package servicios;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-import com.sun.jersey.core.spi.factory.ResponseImpl;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import programa.ClienteMQTT;
-import programa.MailSender;
 
 /**
  *
@@ -52,9 +44,12 @@ import programa.MailSender;
 public class Contrasenias {
 
     public enum Protocolo {
-        AGREGAR(0), MODIFICAR(1), ELIMINAR(2), ELIMINAR_ALL(3);
-        private final int cmd;
-        Protocolo(int cmd) {
+        AGREGAR("01"), 
+        MODIFICAR("02"), 
+        ELIMINAR("03"), 
+        ELIMINAR_ALL("04");
+        private final String cmd;
+        Protocolo(String cmd) {
             this.cmd = cmd;
         }
     }
