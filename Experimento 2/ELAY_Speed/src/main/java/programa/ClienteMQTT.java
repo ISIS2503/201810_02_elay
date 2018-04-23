@@ -49,12 +49,13 @@ public class ClienteMQTT
         public String getTopic() { return topic; }
     }
     
-    public static final ClienteMQTT CLIENTE = new ClienteMQTT();
+    public static ClienteMQTT CLIENTE = new ClienteMQTT();
     static long time = System.currentTimeMillis();
     public final Logger LOG =  Logger.getLogger(ClienteMQTT.class.getName());
     
     private MqttClient cliente;
     public ClienteMQTT() {
+        System.out.println("================================== programa.ClienteMQTT.<init>()");
         if(cliente == null) {
             try {
                 cliente = new MqttClient("tcp://172.24.42.23:8083","0");
@@ -64,6 +65,7 @@ public class ClienteMQTT
                 cliente.setCallback(new MqttCallback() {
                     @Override public void connectionLost(Throwable thrwbl) {Logger.getLogger(ClienteMQTT.class.getName()).log(Level.INFO, "==== Gabrial no joda x2 {0}", time = System.currentTimeMillis()-time);}
                     @Override public void messageArrived(String string, MqttMessage mm) throws Exception {
+                        System.out.println(string+" >> "+mm.toString());
                         if(mm.toString().startsWith(Contrasenias.Protocolo.ERROR.getCmd())) {
                             switch (mm.toString().split(":")[1]) {
                                 case "01":
@@ -106,13 +108,13 @@ public class ClienteMQTT
                     @Override public void deliveryComplete(IMqttDeliveryToken imdt) {}
                 });
                 cliente.connect(op);
-                cliente.subscribe(Topicos.SUSCRIBIR.topic, 0);
+                cliente.subscribe("#", 0);
             } catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
         }
     }
     
     private void reportar(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Error al momento de hacer el protocolo", JOptionPane.ERROR_MESSAGE);
+        LOG.log(Level.SEVERE, msg);
     }
     
     public static void publicar(String msg) {

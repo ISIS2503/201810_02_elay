@@ -33,6 +33,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        ClienteMQTT.CLIENTE = new ClienteMQTT();
         String webappDirLocation = "src/main/webapp/";
         String webPort = System.getenv("PORT");
         if (webPort == null || webPort.isEmpty()) {
