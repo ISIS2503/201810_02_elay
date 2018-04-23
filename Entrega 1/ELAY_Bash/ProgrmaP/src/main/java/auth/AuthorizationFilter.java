@@ -55,7 +55,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         yale,
         administrador,
         propietario,
-        seguridad privada
+        seguridad_privada
     }
 
     @Context

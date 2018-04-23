@@ -33,6 +33,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import programa.ClienteMQTT;
+import programa.ManejadorContrasenias;
 
 /**
  *
@@ -47,11 +48,18 @@ public class Contrasenias {
         AGREGAR("01"), 
         MODIFICAR("02"), 
         ELIMINAR("03"), 
-        ELIMINAR_ALL("04");
+        ELIMINAR_ALL("04"),
+        OK("OK"),
+        ERROR("ERROR");
         private final String cmd;
         Protocolo(String cmd) {
             this.cmd = cmd;
         }
+
+        public String getCmd() {
+            return cmd;
+        }
+        
     }
     
     public Contrasenias() {
@@ -59,23 +67,41 @@ public class Contrasenias {
     
     @POST
     public String agregar(String j) {
+        try {
         JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        ClienteMQTT.publicar(Protocolo.AGREGAR.cmd+":"+info.get("contrasenia").getAsString());
+        String contra = info.get("contrasenia").getAsString();
+        ClienteMQTT.publicar(Protocolo.AGREGAR.cmd+":"+ManejadorContrasenias.agregarNuevaContrasenia(contra)+":"+contra);
         return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        } catch(Exception e) {
+            return error(e.getMessage());
+        }
+    }
+    
+    private String error(String msg) {
+        return "{ \"ERROR\":\" "+msg+" \" }";
     }
     
     @PUT
     public String modificar(String j) {
+        try {
         JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        ClienteMQTT.publicar(Protocolo.MODIFICAR.cmd+":"+info.get("contraseniaAntigua").getAsString()+":"+info.get("contraseniaNueva").getAsString());
+        String contra = info.get("contraseniaNueva").getAsString();
+        ClienteMQTT.publicar(Protocolo.MODIFICAR.cmd+":"+ManejadorContrasenias.cambiarContraseña(info.get("contraseniaAntigua").getAsString(), contra)+":"+info.get("contraseniaNueva").getAsString());
         return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        } catch (Exception e) {
+            return error(e.getMessage());
+        }
     }
     
     @DELETE
     public String eliminar(String j) {
+        try {
         JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        ClienteMQTT.publicar(Protocolo.ELIMINAR.cmd+":"+info.get("contrasenia").getAsString());
+        ClienteMQTT.publicar(Protocolo.ELIMINAR.cmd+":"+ManejadorContrasenias.eliminar(info.get("contrasenia").getAsString()));
         return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        } catch (Exception e) {
+            return error(e.getMessage());
+        }
     }
     
     @DELETE

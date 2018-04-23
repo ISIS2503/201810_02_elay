@@ -23,7 +23,7 @@
  */
 package auth;
 
-import AuthorizationFilter.Role;
+import auth.AuthorizationFilter.Role;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;

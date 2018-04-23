@@ -25,12 +25,14 @@ package programa;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import servicios.Contrasenias;
 
 /**
  *
@@ -49,6 +51,7 @@ public class ClienteMQTT
     
     public static final ClienteMQTT CLIENTE = new ClienteMQTT();
     static long time = System.currentTimeMillis();
+    public final Logger LOG =  Logger.getLogger(ClienteMQTT.class.getName());
     
     private MqttClient cliente;
     public ClienteMQTT() {
@@ -60,13 +63,56 @@ public class ClienteMQTT
                 op.setConnectionTimeout(100000);
                 cliente.setCallback(new MqttCallback() {
                     @Override public void connectionLost(Throwable thrwbl) {Logger.getLogger(ClienteMQTT.class.getName()).log(Level.INFO, "==== Gabrial no joda x2 {0}", time = System.currentTimeMillis()-time);}
-                    @Override public void messageArrived(String string, MqttMessage mm) throws Exception {}
+                    @Override public void messageArrived(String string, MqttMessage mm) throws Exception {
+                        if(mm.toString().startsWith(Contrasenias.Protocolo.ERROR.getCmd())) {
+                            switch (mm.toString().split(":")[1]) {
+                                case "01":
+                                    reportar("Error al momento de agregar la contraseña");
+                                    break;
+                                case "02":
+                                    reportar("Error al momento de modificar la contraseña");
+                                    break;
+                                case "03":
+                                    reportar("Error al momento de eliminar la contraseña");
+                                    break;
+                                case "04":
+                                    reportar("Error al momento de eliminar todas las contraseña");
+                                    break;
+                                case "05":
+                                    reportar("Error al momento de sincronizar las contraseñas");
+                                    break;
+                            }
+                        }
+                        if(mm.toString().startsWith(Contrasenias.Protocolo.OK.getCmd())) {
+                            switch (mm.toString().split(":")[1]) {
+                                case "01":
+                                    LOG.log(Level.INFO, "Adición exitosa");
+                                    break;
+                                case "02":
+                                    LOG.log(Level.INFO, "Modificación exitosa");
+                                    break;
+                                case "03":
+                                    LOG.log(Level.INFO, "Eliminación exitosa");
+                                    break;
+                                case "04":
+                                    LOG.log(Level.INFO, "Eliminación exitosa");
+                                    break;
+                                case "05":
+                                    LOG.log(Level.INFO, "Sincronización exitosa");
+                                    break;
+                            }
+                        }
+                    }
                     @Override public void deliveryComplete(IMqttDeliveryToken imdt) {}
                 });
                 cliente.connect(op);
                 cliente.subscribe(Topicos.SUSCRIBIR.topic, 0);
             } catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
         }
+    }
+    
+    private void reportar(String msg) {
+        JOptionPane.showMessageDialog(null, msg, "Error al momento de hacer el protocolo", JOptionPane.ERROR_MESSAGE);
     }
     
     public static void publicar(String msg) {
