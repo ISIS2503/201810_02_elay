@@ -5,11 +5,12 @@
  */
 package services;
 
-import convert.Convert;
+import convert.convert;
 import dto.HubDTO;
 import dto.HubDTO;
 import entidad.Hub;
 import entidad.Hub;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
@@ -30,7 +31,7 @@ import persistencia.HubPersistence;
  *
  * @author jd.trujillom
  */
-@Path("hubs")
+@Path("hub")
 public class HubService {
     
     @Context
@@ -41,8 +42,7 @@ public class HubService {
     public Response getAll() {
 
         HubPersistence URP = new HubPersistence();
-        Convert<HubDTO, Hub> convert = new Convert<>(HubDTO.class, Hub.class);
-        List<HubDTO> list = convert.listEntityToListDto(URP.all());
+        List<HubDTO> list = toDTOHub(URP.all());
 
         GenericEntity<List<HubDTO>> entity = new GenericEntity<List<HubDTO>>(list) {
         };
@@ -54,15 +54,15 @@ public class HubService {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Response createInmueble(HubDTO dto) {
-        HubPersistence URP = new HubPersistence();
-        Convert<HubDTO, Hub> convert = new Convert<>(HubDTO.class, Hub.class);
-        Hub Hub = convert.dtoToEntity(dto);
+    public Response createHUB(HubDTO dto) {
+        HubPersistence hubPersistence = new HubPersistence();
+        
+        Hub Hub = dto.toEntity();
 
-        Hub nuevo = URP.add(Hub);
+        Hub nuevo = hubPersistence.add(Hub);
         HubDTO nuevoDTO = null;
         if (nuevo != null) {
-            nuevoDTO = convert.entityToDto(nuevo);
+            nuevoDTO = new HubDTO(nuevo);
         }
         return Response.status(200).entity(nuevoDTO).build();
 
@@ -121,5 +121,14 @@ public class HubService {
 //
 //        return Response.status(200).entity(dto).build();
 //    }
+    
+    private List<HubDTO> toDTOHub(List<Hub> entity){
+        List<HubDTO> list = new ArrayList<>();
+        for(Hub hub: entity){
+            list.add(new HubDTO(hub));
+        }
+        
+        return list;
+    }
     
 }

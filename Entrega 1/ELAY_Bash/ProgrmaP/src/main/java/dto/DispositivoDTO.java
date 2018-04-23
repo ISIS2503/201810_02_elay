@@ -5,6 +5,11 @@
  */
 package dto;
 
+import entidad.Alarma;
+import entidad.Dispositivo;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author jd.trujillom
@@ -25,8 +30,10 @@ public class DispositivoDTO {
     private String clave;
     
     private boolean activado;
+    
+    private List<AlarmaDTO> alarmas;
 
-    public DispositivoDTO(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado) {
+    public DispositivoDTO(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado, List<AlarmaDTO> alarmas) {
         this.id = id;
         this.nivelCriticoBateria = nivelCriticoBateria;
         this.tiempoMaximoAbierta = tiempoMaximoAbierta;
@@ -35,7 +42,21 @@ public class DispositivoDTO {
         this.numeroIntentosTolerancia = numeroIntentosTolerancia;
         this.clave = clave;
         this.activado = activado;
+        this.alarmas = alarmas;
     }
+    
+    public DispositivoDTO(Dispositivo entidad){
+        this.id = entidad.getId();
+        this.activado = entidad.isActivado();
+        this.alarmas = toDTOAlarmaList(entidad.getAlarmas());
+        this.clave = entidad.getClave();
+        this.cantidadIntentosFallidos = entidad.getNivelCriticoBateria();
+        this.tiempoMaximoAbierta = entidad.getTiempoMaximoAbierta();
+        this.frecuenciaReporte = entidad.getFrecuenciaReporte();
+        this.nivelCriticoBateria = entidad.getNivelCriticoBateria();
+        this.numeroIntentosTolerancia = entidad.getNumeroIntentosTolerancia();
+    }
+
 
     public DispositivoDTO(){
         
@@ -107,6 +128,54 @@ public class DispositivoDTO {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<AlarmaDTO> getAlarmas() {
+        return alarmas;
+    }
+
+    public void setAlarmas(List<AlarmaDTO> alarmas) {
+        this.alarmas = alarmas;
+    }
+    
+    private List<AlarmaDTO> toDTOAlarmaList(List<Alarma> entidades) {
+        List<AlarmaDTO> lista = null;
+        if (entidades != null) {
+            lista = new ArrayList<>();
+            for (Alarma inmueble : entidades) {
+                AlarmaDTO nuevo = new AlarmaDTO(inmueble);
+                lista.add(nuevo);
+            }
+        }
+
+        return lista;
+    }
+
+    private List<Alarma> toEntityAlarmaList(List<AlarmaDTO> list) {
+        List<Alarma> lista = null;
+        if (list != null) {
+            lista = new ArrayList<>();
+            for (AlarmaDTO inmueble : list) {
+                lista.add(inmueble.toEntity());
+            }
+        }
+
+        return lista;
+    }
+    
+    public Dispositivo toEntity(){
+        Dispositivo entity = new Dispositivo();
+        entity.setActivado(activado);
+        entity.setAlarmas(toEntityAlarmaList(alarmas));
+        entity.setCantidadIntentosFallidos(cantidadIntentosFallidos);
+        entity.setClave(clave);
+        entity.setFrecuenciaReporte(frecuenciaReporte);
+        entity.setId(id);
+        entity.setNivelCriticoBateria(nivelCriticoBateria);
+        entity.setNumeroIntentosTolerancia(numeroIntentosTolerancia);
+        entity.setTiempoMaximoAbierta(tiempoMaximoAbierta);
+        
+        return entity;
     }
 
 

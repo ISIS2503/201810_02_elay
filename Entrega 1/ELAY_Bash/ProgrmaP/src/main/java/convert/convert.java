@@ -15,7 +15,7 @@ import persistencia.*;
 //import persistencia.CountentPersistence;
 
 
-public class Convert <DTO, Entity>
+public class convert <DTO, Entity>
 {
 	
 	protected Class<DTO> claseDTO;
@@ -23,7 +23,7 @@ public class Convert <DTO, Entity>
 	private Field[] eF; 
 	private Field[] dF;
 
-	public Convert(Class<DTO> claseDTO, Class<Entity> claseEntity) {
+	public convert(Class<DTO> claseDTO, Class<Entity> claseEntity) {
 		this.claseDTO = claseDTO;
 		this.claseEntity = claseEntity;
 		eF = claseEntity.getDeclaredFields();
@@ -52,7 +52,7 @@ public class Convert <DTO, Entity>
 		}
 	}
 	
-	public Convert() {}
+	public convert() {}
 	
 	public DTO entityToDto(Entity e)  
 	{

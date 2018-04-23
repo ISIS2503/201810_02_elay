@@ -6,11 +6,17 @@
 package entidad;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,37 +30,49 @@ public class Inmueble implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-    
-    //@Column("activado")
+
+    @Column(name = "activado")
     private boolean activado;
-    
-   // @Column("torre")
+
+    @Column(name = "torre")
     private Integer torre;
-    
-    //@Column("apartamento")
+
+    @Column(name = "apartamento")
     private Integer apartamento;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "inmueble")
+    private List<Alarma> alarmas;
     
-    @PodamExclude
     @ManyToOne
     private UnidadResidencial unidadResidencial;
-    
-    @PodamExclude
+
     @OneToOne
     private Hub hub;
 
-       public Inmueble(String id, boolean activado, Integer torre, Integer apartamento,
-               UnidadResidencial unidadResidencial, Hub hub) {
+    public Inmueble(String id, boolean activado, Integer torre, Integer apartamento, List<Alarma> alarmas, UnidadResidencial unidadResidencial, Hub hub) {
         this.id = id;
         this.activado = activado;
         this.torre = torre;
         this.apartamento = apartamento;
+        this.alarmas = alarmas;
         this.unidadResidencial = unidadResidencial;
         this.hub = hub;
     }
-       
-       public Inmueble(){
-           
-       }
+  
+    
+
+    public Inmueble() {
+
+    }
+    
+     public List<Alarma> getAlarmas() {
+        return alarmas;
+    }
+
+    public void setAlarmas(List<Alarma> alarmas) {
+        this.alarmas = alarmas;
+    }
 
 
     public String getId() {
@@ -67,22 +85,6 @@ public class Inmueble implements Serializable {
 
     public boolean isActivado() {
         return activado;
-    }
-    
-    private Hub getHub(){
-        return hub;
-    }
-    
-    private void setHub(Hub hub){
-        this.hub = hub;
-    }
-    
-    public UnidadResidencial getUnidadResidencial(){
-        return unidadResidencial;
-    }
-    
-    public void setUnidadResidencial(UnidadResidencial unidadResidencial){
-        this.unidadResidencial = unidadResidencial;
     }
 
     public void setActivado(boolean activado) {
@@ -105,10 +107,27 @@ public class Inmueble implements Serializable {
         this.apartamento = apartamento;
     }
 
+    public UnidadResidencial getUnidadResidencial() {
+        return unidadResidencial;
+    }
 
-    @Override
-    public String toString() {
-        return "entidad.Inmueble[ id=" + id + " ]";
+    public void setUnidadResidencial(UnidadResidencial unidadResidencial) {
+        this.unidadResidencial = unidadResidencial;
+    }
+
+    public Hub getHub() {
+        return hub;
+    }
+
+    public void setHub(Hub hub) {
+        this.hub = hub;
     }
     
+    @Override
+    public String toString() {
+        return "Inmueble{" + "id=" + id + ", activado=" + activado + ", torre=" + torre + ", apartamento=" + apartamento + '}';
+    }
+     
+    
+
 }
