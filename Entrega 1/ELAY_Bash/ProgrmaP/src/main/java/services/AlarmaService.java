@@ -21,9 +21,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
 import persistencia.CuntentPersistence;
-
+import auth.AuthorizationFilter.Role;
+import auth.Secured;
 
 @Path("alarmas")
+@Secured({Role.yale})
 public class AlarmaService {
 	@Context 
 	ServletContext servletContext;

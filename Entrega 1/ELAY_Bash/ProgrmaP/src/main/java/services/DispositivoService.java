@@ -25,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import persistencia.DispositivoPersistence;
 import persistencia.DispositivoPersistence;
+import auth.AuthorizationFilter.Role;
+import auth.Secured;
 
 /**
  *

@@ -25,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import persistencia.InmueblePersistence;
 import persistencia.InmueblePersistence;
+import auth.AuthorizationFilter.Role;
+import auth.Secured;
 
 /**
  *
