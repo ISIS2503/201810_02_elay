@@ -18,14 +18,13 @@ import javax.persistence.Query;
 public class InmueblePersistence extends Persistencer<Inmueble, Long> {
 
     public InmueblePersistence() {
-    this.entityClass = Inmueble.class;
-        
+        this.entityClass = Inmueble.class;
+
     }
-    
-       
+
     public Inmueble find(String nombre) {
-       Inmueble entity;
-       String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.nombre = :nombre1";
+        Inmueble entity;
+        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.nombre = :nombre1";
         Query query = entityManager.createQuery(queryString).setParameter("nombre1", nombre);
         try {
             entity = (Inmueble) query.getSingleResult();
@@ -34,7 +33,17 @@ public class InmueblePersistence extends Persistencer<Inmueble, Long> {
         }
         return entity;
     }
-    
-    
-    
+
+    public Inmueble findInmuebleByTorreAndApartamento(int torre, int apartamento) {
+        Inmueble entity;
+        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.torre = :torre1 AND c.apartamento = :apartamento1";
+        Query query = entityManager.createQuery(queryString).setParameter("torre1", torre).setParameter("apartamento1", apartamento);
+        try {
+            entity = (Inmueble) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            entity = null;
+        }
+        return entity;
+    }
+
 }

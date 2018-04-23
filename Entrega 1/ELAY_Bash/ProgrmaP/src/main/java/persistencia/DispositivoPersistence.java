@@ -11,7 +11,7 @@ import entidad.Dispositivo;
  *
  * @author jd.trujillom
  */
-public class DispositivoPersistence extends  Persistencer<Dispositivo, Long> {
+public class DispositivoPersistence extends  Persistencer<Dispositivo, String> {
     
     public DispositivoPersistence(){
         this.entityClass = Dispositivo.class;

@@ -11,76 +11,119 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import convert.Convert;
-import dto.CountentDTO;
-import entidad.Countent;
+import convert.convert;
+import dto.AlarmaDTO;
+import dto.AlarmaInfo;
+import entidad.Alarma;
+import entidad.Dispositivo;
+import entidad.Inmueble;
+import entidad.UnidadResidencial;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
-import persistencia.CuntentPersistence;
+import org.codehaus.jackson.node.ObjectNode;
+import org.codehaus.jettison.json.JSONObject;
+import persistencia.AlarmaPersistence;
+import persistencia.DispositivoPersistence;
+import persistencia.InmueblePersistence;
+import persistencia.UnidadResidencialPersistence;
 import auth.AuthorizationFilter.Role;
 import auth.Secured;
 
 @Path("alarmas")
 @Secured({Role.yale})
 public class AlarmaService {
-	@Context 
-	ServletContext servletContext;
-	
-	@GET
-	@Produces({MediaType.APPLICATION_JSON})
-	public Response getAllAlarmas () {
-		CuntentPersistence CP = new CuntentPersistence();
-		Convert<CountentDTO, Countent> convert = new Convert<>(CountentDTO.class, Countent.class);
-		 List<CountentDTO> listaDTO = convert.listEntityToListDto(CP.all());
-		
-                 List<CountentDTO> list = new LinkedList<>();
-                 GenericEntity<List<CountentDTO>> entity = new GenericEntity<List<CountentDTO>>(listaDTO) {};
-                 
-		return Response.status(200).entity(entity).build();
-	}
-        
-        @GET
-        @Produces({MediaType.APPLICATION_JSON})
-        @Path("{id : \\d+}")
-        public Response getAlarmaPorId(@PathParam("id") String id){ 
-            CuntentPersistence CP = new CuntentPersistence();
-            Convert<CountentDTO, Countent> convert = new Convert<>(CountentDTO.class, Countent.class);
-            
-            Countent entity = CP.find(id);
-            if(entity == null)
-                return Response.status(404).build();
-            
-            CountentDTO dto = convert.entityToDto(entity);
-            
-            return Response.status(200).entity(dto).build();
+
+    @Context
+    ServletContext servletContext;
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAllAlarmas() {
+        AlarmaPersistence CP = new AlarmaPersistence();
+        List<AlarmaDTO> listaDTO = toDTOAlarmaList(CP.all());
+
+        GenericEntity<List<AlarmaDTO>> entity = new GenericEntity<List<AlarmaDTO>>(listaDTO) {
+        };
+
+        return Response.status(200).entity(entity).build();
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("{id : \\d+}")
+    public Response getAlarmaPorId(@PathParam("id") String id) {
+        AlarmaPersistence CP = new AlarmaPersistence();
+        convert<AlarmaDTO, Alarma> convert = new convert<>(AlarmaDTO.class, Alarma.class);
+
+        Alarma entity = CP.find(id);
+        if (entity == null) {
+            return Response.status(404).build();
         }
-        
-        
-	@Consumes({MediaType.APPLICATION_JSON})
-        @POST
-        public Response addAlarma(CountentDTO dto){
-            Convert<CountentDTO, Countent> convert = new Convert<>(CountentDTO.class, Countent.class);
-            Countent countent = convert.dtoToEntity(dto);
-            
-            
-            CuntentPersistence CP = new CuntentPersistence();
-            CP.add(countent);
-            
-            
-            
-            return Response.status(200).build();
-        }     
-                
-                
-	@GET
-	@Path("holaMundo")
-	public Response holaMundo() {
-		return Response.status(200).entity("Hola mundo").build();
-	}
-	
-	
+
+        AlarmaDTO dto = convert.entityToDto(entity);
+
+        return Response.status(200).entity(dto).build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response addAlarma(AlarmaInfo dto) {
+        AlarmaPersistence alarmaPersistence = new AlarmaPersistence();
+        UnidadResidencialPersistence unidadResidencialPersistence = new UnidadResidencialPersistence();
+        InmueblePersistence inmueblePersistence = new InmueblePersistence();
+        DispositivoPersistence dispositivoPersistence = new DispositivoPersistence();
+
+        AlarmaDTO alarma = new AlarmaDTO(null, dto.getTimestamp(), dto.getAlertaId(), dto.getMensajeAlerta());
+        Alarma entidad = alarma.toEntity();
+
+        UnidadResidencial unidadResidencialBuscado = unidadResidencialPersistence.find(dto.getUnidadResidencial());
+        Inmueble inmuebleBuscado = inmueblePersistence.findInmuebleByTorreAndApartamento(dto.getTorre(), dto.getApto());
+        Dispositivo dispositivo = dispositivoPersistence.find(dto.getIdDispositivo());
+
+        if (unidadResidencialBuscado == null) {
+            return Response.status(404).entity("La unidad residencial ingresada no existe").build();
+        }
+
+        if (inmuebleBuscado == null) {
+            return Response.status(404).entity("El inmueble ingresado no existe").build();
+        }
+
+        if (dispositivo == null) {
+            return Response.status(404).entity("El dispositivo ingresado no existe").build();
+        }
+
+        entidad.setInmueble(inmuebleBuscado);
+        entidad.setUnidadResidencial(unidadResidencialBuscado);
+        entidad.setDispositivo(dispositivo);
+        alarmaPersistence.add(entidad);
+
+        alarma = new AlarmaDTO(entidad);
+
+        return Response.status(200).entity(alarma).build();
+    }
+
+    @GET
+    @Path("holaMundo")
+    public Response holaMundo() {
+        return Response.status(200).entity("Hola mundo").build();
+    }
+
+    private List<AlarmaDTO> toDTOAlarmaList(List<Alarma> entidades) {
+        List<AlarmaDTO> lista = null;
+        if (entidades != null) {
+            lista = new ArrayList<>();
+            for (Alarma inmueble : entidades) {
+                AlarmaDTO nuevo = new AlarmaDTO(inmueble);
+                lista.add(nuevo);
+            }
+        }
+
+        return lista;
+    }
+
 }

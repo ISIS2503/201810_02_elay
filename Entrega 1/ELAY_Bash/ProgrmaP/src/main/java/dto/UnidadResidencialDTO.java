@@ -5,33 +5,52 @@
  */
 package dto;
 
+import entidad.Alarma;
+import entidad.Inmueble;
+import entidad.UnidadResidencial;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author jd.trujillom
  */
-@XmlRootElement
 public class UnidadResidencialDTO {
+
     public String id;
 
     public String direccion;
-    
+
     public String nombre;
-    
+
     public boolean activado;
 
-    public UnidadResidencialDTO(String id, String direccion, String nombre, boolean activado) {
+    public List<InmuebleDTO> inmuebles;
+
+    public List<AlarmaDTO> alarmas;
+
+    public UnidadResidencialDTO(String id, String direccion, String nombre, boolean activado, List<InmuebleDTO> inmuebles, List<AlarmaDTO> alarmas) {
         this.id = id;
         this.direccion = direccion;
         this.nombre = nombre;
         this.activado = activado;
+        this.inmuebles = inmuebles;
+        this.alarmas = alarmas;
     }
 
-    public UnidadResidencialDTO(){
-        
+    public UnidadResidencialDTO() {
+
     }
-    
+
+    public List<AlarmaDTO> getAlarmas() {
+        return alarmas;
+    }
+
+    public void setAlarmas(List<AlarmaDTO> alarmas) {
+        this.alarmas = alarmas;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -55,7 +74,7 @@ public class UnidadResidencialDTO {
     public void setActivado(boolean activado) {
         this.activado = activado;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -64,9 +83,88 @@ public class UnidadResidencialDTO {
         this.id = id;
     }
 
+    public List<InmuebleDTO> getInmuebles() {
+        return inmuebles;
+    }
+
+    public void setInmuebles(List<InmuebleDTO> inmuebles) {
+        this.inmuebles = inmuebles;
+    }
+
     @Override
     public String toString() {
         return "entidad.UnidadResidencial[ id=" + id + " ]";
     }
+
+    public UnidadResidencial toEntity() {
+
+        UnidadResidencial entity = new UnidadResidencial();
+
+        entity.setId(id);
+        entity.setInmuebles(toEntityInmuebleList(inmuebles));
+        entity.setDireccion(direccion);
+        entity.setNombre(nombre);
+        entity.setActivado(activado);
+        entity.setAlarmas(toEntityAlarmaList(alarmas));
+
+        return entity;
+    }
+
+    public void toDTO(UnidadResidencial unidadResidencial) {
+        this.id = unidadResidencial.getId();
+        this.nombre = unidadResidencial.getNombre();
+        this.direccion = unidadResidencial.getDireccion();
+        this.activado = unidadResidencial.isActivado();
+        this.inmuebles = toDTOInmuebleList(unidadResidencial.getInmuebles());
+        this.alarmas = toDTOAlarmaList(unidadResidencial.getAlarmas());
+    }
+
+    private List<InmuebleDTO> toDTOInmuebleList(List<Inmueble> entidades) {
+        List<InmuebleDTO> lista = new ArrayList<>();
+        for (Inmueble inmueble : entidades) {
+            InmuebleDTO nuevo = new InmuebleDTO();
+            nuevo.toDTO(inmueble);
+            lista.add(nuevo);
+        }
+
+        return lista;
+    }
+
+    private List<AlarmaDTO> toDTOAlarmaList(List<Alarma> entidades) {
+        List<AlarmaDTO> lista = null;
+        if (entidades != null) {
+            lista = new ArrayList<>();
+            for (Alarma inmueble : entidades) {
+                AlarmaDTO nuevo = new AlarmaDTO(inmueble);
+                lista.add(nuevo);
+            }
+        }
+
+        return lista;
+    }
+
+    private List<Alarma> toEntityAlarmaList(List<AlarmaDTO> list) {
+        List<Alarma> lista = null;
+        if (list != null) {
+            lista = new ArrayList<>();
+            for (AlarmaDTO inmueble : list) {
+                lista.add(inmueble.toEntity());
+            }
+        }
+
+        return lista;
+    }
     
+    private List<Inmueble> toEntityInmuebleList(List<InmuebleDTO> list) {
+        List<Inmueble> lista = null;
+        if (list != null) {
+            lista = new ArrayList<>();
+            for (InmuebleDTO inmueble : list) {
+                lista.add(inmueble.toEntity());
+            }
+        }
+
+        return lista;
+    }
+
 }

@@ -23,7 +23,7 @@
  */
 package auth;
 
-import static AuthenticationFilter.AUTHENTICATION_SCHEME;
+import static auth.AuthenticationFilter.AUTHENTICATION_SCHEME;
 import com.auth0.jwt.JWT;
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
@@ -55,7 +55,11 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         yale,
         administrador,
         propietario,
+<<<<<<< HEAD
         seguridad_privada
+=======
+        seguridadprivada
+>>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
     }
 
     @Context

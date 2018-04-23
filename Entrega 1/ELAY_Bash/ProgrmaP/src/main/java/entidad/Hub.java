@@ -6,13 +6,22 @@
 package entidad;
 
 import java.io.Serializable;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
+=======
+import java.util.List;
+import javax.persistence.CascadeType;
+>>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
+=======
+import javax.persistence.JoinColumn;
+>>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,17 +47,24 @@ public class Hub implements Serializable {
     //@Column("activado")
     private boolean activado;
     
+<<<<<<< HEAD
     @PodamExclude
     @OneToMany(mappedBy="hub")
     private List<Dispositivo> dispositivos = new ArrayList<Dispositivo>();
+=======
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "hub")
+    private List<Dispositivo> dispositivos;
+>>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
 
-    
-     public Hub(String id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado) {
+    public Hub(String id, Integer frecuenciaReporte, Integer numeroPerdidasToleradas, boolean activado, List<Dispositivo> dispositivos) {
         this.id = id;
         this.frecuenciaReporte = frecuenciaReporte;
         this.numeroPerdidasToleradas = numeroPerdidasToleradas;
         this.activado = activado;
+        this.dispositivos = dispositivos;
     }
+
     
     public Hub(){
         
@@ -66,8 +82,8 @@ public class Hub implements Serializable {
         return dispositivos;
     }
     
-    public void setDispositivos(List<Dispositivos> dispositivos){
-        this.dispositivos = dispositivos;
+    public void setDispositivos(List<Dispositivo> dispositivos){
+        this.dispositivos = (List<Dispositivo>) dispositivos;
     }
     
     public String getId() {
@@ -94,6 +110,8 @@ public class Hub implements Serializable {
         this.numeroPerdidasToleradas = numeroPerdidasToleradas;
     }
 
+    
+    
     @Override
     public String toString() {
         return "entidad.Hub[ id=" + id + " ]";

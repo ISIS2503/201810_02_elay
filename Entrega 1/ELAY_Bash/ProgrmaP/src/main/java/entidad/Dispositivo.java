@@ -6,11 +6,17 @@
 package entidad;
 
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
+=======
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+>>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,7 +29,6 @@ import javax.persistence.Table;
 public class Dispositivo implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     
     //@Column("nivelCriticoBateria")
@@ -47,13 +52,19 @@ public class Dispositivo implements Serializable {
     //@Column("activado")
     private boolean activado;
     
+<<<<<<< HEAD
     @PodamExclude
     @OneToMany(mappedBy="dispositivo")
+=======
+    @ManyToOne
+>>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
     private Hub hub;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "dispositivo")
+    private List<Alarma> alarmas;
 
-    public Dispositivo(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, 
-            Integer frecuenciaReporte, Integer cantidadIntentosFallidos,
-            Integer numeroIntentosTolerancia, String clave, boolean activado, Hub hub) {
+    public Dispositivo(String id, Integer nivelCriticoBateria, Integer tiempoMaximoAbierta, Integer frecuenciaReporte, Integer cantidadIntentosFallidos, Integer numeroIntentosTolerancia, String clave, boolean activado, Hub hub, List<Alarma> alarmas) {
         this.id = id;
         this.nivelCriticoBateria = nivelCriticoBateria;
         this.tiempoMaximoAbierta = tiempoMaximoAbierta;
@@ -63,6 +74,7 @@ public class Dispositivo implements Serializable {
         this.clave = clave;
         this.activado = activado;
         this.hub = hub;
+        this.alarmas = alarmas;
     }
     
     public Dispositivo(){
@@ -142,6 +154,14 @@ public class Dispositivo implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Alarma> getAlarmas() {
+        return alarmas;
+    }
+
+    public void setAlarmas(List<Alarma> alarmas) {
+        this.alarmas = alarmas;
     }
 
 
