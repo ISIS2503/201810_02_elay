@@ -71,11 +71,11 @@ public class ManejadorContrasenias {
         for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenias[i] = "-1";
     }
     
-//    public static void cargarContrasenias(String s){
-//        String[] sp = s.split(":");
-//        eliminarTodo();
-//        for(int i = 0; i < )
-//    }
+    public static void cargarContrasenias(String s){
+        String[] sp = s.split(":");
+        eliminarTodo();
+        System.arraycopy(sp, 0, contrasenias, 0, CANT_CONTRASENIAS);
+    }
 
     
 }

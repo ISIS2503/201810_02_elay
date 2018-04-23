@@ -58,8 +58,8 @@ public class Disparador {
 				public void messageArrived(String topic, MqttMessage message) throws Exception {
 					System.out.println(topic+" >> "+message.toString());
 					if(validarTopico(topic)) {
-//						new Speed(topic.split("/")[0],message.toString()).start();
-//						new Batch(message.toString()).start();
+						new Speed(topic.split("/")[0],message.toString()).start();
+						new Batch(message.toString()).start();
 						imprimir(topic, message.toString());
 					}
 				}
