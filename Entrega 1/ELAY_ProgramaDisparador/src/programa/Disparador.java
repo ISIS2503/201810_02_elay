@@ -29,13 +29,6 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-//import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-//import org.eclipse.paho.client.mqttv3.MqttCallback;
-//import org.eclipse.paho.client.mqttv3.MqttClient;
-//import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-//import org.eclipse.paho.client.mqttv3.MqttException;
-//import org.eclipse.paho.client.mqttv3.MqttMessage;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -49,29 +42,38 @@ public class Disparador {
 		lista = new ArrayList<LinkedList<Countent>>();
 		for(int i = 0; i < 4; i++) lista.add(new LinkedList<Countent>());
 	}
-
+	private MqttClient sampleClient;
 	public Disparador(Interfaz i) {
 		this.interfaz = i;
 		try {
+			
 			String myTopic = "#";
-			MqttClient sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
+			sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
 			MqttConnectOptions connOpts = new MqttConnectOptions();
 			connOpts.setCleanSession(true);
 			sampleClient.setCallback(new MqttCallback() {
-				public void connectionLost(Throwable cause) {}
+				public void connectionLost(Throwable cause) {
+					System.out.println("Se perdió la conexión");
+				}
 				public void messageArrived(String topic, MqttMessage message) throws Exception {
-					System.out.println(topic+" :: "+message.toString());
+					System.out.println(topic+" >> "+message.toString());
 					if(validarTopico(topic)) {
 						new Speed(topic.split("/")[0],message.toString()).start();
 						new Batch(message.toString()).start();
 						imprimir(topic, message.toString());
 					}
 				}
-				public void deliveryComplete(IMqttDeliveryToken token) {}
+				public void deliveryComplete(IMqttDeliveryToken token) {
+					System.out.println("Hola");
+				}
 			});
 			sampleClient.connect(connOpts);
 			sampleClient.subscribe(myTopic, 0);
 		} catch(MqttException e) { e.printStackTrace(); }
+	}
+	
+	public MqttClient getSampleClient() {
+		return sampleClient;
 	}
 
 	private void imprimir(String topic, String msg) {
@@ -81,7 +83,8 @@ public class Disparador {
 				info.get("mensajeAlerta").getAsString(),
 				info.get("idDispositivo").getAsString(),
 				info.get("torre").getAsString(),
-				info.get("apto").getAsString())));
+				info.get("apto").getAsString(),
+				info.get("unidadResidencial").getAsString())));
 	}
 	
 	
@@ -105,7 +108,6 @@ public class Disparador {
 			lista.get(3).add(temp);
 			new Agregar(3,temp).start();
 		}
-		
 		System.out.println(s[0].toUpperCase()+": \n"+temp.toText());
 	}
 
@@ -125,13 +127,15 @@ public class Disparador {
 			String idDispositivo;
 			String torre;
 			String apto;
-			public Info(String alertaId, String mensajeAlerta, String idDispositivo, String torre, String apto) {
+			String unidadResidencial;
+			public Info(String alertaId, String mensajeAlerta, String idDispositivo, String torre, String apto, String unidadResidencial) {
 				super();
 				this.alertaId = alertaId;
 				this.mensajeAlerta = mensajeAlerta;
 				this.idDispositivo = idDispositivo;
 				this.torre = torre;
 				this.apto = apto;
+				this.unidadResidencial = unidadResidencial;
 			}
 			@Override
 			public String toString() { return mensajeAlerta; }
@@ -202,7 +206,6 @@ public class Disparador {
 			return ret;
 		}
 
-		@SuppressWarnings("serial")
 		public class Detalle extends JFrame {
 			public Detalle(Countent c) {
 				setSize(370,200);
@@ -250,8 +253,8 @@ public class Disparador {
 					"	\"mensajeAlerta\": \""+info.get("mensajeAlerta").getAsString()+"\",\r\n" + 
 					"	\"idDispositivo\": \""+info.get("idDispositivo").getAsString()+"\",\r\n" + 
 					"	\"torre\": "+info.get("torre").getAsInt()+",\r\n" + 
-					"	\"apto\": "+info.get("apto").getAsString()+"\r\n" + 
-					"\r\n" + 
+					"	\"apto\": "+info.get("apto").getAsString()+",\r\n" + 
+					"	\"unidadResidencial\": \""+info.get("unidadResidencial").getAsString()+"\" \r\n" + 
 					"}";
 			
 		}
@@ -272,7 +275,7 @@ public class Disparador {
 				os.flush();
 				os.close();
 				int responseCode = con.getResponseCode();
-//				System.out.println("Response Code :" + responseCode);
+				System.out.println("Response Code :" + responseCode);
 				BufferedReader reader = null;
 				String json = null;
 				reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -280,7 +283,7 @@ public class Disparador {
 				String line = null;
 				while ((line = reader.readLine()) != null) jsonSb.append(line);
 				json = jsonSb.toString();
-//				System.out.println(json);
+				System.out.println(json);
 			} catch (Exception e) {	e.printStackTrace(); }
 		}
 		public static void postBatch(String msg) {
@@ -295,7 +298,7 @@ public class Disparador {
 				os.flush();
 				os.close();
 				int responseCode = con.getResponseCode();
-//				System.out.println("Response Code :" + responseCode);
+				System.out.println("Response Code :" + responseCode);
 				BufferedReader reader = null;
 				String json = null;
 				reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -303,7 +306,7 @@ public class Disparador {
 				String line = null;
 				while ((line = reader.readLine()) != null) jsonSb.append(line);
 				json = jsonSb.toString();
-//				System.out.println(json);
+				System.out.println(json);
 			} catch (Exception e) {	e.printStackTrace(); }
 		}
 	}

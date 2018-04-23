@@ -40,7 +40,7 @@ Para la realización de la gestión de las contraseñas, se realiza el envio de 
 
 En caso de que todo salga bien al momento de realizar la solicitud, el Arduino responde con:
 ``` OK:<codigoProtocolo> ```, donde ``` <codigoProtocolo> ``` puede ser un valor entre 01-05.
-En el caso del prótocolo "05", se responde adicionalmente con las alarmas separadas por ":".
+En el caso del prótocolo "05", se responde adicionalmente con las alarmas separadas por ":" y se termina con "FIN".
 
 ### Errores
 

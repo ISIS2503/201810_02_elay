@@ -30,8 +30,11 @@ import persistencia.AlarmaPersistence;
 import persistencia.DispositivoPersistence;
 import persistencia.InmueblePersistence;
 import persistencia.UnidadResidencialPersistence;
+import auth.AuthorizationFilter.Role;
+import auth.Secured;
 
 @Path("alarmas")
+@Secured({Role.yale})
 public class AlarmaService {
 
     @Context

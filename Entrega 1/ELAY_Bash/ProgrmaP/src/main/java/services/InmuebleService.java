@@ -31,6 +31,8 @@ import javax.ws.rs.core.Response;
 import persistencia.InmueblePersistence;
 import persistencia.InmueblePersistence;
 import persistencia.UnidadResidencialPersistence;
+import auth.AuthorizationFilter.Role;
+import auth.Secured;
 
 /**
  *
