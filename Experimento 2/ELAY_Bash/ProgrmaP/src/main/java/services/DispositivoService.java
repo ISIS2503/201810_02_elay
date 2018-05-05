@@ -36,6 +36,7 @@ import auth.Secured;
  * @author jd.trujillom
  */
 @Path("dispositivos")
+@Secured({Role.yale})
 public class DispositivoService {
 
     @Context
@@ -91,6 +92,7 @@ public class DispositivoService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{id}/alarmas")
+    @Secured({Role.propietario})
     public Response getAlarmasDispositivoPorId(@PathParam("id") String id) {
         DispositivoPersistence dispositivoPersistence = new DispositivoPersistence();
 

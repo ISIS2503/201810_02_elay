@@ -12,11 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-<<<<<<< HEAD
-=======
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
->>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -52,12 +49,8 @@ public class Dispositivo implements Serializable {
     //@Column("activado")
     private boolean activado;
     
-<<<<<<< HEAD
-    @PodamExclude
-    @OneToMany(mappedBy="dispositivo")
-=======
+
     @ManyToOne
->>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
     private Hub hub;
     
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

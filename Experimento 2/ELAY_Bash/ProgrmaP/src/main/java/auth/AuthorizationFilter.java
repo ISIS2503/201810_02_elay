@@ -55,11 +55,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         yale,
         administrador,
         propietario,
-<<<<<<< HEAD
         seguridad_privada
-=======
-        seguridadprivada
->>>>>>> 2c70c4882a04aac1cbd4f3065cdde2e7ad76d4e3
     }
 
     @Context
@@ -121,7 +117,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         if (!JWT.decode(token).getClaim("gty").isNull() && JWT.decode(token).getClaim("gty").asString().equals("client-credentials")) {
             roles.add("service");
         } else {
-            roles = JWT.decode(token).getClaim("http://thermalcomfort/roles").asList(String.class);
+            roles = JWT.decode(token).getClaim("http://elay/roles").asList(String.class);
         }
         for(String role: roles) {
             if(allowedRoles.contains(Role.valueOf(role)))

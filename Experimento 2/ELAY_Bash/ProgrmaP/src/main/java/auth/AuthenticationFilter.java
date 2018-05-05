@@ -49,6 +49,7 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 @Secured
 @Provider
@@ -57,7 +58,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     public static final String AUTHENTICATION_SCHEME = "Bearer";
 
-    final JwkProvider provider = new UrlJwkProvider("https://isis2503-maforero11.auth0.com/.well-known/jwks.json");
+    final JwkProvider provider = new UrlJwkProvider("https://isis2503-jdtrujillom.auth0.com/.well-known/jwks.json");
     final String privateKeyId = "PK";
     RSAKeyProvider keyProvider = new RSAKeyProvider() {
         @Override
@@ -74,7 +75,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         @Override
         public RSAPrivateKey getPrivateKey() {
-            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+            Security.addProvider(new BouncyCastleProvider());
             KeyPairGenerator keyPairGenerator;
             try {
                 keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
@@ -98,7 +99,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     void verifyToken(String token) {
         try {//Cambiar por variables de entorno
-            String issuer = "https://elay-2018.auth0.com";
+            String issuer = "https://isis2503-jdtrujillom.auth0.com/";
             String audience;
             //Access token
             if (!JWT.decode(token).getClaim("gty").isNull() && JWT.decode(token).getClaim("gty").asString().equals("client-credentials")) {
@@ -106,7 +107,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             }
             //ID token
             else {
-                audience = "YiU_Q8fo5EQ-mJCHY2KyooIfmELTf9ZZ";
+                audience = "Fm291VvLyWt5V48H5OQCUzn4dKO7NSVA";
             }
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(issuer)

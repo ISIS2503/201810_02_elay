@@ -1,5 +1,6 @@
 package services;
 
+import auth.AuthorizationFilter;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -19,22 +20,18 @@ import entidad.Dispositivo;
 import entidad.Inmueble;
 import entidad.UnidadResidencial;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.GenericEntity;
-import org.codehaus.jackson.node.ObjectNode;
-import org.codehaus.jettison.json.JSONObject;
 import persistencia.AlarmaPersistence;
 import persistencia.DispositivoPersistence;
 import persistencia.InmueblePersistence;
 import persistencia.UnidadResidencialPersistence;
-import auth.AuthorizationFilter.Role;
 import auth.Secured;
 
 @Path("alarmas")
-@Secured({Role.yale})
+@Secured
 public class AlarmaService {
 
     @Context
@@ -42,6 +39,7 @@ public class AlarmaService {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
+    @Secured({AuthorizationFilter.Role.yale})
     public Response getAllAlarmas() {
         AlarmaPersistence CP = new AlarmaPersistence();
         List<AlarmaDTO> listaDTO = toDTOAlarmaList(CP.all());
@@ -55,6 +53,7 @@ public class AlarmaService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{id : \\d+}")
+    @Secured({AuthorizationFilter.Role.yale})
     public Response getAlarmaPorId(@PathParam("id") String id) {
         AlarmaPersistence CP = new AlarmaPersistence();
         convert<AlarmaDTO, Alarma> convert = new convert<>(AlarmaDTO.class, Alarma.class);

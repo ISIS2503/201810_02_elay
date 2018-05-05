@@ -40,6 +40,7 @@ import auth.Secured;
  * @author jd.trujillom
  */
 @Path("unidadesResidenciales")
+@Secured({Role.yale})
 public class UnidadResidencialService {
 
     @Context
@@ -126,6 +127,7 @@ public class UnidadResidencialService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{nombre}/alarmas")
+    @Secured({Role.seguridad_privada})
     public Response getAlarmasUnidadResidencial(@PathParam("nombre") String nombre) {
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 

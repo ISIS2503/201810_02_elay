@@ -34,6 +34,7 @@ import auth.Secured;
  * @author jd.trujillom
  */
 @Path("hub")
+@Secured({Role.yale})
 public class HubService {
     
     @Context

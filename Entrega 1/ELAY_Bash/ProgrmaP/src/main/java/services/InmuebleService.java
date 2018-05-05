@@ -39,6 +39,8 @@ import auth.Secured;
  * @author jd.trujillom
  */
 @Path("inmuebles")
+@Secured({Role.yale})
+
 public class InmuebleService {
     
     @Context
@@ -130,6 +132,7 @@ public class InmuebleService {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("alarmas")
+    @Secured({Role.propietario})
     public Response getAlarmasInmuebleByTorreAndApartamento(@QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento){
         try{
            InmueblePersistence persistence = new InmueblePersistence();
