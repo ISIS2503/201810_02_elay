@@ -1,6 +1,11 @@
-C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Experimento 2\ELAY_Speed\src\main\java\programa\Main.java
-C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Experimento 2\ELAY_Speed\src\main\java\servicios\EnviarMensaje.java
-C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Experimento 2\ELAY_Speed\src\main\java\programa\ClienteMQTT.java
-C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Experimento 2\ELAY_Speed\src\main\java\programa\ManejadorContrasenias.java
-C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Experimento 2\ELAY_Speed\src\main\java\servicios\Contrasenias.java
-C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Experimento 2\ELAY_Speed\src\main\java\programa\MailSender.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\healdcheck\Verificador.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\programa\Main.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\servicios\EnviarMensaje.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\healdcheck\HealdCheck.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\healdcheck\Notificador.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\programa\ClienteMQTT.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\programa\ManejadorContrasenias.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\healdcheck\Reporte.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\healdcheck\ReporteHub.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\programa\MailSender.java
+C:\Users\ws.duarte\Desktop\Proyecto\201810_02_elay\Entrega 2\ELAY_Speed\src\main\java\servicios\Contrasenias.java

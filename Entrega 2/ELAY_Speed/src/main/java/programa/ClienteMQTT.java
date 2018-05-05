@@ -23,6 +23,8 @@
  */
 package programa;
 
+import ch.qos.logback.classic.util.ContextInitializer;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -55,7 +57,6 @@ public class ClienteMQTT
     
     private MqttClient cliente;
     public ClienteMQTT() {
-        System.out.println("================================== programa.ClienteMQTT.<init>()");
         if(cliente == null) {
             try {
                 cliente = new MqttClient("tcp://172.24.42.23:8083","0");
@@ -64,8 +65,8 @@ public class ClienteMQTT
                 op.setConnectionTimeout(100000);
                 cliente.setCallback(new MqttCallback() {
                     @Override public void connectionLost(Throwable thrwbl) {Logger.getLogger(ClienteMQTT.class.getName()).log(Level.INFO, "==== Gabrial no joda x2 {0}", time = System.currentTimeMillis()-time);}
-                    @Override public void messageArrived(String string, MqttMessage mm) throws Exception {
-                        System.out.println(string+" >> "+mm.toString());
+                    @Override public void messageArrived(String topic, MqttMessage mm) throws Exception {
+                        System.out.println(topic+" >> "+mm.toString());
                         if(mm.toString().startsWith(Contrasenias.Protocolo.ERROR.getCmd())) {
                             switch (mm.toString().split(":")[1]) {
                                 case "01":
@@ -104,14 +105,22 @@ public class ClienteMQTT
                                     break;
                             }
                         }
+                        
+                        if(p(t -> t.equals("estado") ,topic)) {
+                            System.out.println("estado: "+mm);
+                            if(mm.toString().startsWith("STARDHUB")) healdcheck.HealdCheck.empezarVerificador(mm.toString().split(":")[1]);
+                            if(mm.toString().startsWith("ESTADO")) healdcheck.HealdCheck.notificar(mm.toString().split(":")[2]);
+                        }
                     }
                     @Override public void deliveryComplete(IMqttDeliveryToken imdt) {}
                 });
                 cliente.connect(op);
-                cliente.subscribe("#", 0);
+                cliente.subscribe(new String[]{Topicos.SUSCRIBIR.topic,"estado"}, new int[]{1,1});
             } catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
         }
     }
+    
+    private boolean p(Predicate<String> l, String s) { return l.test(s); }
     
     private void reportar(String msg) {
         LOG.log(Level.SEVERE, msg);
@@ -124,6 +133,11 @@ public class ClienteMQTT
     
     public static void publicar(String msg, int QoS, boolean retain) {
         try { CLIENTE.cliente.publish(Topicos.PUBLICAR.topic, msg.getBytes(), QoS, retain); } 
+        catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
+    }
+    
+    public static void publicar(String topic, String msg, int QoS, boolean retain) {
+        try { CLIENTE.cliente.publish(topic, msg.getBytes(), QoS, retain); } 
         catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
     }
     
