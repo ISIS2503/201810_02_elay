@@ -13,7 +13,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.function.Predicate;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -47,6 +46,7 @@ public class Disparador {
 	public Disparador(Interfaz i) {
 		this.interfaz = i;
 		try {
+			
 			String myTopic = "#";
 			sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
 			MqttConnectOptions connOpts = new MqttConnectOptions();
@@ -57,44 +57,19 @@ public class Disparador {
 				}
 				public void messageArrived(String topic, MqttMessage message) throws Exception {
 					System.out.println(topic+" >> "+message.toString());
-					if(p( t -> t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale") , topic)) {
+					if(validarTopico(topic)) {
 //						new Speed(topic.split("/")[0],message.toString()).start();
 //						new Batch(message.toString()).start();
 						imprimir(topic, message.toString());
-					} else if(p( t -> t.equals("preguntar") && message.toString().equals("ACTIVO") , topic)) {
-						System.out.println("Envio Estado:ok:1");
-						sampleClient.publish("estado", "ESTADO:OK:1".getBytes(), 1, true);
 					}
 				}
 				public void deliveryComplete(IMqttDeliveryToken token) {
 					System.out.println("Hola");
 				}
 			});
-			new C(sampleClient).start();
 			sampleClient.connect(connOpts);
 			sampleClient.subscribe(myTopic, 0);
-			
 		} catch(MqttException e) { e.printStackTrace(); }
-	}
-	
-	public static class C extends Thread {
-		MqttClient s;
-		public C(MqttClient s) {
-			this.s = s;
-		}
-		@Override
-		public void run() {
-			try {
-				Thread.sleep(100);
-				System.out.println("Activar");
-				s.publish("estado", "STARDHUB:1".getBytes(), 1, true);
-			} catch (MqttException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public MqttClient getSampleClient() {
@@ -112,7 +87,8 @@ public class Disparador {
 				info.get("unidadResidencial").getAsString())));
 	}
 	
-	private boolean p(Predicate<String> l, String s) { return l.test(s); }
+	
+	private boolean validarTopico(String t) { return t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"); }
 	
 	private void add(String topic, Countent temp) {
 		String[] s = topic.split("/");
