@@ -64,7 +64,10 @@ public class ClienteMQTT
                 op.setCleanSession(true);
                 op.setConnectionTimeout(100000);
                 cliente.setCallback(new MqttCallback() {
-                    @Override public void connectionLost(Throwable thrwbl) {Logger.getLogger(ClienteMQTT.class.getName()).log(Level.INFO, "==== Gabrial no joda x2 {0}", time = System.currentTimeMillis()-time);}
+                    @Override public void connectionLost(Throwable thrwbl) {
+                        Logger.getLogger(ClienteMQTT.class.getName()).log(Level.INFO, "==== Gabrial no joda x2 {0}", time = System.currentTimeMillis()-time);
+                        new Exception(thrwbl).printStackTrace();
+                    }
                     @Override public void messageArrived(String topic, MqttMessage mm) throws Exception {
                         System.out.println(topic+" >> "+mm.toString());
                         if(mm.toString().startsWith(Contrasenias.Protocolo.ERROR.getCmd())) {
