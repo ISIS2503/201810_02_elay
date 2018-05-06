@@ -21,28 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package servicios;
 
-import java.util.ArrayList;
-import programa.MailSender;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
+import procesadortopicos.Disparador;
 
 /**
  *
  * @author ws.duarte
  */
-public class HealdCheck {
+@Path("healdcheck")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class HealdCheckService extends Application{
 
-    private static ArrayList<Verificador> verificadores;
-    private static final int time = 1000, max = 10;
-
-    public static void empezarVerificador(String id) {
-        new Thread(new Verificador(time, max, new ReporteHub(),
-                () -> {
-                    try {
-                        new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo();
-                    } catch (Exception e) {
-                    }
-                }, id))
-                .start();
+    public HealdCheckService() {
+    }
+    
+    @GET
+    public String reportar() {
+        System.out.println("*****************************servicios.HealdCheckService.reportar()");
+        return "OK:"+Disparador.ID;
     }
 }

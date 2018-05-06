@@ -23,6 +23,13 @@
  */
 package healdcheck;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import programa.ClienteMQTT;
 
 /**
@@ -31,23 +38,33 @@ import programa.ClienteMQTT;
  */
 public class ReporteHub implements Reporte {
 
-    private boolean reportar;
+    private BufferedReader reader = null;
+    private String json = null;
+    private final String URL = "http://localhost:8181/healdcheck";
+
+    public ReporteHub() {
+
+    }
 
     @Override
     public boolean Reportar(int time) {
+
+        HttpURLConnection connection = null;
         try {
-            ClienteMQTT.publicar("preguntar","ACTIVO",2,true);
+            URL resetEndpoint = new URL(URL);
+            connection = (HttpURLConnection) resetEndpoint.openConnection();
+            connection.setRequestMethod("GET");
             Thread.sleep(time);
-            boolean ret = reportar;
-            reportar = false;
-            return ret;
-        } catch (Exception e) {
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder jsonSb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                jsonSb.append(line);
+            }
+            json = jsonSb.toString();
+            return  connection.getResponseCode() == 200 && json.startsWith("OK");
+        } catch (InterruptedException | IOException e) {
             return false;
-        }
+        } 
     }
-
-    public void registrarActividad() {
-        reportar = true;
-    }
-
 }

@@ -336,7 +336,34 @@ public class Disparador {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new Disparador(new Interfaz());
+//		new Disparador(new Interfaz());
+		HttpURLConnection connection = null;
+	    BufferedReader reader = null;
+	    String json = null;
+	    try {
+	      URL resetEndpoint = new URL("http://localhost:8181/healdcheck");
+	      
+	      for(int i = 0; i < 10; i++) {
+	    	  connection = (HttpURLConnection) resetEndpoint.openConnection();
+		      connection.setRequestMethod("GET");
+	    	  System.out.println(i);
+	    	  Thread.sleep(5000);
+		      reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		      StringBuilder jsonSb = new StringBuilder();
+		      String line = null;
+		      while ((line = reader.readLine()) != null) {
+		        jsonSb.append(line);
+		      }
+		      json = jsonSb.toString();
+		      System.out.println(json);
+		      
+	      }
+	      
+//	      int responseCode = connection.getResponseCode();
+//	      System.out.println(responseCode);
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
 	}
 
 }

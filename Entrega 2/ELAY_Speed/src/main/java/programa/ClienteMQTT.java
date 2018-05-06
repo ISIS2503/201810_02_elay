@@ -109,11 +109,6 @@ public class ClienteMQTT
                             }
                         }
                         
-                        if(p(t -> t.equals("estado") ,topic)) {
-                            System.out.println("estado: "+mm);
-                            if(mm.toString().startsWith("STARDHUB")) healdcheck.HealdCheck.empezarVerificador(mm.toString().split(":")[1]);
-                            if(mm.toString().startsWith("ESTADO")) healdcheck.HealdCheck.notificar(mm.toString().split(":")[2]);
-                        }
                     }
                     @Override public void deliveryComplete(IMqttDeliveryToken imdt) {}
                 });
@@ -122,8 +117,6 @@ public class ClienteMQTT
             } catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
         }
     }
-    
-    private boolean p(Predicate<String> l, String s) { return l.test(s); }
     
     private void reportar(String msg) {
         LOG.log(Level.SEVERE, msg);

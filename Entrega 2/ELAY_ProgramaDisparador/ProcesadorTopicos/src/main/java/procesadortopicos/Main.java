@@ -21,28 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package procesadortopicos;
 
-import java.util.ArrayList;
-import programa.MailSender;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
  *
  * @author ws.duarte
  */
-public class HealdCheck {
-
-    private static ArrayList<Verificador> verificadores;
-    private static final int time = 1000, max = 10;
-
-    public static void empezarVerificador(String id) {
-        new Thread(new Verificador(time, max, new ReporteHub(),
-                () -> {
-                    try {
-                        new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo();
-                    } catch (Exception e) {
-                    }
-                }, id))
-                .start();
+public class Main {
+    public static void main(String[] args) throws Exception {
+        new Disparador(new Disparador.Interfaz());
+        String webappDirLocation = "src/main/webapp/";
+        String webPort = System.getenv("PORT");
+        if (webPort == null || webPort.isEmpty()) {
+            webPort = "8181";
+        }
+        Server server = new Server(Integer.valueOf(webPort));
+        WebAppContext root = new WebAppContext();
+        root.setContextPath("/");
+        root.setDescriptor(webappDirLocation + "/WEB-INF/web.xml");
+        root.setResourceBase(webappDirLocation);
+        root.setParentLoaderPriority(true);
+        server.setHandler(root);
+        server.start();
+        server.join();
     }
 }

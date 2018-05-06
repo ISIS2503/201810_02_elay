@@ -1,4 +1,5 @@
 servicios\Contrasenias$Protocolo.class
+servicios\HealdCheckService.class
 healdcheck\Verificador.class
 programa\MailSender.class
 healdcheck\Reporte.class

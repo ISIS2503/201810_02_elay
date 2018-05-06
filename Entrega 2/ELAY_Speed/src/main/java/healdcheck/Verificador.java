@@ -47,10 +47,6 @@ public class Verificador implements Runnable {
         this.id = id;
     }
 
-    Verificador(int time, int max, ReporteHub reporteHub, Notificador notificador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public void run() {
         while (activo) {
@@ -71,9 +67,7 @@ public class Verificador implements Runnable {
         run();
     }
     
-    public static void iniciarVerificador(int time, int cantLost, Reporte reporte, Notificador notificador, String id) {
-        new Thread(new Verificador(time, cantLost, reporte, notificador, id)).start();
-    }
+    
     
     public Reporte darReporte() {
         return reporte;

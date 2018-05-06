@@ -1,6 +1,8 @@
 procesadortopicos\Disparador$Countent.class
+procesadortopicos\Reporte.class
+servicios\HealdCheckService.class
 procesadortopicos\Disparador$HTTP.class
-procesadortopicos\Disparador$C.class
+procesadortopicos\Verificador.class
 procesadortopicos\Disparador.class
 procesadortopicos\Disparador$1.class
 procesadortopicos\Disparador$Batch.class
@@ -11,3 +13,5 @@ procesadortopicos\Disparador$Interfaz$1.class
 procesadortopicos\Disparador$Interfaz.class
 procesadortopicos\Disparador$Interfaz$Detalle$1.class
 procesadortopicos\Disparador$Countent$Info.class
+procesadortopicos\Main.class
+procesadortopicos\Notificador.class
