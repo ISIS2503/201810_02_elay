@@ -550,7 +550,7 @@ void processCommand(String command) {
 
   if (code == NO_PERMITIDAS) {
     noPerms = com;
-    Serial.println(OPERACION_CORRECTA + ":" + code);
+    Serial.println(OPERACION_CORRECTA + ":0" + code);
   }
   else if (code == CREAR_CONTRA) {
     addPassword(comandos[2], comandos[1]);
