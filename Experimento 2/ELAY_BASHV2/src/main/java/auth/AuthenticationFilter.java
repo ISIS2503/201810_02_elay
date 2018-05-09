@@ -23,7 +23,6 @@
  */
 package auth;
 
-
 import com.auth0.jwk.JwkException;
 import com.auth0.jwk.JwkProvider;
 import com.auth0.jwk.UrlJwkProvider;
@@ -33,6 +32,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.RSAKeyProvider;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -98,19 +98,22 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     Algorithm algorithm = Algorithm.RSA256(keyProvider);
 
-    void verifyToken(String token) {
+    void verifyToken(String token) throws IllegalArgumentException, UnsupportedEncodingException {
         try {//Cambiar por variables de entorno
             String issuer = "https://isis2503-jdtrujillom.auth0.com/";
             String audience;
             //Access token
-            
-            if (!JWT.decode(token).getClaim("gty").isNull() && JWT.decode(token).getClaim("gty").asString().equals("client-credentials")) {
+            if (!JWT.decode(token).getClaim("gty").isNull() && JWT.decode(token).getClaim("gty").asString().equals("password")) {
                 audience = "uniandes.edu.co/elay";
-            }
-            //ID token
+
+                System.out.println("Access token");
+            } //ID token
             else {
                 audience = "Fm291VvLyWt5V48H5OQCUzn4dKO7NSVA";
+                System.out.println("id token");
             }
+
+            System.out.println(JWT.decode(token).getAlgorithm());
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(issuer)
                     .withAudience(audience)
