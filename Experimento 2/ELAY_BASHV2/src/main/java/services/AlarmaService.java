@@ -12,7 +12,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import convert.convert;
 import dto.AlarmaDTO;
 import dto.AlarmaInfo;
 import entidad.Alarma;
@@ -39,6 +38,7 @@ public class AlarmaService {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
+    @Secured({AuthorizationFilter.Role.yale})
     public Response getAllAlarmas() {
         AlarmaPersistence CP = new AlarmaPersistence();
         List<AlarmaDTO> listaDTO = toDTOAlarmaList(CP.all());
@@ -55,15 +55,13 @@ public class AlarmaService {
     @Secured({AuthorizationFilter.Role.yale})
     public Response getAlarmaPorId(@PathParam("id") String id) {
         AlarmaPersistence CP = new AlarmaPersistence();
-        convert<AlarmaDTO, Alarma> convert = new convert<>(AlarmaDTO.class, Alarma.class);
 
         Alarma entity = CP.find(id);
         if (entity == null) {
             return Response.status(404).build();
         }
 
-        AlarmaDTO dto = convert.entityToDto(entity);
-
+        AlarmaDTO dto = new AlarmaDTO(entity);
         return Response.status(200).entity(dto).build();
     }
 
