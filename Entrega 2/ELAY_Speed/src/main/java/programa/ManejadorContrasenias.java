@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class ManejadorContrasenias {
     
     public static final int CANT_CONTRASENIAS = 20;
-    public static List<Contrasena> contrasenas = new ArrayList<>(CANT_CONTRASENIAS);
+    public static final List<Contrasena> contrasenas = new ArrayList<>(CANT_CONTRASENIAS);
     static {
         for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.add(new Contrasena("-1", System.currentTimeMillis()));  //contrasenias[i] = "-1";
     }

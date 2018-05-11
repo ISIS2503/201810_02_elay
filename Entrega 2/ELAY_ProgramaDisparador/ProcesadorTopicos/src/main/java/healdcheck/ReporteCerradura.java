@@ -23,45 +23,38 @@
  */
 package healdcheck;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import procesadortopicos.Disparador;
+
+
 /**
  *
  * @author ws.duarte
  */
-public class Verificador implements Runnable {
+public class ReporteCerradura implements Reporte{
 
-    private boolean activo;
-    private final int time;
-    private final int cantLost;
-    private int actLost;
-    private final Reporte reporte;
-    private final Notificador notificador;
-    private final String id;
+    private boolean reportar;
+    private String id;
 
-    public Verificador(int time, int cantLost, Reporte reporte, Notificador notificador, String id) {
-        activo = true;
-        actLost = 0;
-        this.time = time;
-        this.cantLost = cantLost;
-        this.reporte = reporte;
-        this.notificador = notificador;
+    public ReporteCerradura(String id) {
+        reportar = false;
         this.id = id;
     }
-
+    
     @Override
-    public void run() {
-        while (activo) {
-            if (reporte.Reportar(time)) {
-                actLost = 0;
-            } else {
-                actLost++;
-            }
-            if (actLost == cantLost) {
-                activo = false;
-                ManejadorHealdCheck.eliminar(((ReporteCerradura)reporte).getId());
-                notificador.notificar();
-            }
+    public boolean Reportar(int time) {
+        try {
+            Disparador.sampleClient.publish("entradasCerradura", "06:".getBytes(),2,false);
+            Thread.sleep(time);
+            boolean ret= reportar;
+            reportar = false;
+            return ret;
+        } catch (MqttException | InterruptedException ex) {
+            Logger.getLogger(ReporteCerradura.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        System.gc();
     }
 
     public String getId() {
@@ -70,13 +63,15 @@ public class Verificador implements Runnable {
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Verificador)) return false;
-        Verificador v = (Verificador) obj;
-        return v.getId().equals(id);
+        return obj instanceof ReporteCerradura && ((ReporteCerradura) obj).id.equals(id);
     }
 
     @Override
     public int hashCode() {
         return id.hashCode();
     }
+    
+    public void reportar() {
+        reportar = true;
+    }    
 }

@@ -37,6 +37,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import healdcheck.ManejadorHealdCheck;
 
 /**
  *
@@ -47,6 +48,7 @@ public class Disparador {
     public static ArrayList<LinkedList<Countent>> lista;
     public Interfaz interfaz;
     public static final String ID = "1";
+
     static {
         lista = new ArrayList<LinkedList<Countent>>();
         for (int i = 0; i < 4; i++) {
@@ -70,11 +72,16 @@ public class Disparador {
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     System.out.println(topic + " >> " + message.toString());
                     if (p(t -> t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"), topic)) {
-//						new Speed(topic.split("/")[0],message.toString()).start();
-//						new Batch(message.toString()).start();
+                        new Speed(topic.split("/")[0], message.toString()).start();
+                        new Batch(message.toString()).start();
                         imprimir(topic, message.toString());
-                    } 
+                    } else if(message.toString().startsWith("HC:")) {
+                        ManejadorHealdCheck.reportar(message.toString().split(":")[1]);
+                    } else if(message.toString().startsWith("STARD:")){
+                        ManejadorHealdCheck.iniciarMedicion(message.toString().split(":")[1]);
+                    }
                 }
+
                 public void deliveryComplete(IMqttDeliveryToken token) {
                     System.out.println("Hola");
                 }
@@ -87,33 +94,33 @@ public class Disparador {
             e.printStackTrace();
         }
     }
-    
+
     public final void post(String msg) {
         try {
-                URL url = new URL("http://localhost:8080/healdcheck");
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("POST");
-                con.setRequestProperty("Content-Type", "application/json");
-                con.setDoOutput(true);
-                OutputStream os = con.getOutputStream();
-                os.write(msg.getBytes());
-                os.flush();
-                os.close();
-                int responseCode = con.getResponseCode();
-                System.out.println("Response Code :" + responseCode);
-                BufferedReader reader = null;
-                String json = null;
-                reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                StringBuilder jsonSb = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    jsonSb.append(line);
-                }
-                json = jsonSb.toString();
-                System.out.println(json);
-            } catch (Exception e) {
-                e.printStackTrace();
+            URL url = new URL("http://localhost:8080/healdcheck");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+            OutputStream os = con.getOutputStream();
+            os.write(msg.getBytes());
+            os.flush();
+            os.close();
+            int responseCode = con.getResponseCode();
+            System.out.println("Response Code :" + responseCode);
+            BufferedReader reader = null;
+            String json = null;
+            reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            StringBuilder jsonSb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                jsonSb.append(line);
             }
+            json = jsonSb.toString();
+            System.out.println(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public MqttClient getSampleClient() {
