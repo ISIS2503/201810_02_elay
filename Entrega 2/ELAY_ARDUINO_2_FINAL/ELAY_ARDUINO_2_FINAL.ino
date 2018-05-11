@@ -566,7 +566,7 @@ void processCommand(String command) {
   } else if (code == ENVIAR_TODAS ) {
     getAllPasswords();
   } else if (code == HC){
-    Serial.println(RESPUESTA); 
+    Serial.println(RESPUESTA + ":" + ID); 
   }
   else {
     Serial.println(OPERACION_ERROR + ":" + code);
