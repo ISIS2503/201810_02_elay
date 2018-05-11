@@ -55,8 +55,7 @@ public class EnviarMensaje extends Application {
         try {
             JsonObject info = new JsonParser().parse(j).getAsJsonObject().get("info").getAsJsonObject();
             String[] ss = darValues(rol, info);
-            new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
-                    ss[0], ss[1]).start();
+//            new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),     ss[0], ss[1]).start();
         } catch (Exception ex) {
             Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
