@@ -27,18 +27,17 @@ import javax.persistence.Table;
 @Table(name = "HUB")
 public class Hub implements Serializable {
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     
-    //@Column("frecuenciaReporte")
+    @Column(name = "frecuenciaReporte")
     private Integer frecuenciaReporte;
     
-    //@Column("numeroPerdidasToleradas")
+    @Column(name = "numeroPerdidasToleradas")
     private Integer numeroPerdidasToleradas;
     
-    //@Column("activado")
+    @Column(name = "activado")
     private boolean activado;
     
     

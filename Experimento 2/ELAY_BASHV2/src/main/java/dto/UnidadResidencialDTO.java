@@ -24,17 +24,14 @@ public class UnidadResidencialDTO {
 
     public String nombre;
 
-    public boolean activado;
-
     public List<InmuebleDTO> inmuebles;
 
     public List<AlarmaDTO> alarmas;
 
-    public UnidadResidencialDTO(String id, String direccion, String nombre, boolean activado, List<InmuebleDTO> inmuebles, List<AlarmaDTO> alarmas) {
+    public UnidadResidencialDTO(String id, String direccion, String nombre, List<InmuebleDTO> inmuebles, List<AlarmaDTO> alarmas) {
         this.id = id;
         this.direccion = direccion;
         this.nombre = nombre;
-        this.activado = activado;
         this.inmuebles = inmuebles;
         this.alarmas = alarmas;
     }
@@ -67,14 +64,6 @@ public class UnidadResidencialDTO {
         this.nombre = nombre;
     }
 
-    public boolean getActivado() {
-        return activado;
-    }
-
-    public void setActivado(boolean activado) {
-        this.activado = activado;
-    }
-
     public String getId() {
         return id;
     }
@@ -104,7 +93,6 @@ public class UnidadResidencialDTO {
         entity.setInmuebles(toEntityInmuebleList(inmuebles));
         entity.setDireccion(direccion);
         entity.setNombre(nombre);
-        entity.setActivado(activado);
         entity.setAlarmas(toEntityAlarmaList(alarmas));
 
         return entity;
@@ -114,8 +102,8 @@ public class UnidadResidencialDTO {
         this.id = unidadResidencial.getId();
         this.nombre = unidadResidencial.getNombre();
         this.direccion = unidadResidencial.getDireccion();
-        this.activado = unidadResidencial.isActivado();
-        this.inmuebles = toDTOInmuebleList(unidadResidencial.getInmuebles());
+        
+        this.inmuebles = unidadResidencial.getInmuebles() != null?toDTOInmuebleList(unidadResidencial.getInmuebles()):new ArrayList<InmuebleDTO>();
         this.alarmas = toDTOAlarmaList(unidadResidencial.getAlarmas());
     }
 

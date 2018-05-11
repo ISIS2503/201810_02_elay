@@ -26,6 +26,13 @@ import javax.ws.rs.core.Response;
 import persistencia.InmueblePersistence;
 import auth.AuthorizationFilter.Role;
 import auth.Secured;
+import entidad.ErrorEdited;
+import entidad.Hub;
+import entidad.UnidadResidencial;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import persistencia.HubPersistence;
+import persistencia.UnidadResidencialPersistence;
 
 /**
  *
@@ -39,6 +46,12 @@ public class InmuebleService {
     @Context
     ServletContext servletContext;
 
+    /**
+     * Obtiene todos los inmuebles. Solo pueden ser obtenidos por un
+     * administrador de Yale.
+     *
+     * @return todos los inmuebles que están en el sistema.
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll() {
@@ -80,34 +93,45 @@ public class InmuebleService {
 //        return Response.status(200).entity(nuevoDTO).build();
 //
 //    }
+    /**
+     * Obtiene un inmueble que pertene a la unidad residencial y es del bloque y
+     * es el apartamento pasados por parametros. Solo pueden ser obtenidos por
+     * un administrador Yale.
+     *
+     * @param nombre de la unidad residencial.
+     * @param torre del inmueble
+     * @param apartamento del inmueble.
+     * @return el inmueble con estos atributos. Null en caso de no encontrarlos.
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{nombre}")
-    public Response getInmueblePorId(@PathParam("nombre") String nombre) {
-        InmueblePersistence URP = new InmueblePersistence();
-
-        Inmueble entity = URP.find(nombre);
-        if (entity == null) {
-            return Response.status(404).build();
-        }
-
-        InmuebleDTO dto = new InmuebleDTO();
-        dto.toDTO(entity);
-        return Response.status(200).entity(dto).build();
-    }
-
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    @Path("buscar")
-    public Response getInmuebleByTorreAndApartamento(@QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
+    @Path("buscar/{nombre}")
+    public Response getInmuebleByTorreAndApartamento(@PathParam("nombre") String nombre, @QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
         try {
-            InmueblePersistence persistence = new InmueblePersistence();
-            Inmueble buscado = persistence.findInmuebleByTorreAndApartamento(torre, apartamento);
+            UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
-            if (buscado == null) {
-                return Response.status(404).entity("No existe un inmueble con esas caracteristcas").build();
+            //Verifica que la unidad residencial exista.
+            UnidadResidencial unidadResidencial = URP.find(nombre);
+            if (unidadResidencial == null) {
+                return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
             }
 
+            Inmueble buscado = null;
+
+            //Busca al inmueble por su unidad residencial.
+            for (Inmueble inmueble : unidadResidencial.getInmuebles()) {
+                if (inmueble.getApartamento().equals(apartamento) && inmueble.getTorre().equals(torre)) {
+                    buscado = inmueble;
+                    break;
+                }
+            }
+
+            //Lanza exceptión si no encuentra nada
+            if (buscado == null) {
+                return Response.status(404).entity(new ErrorEdited("No existe un inmueble con esas caracteristicas")).build();
+            }
+
+            //Devuelve el inmueble encontrado.
             InmuebleDTO dto = new InmuebleDTO();
             dto.toDTO(buscado);
 
@@ -117,71 +141,167 @@ public class InmuebleService {
         }
 
     }
-
-    @GET
+    
+    @POST
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("alarmas")
-    @Secured({Role.propietario})
-    public Response getAlarmasInmuebleByTorreAndApartamento(@QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
+    @Path("asociarHUB/{nombre}")
+    public Response asociarHub(@PathParam("nombre") String nombre, @QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento, @QueryParam("idHub") String idHub) {
         try {
-            InmueblePersistence persistence = new InmueblePersistence();
-            Inmueble buscado = persistence.findInmuebleByTorreAndApartamento(torre, apartamento);
+            UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
-            if (buscado == null) {
-                return Response.status(404).entity("No existe un inmueble con esas caracteristcas").build();
+            //Verifica que la unidad residencial exista.
+            UnidadResidencial unidadResidencial = URP.find(nombre);
+            if (unidadResidencial == null) {
+                return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
             }
 
-            List<Alarma> alarmasEntity = buscado.getAlarmas();
-            List<AlarmaDTO> alarmaDTO = toDTOAlarmaList(alarmasEntity);
+            Inmueble buscado = null;
 
-            GenericEntity<List<AlarmaDTO>> listEntity = new GenericEntity<List<AlarmaDTO>>(alarmaDTO) {
-            };
+            //Busca al inmueble por su unidad residencial.
+            for (Inmueble inmueble : unidadResidencial.getInmuebles()) {
+                if (inmueble.getApartamento().equals(apartamento) && inmueble.getTorre().equals(torre)) {
+                    buscado = inmueble;
+                    break;
+                }
+            }
 
-            return Response.status(200).entity(listEntity).build();
+            //Lanza exceptión si no encuentra nada
+            if (buscado == null) {
+                return Response.status(404).entity(new ErrorEdited("No existe un inmueble con esas caracteristicas")).build();
+            }
+
+            //Busca el hub
+            HubPersistence hubPersistence = new HubPersistence();
+            Hub hubBuscado = hubPersistence.find(idHub);
+            
+            if (hubBuscado == null) {
+                return Response.status(404).entity(new ErrorEdited("La hub con id" + idHub + " no existe")).build();
+            }
+            
+            buscado.setHub(hubBuscado);
+            InmueblePersistence inmueblePersistence = new InmueblePersistence();
+            buscado = inmueblePersistence.update(buscado);
+            
+            InmuebleDTO dto = new InmuebleDTO();
+            dto.toDTO(buscado);
+            
+
+            return Response.status(200).entity(dto).build();
         } catch (Exception e) {
             return Response.status(500).entity(e.getMessage()).build();
         }
 
     }
+    
+    
 
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON})
+//    @Path("alarmas")
+//    @Secured({Role.propietario})
+//    public Response getAlarmasInmuebleByTorreAndApartamento(@QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
+//        try {
+//            InmueblePersistence persistence = new InmueblePersistence();
+//            Inmueble buscado = persistence.findInmuebleByTorreAndApartamento(torre, apartamento);
+//
+//            if (buscado == null) {
+//                return Response.status(404).entity("No existe un inmueble con esas caracteristcas").build();
+//            }
+//
+//            List<Alarma> alarmasEntity = buscado.getAlarmas();
+//            List<AlarmaDTO> alarmaDTO = toDTOAlarmaList(alarmasEntity);
+//
+//            GenericEntity<List<AlarmaDTO>> listEntity = new GenericEntity<List<AlarmaDTO>>(alarmaDTO) {
+//            };
+//
+//            return Response.status(200).entity(listEntity).build();
+//        } catch (Exception e) {
+//            return Response.status(500).entity(e.getMessage()).build();
+//        }
+//
+//    }
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{id}")
-    public Response updateUnidadResidencial(InmuebleDTO dto, @PathParam("id") String id) {
-        InmueblePersistence URP = new InmueblePersistence();
-        Inmueble Inmueble = dto.toEntity();
-
-        Inmueble nuevo = URP.find(id);
-        InmuebleDTO nuevoDTO = null;
-        if (nuevo != null) {
-            nuevoDTO = new InmuebleDTO();
-            dto.toDTO(nuevo);
+    @Path("actualizar/{nombre}")
+    public Response updateInmueble(InmuebleDTO dto, @PathParam("nombre") String nombre, @QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
+        
+        //Verifica que los datos necesarios esten en el dto
+        if(dto.getApartamento() == null || dto.getTorre() == null){
+            return Response.status(404).entity(new ErrorEdited("Los datos para actualizar el inmueble están incompletos")).build();
         }
-        return Response.status(200).entity(nuevoDTO).build();
+        
+        //Verifica la unidad residencial exista
+        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
+        UnidadResidencial unidadResidencial = URP.find(nombre);
+        
+        //Excepción si la unidad residencial no existe
+        if (unidadResidencial == null) {
+            return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
+        }
+
+        //Busca al inmueble por su unidad residencial.
+        Inmueble buscado = null;
+        for (Inmueble inmueble : unidadResidencial.getInmuebles()) {
+            if (inmueble.getApartamento().equals(apartamento) && inmueble.getTorre().equals(torre)) {
+                buscado = inmueble;
+                //unidadResidencial.getInmuebles().remove(buscado);
+                break;
+            }
+        }
+         if (buscado == null) {
+            return Response.status(404).entity(new ErrorEdited("El inmueble con las caracteristicas descritas no existe")).build();
+        }
+        
+        //Procede a actualizar la unidad residecial
+        InmueblePersistence UP = new InmueblePersistence();
+        buscado.setTorre(dto.getTorre());
+        buscado.setApartamento(dto.getApartamento());
+        buscado.setUnidadResidencial(unidadResidencial);
+        unidadResidencial.addInmueble(buscado);
+        
+        //Revisar si existe alguna forma de que la actualización sea desde el persistence del inmueble
+        unidadResidencial = URP.update(unidadResidencial);
+        buscado = UP.update(buscado);
+        buscado = unidadResidencial.getInmuebles().get(unidadResidencial.getInmuebles().size()-1);
+        
+        InmuebleDTO inmuebleDTO = new InmuebleDTO();
+        inmuebleDTO.toDTO(buscado);
+        
+        return Response.status(200).entity(inmuebleDTO).build();
 
     }
 
-    @PUT
+    @DELETE
     @Produces({MediaType.APPLICATION_JSON})
-    @Path("{nombre}/desactivar")
-    public Response desactivarUnidadResidencialPorNombre(@PathParam("nombre") String nombre) {
-        InmueblePersistence URP = new InmueblePersistence();
-
-        Inmueble entity = URP.find(nombre);
+    @Path("eliminar/{nombre}")
+    public Response desactivarUnidadResidencialPorNombre(@PathParam("nombre") String nombre, @QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
         
-         if (entity == null) {
-            return Response.status(404).build();
+        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
+        UnidadResidencial unidadResidencial = URP.find(nombre);
+        
+        //Excepción si la unidad residencial no existe
+        if (unidadResidencial == null) {
+            return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
         }
-        
-        entity.setActivado(false);
-        URP.update(entity);
-       
 
-        InmuebleDTO dto = new InmuebleDTO();
-        dto.toDTO(entity);
+        //Busca al inmueble por su unidad residencial.
+        Inmueble buscado = null;
+        for (Inmueble inmueble : unidadResidencial.getInmuebles()) {
+            if (inmueble.getApartamento().equals(apartamento) && inmueble.getTorre().equals(torre)) {
+                buscado = inmueble;
+                //unidadResidencial.getInmuebles().remove(buscado);
+                break;
+            }
+        }
+         if (buscado == null) {
+            return Response.status(404).entity(new ErrorEdited("El inmueble con las caracteristicas descritas no existe")).build();
+         }
 
-        return Response.status(200).entity(dto).build();
+        InmueblePersistence inmueblePersistence = new InmueblePersistence();
+        inmueblePersistence.delete(buscado.getId());
+
+        return Response.status(200).entity(new ErrorEdited("La inmueble fue eliminado correctamente")).build();
     }
 
     private List<InmuebleDTO> toDTOList(List<Inmueble> entidades) {

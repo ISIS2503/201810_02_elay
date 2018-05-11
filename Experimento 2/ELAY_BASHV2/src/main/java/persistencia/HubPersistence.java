@@ -11,7 +11,7 @@ import entidad.Hub;
  *
  * @author jd.trujillom
  */
-public class HubPersistence extends Persistencer<Hub, Long> {
+public class HubPersistence extends Persistencer<Hub, String> {
 
     public HubPersistence() {
     this.entityClass = Hub.class;
