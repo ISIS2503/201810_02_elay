@@ -34,7 +34,6 @@ import java.util.function.Predicate;
 public class ManejadorContrasenias {
     
     public static final int CANT_CONTRASENIAS = 20;
-//    public static String[] contrasenias = new String[CANT_CONTRASENIAS]; 
     public static List<Contrasena> contrasenas = new ArrayList<>(CANT_CONTRASENIAS);
     static {
         for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.add(new Contrasena("-1", System.currentTimeMillis()));  //contrasenias[i] = "-1";
@@ -46,49 +45,44 @@ public class ManejadorContrasenias {
     
     public static int agregarNuevaContrasenia(String contrasenia, long time) throws Exception {
         if(contrasenia.length() != 4) throw new Exception("La contraseña tiene que tener obligatoriamente 4 caracteres");
-        Contrasena con =  contrasenas.stream().filter(x -> x.contrasena.equals("-1")).findFirst().orElse(null);
-        if(con != null) con.asignar(contrasenia, time);
-//        for(int i = 0; i < CANT_CONTRASENIAS; i++) {
-//            if(contrasenias[i].equals("-1")) {
-//                contrasenias[i] = contrasenia;
-//                return i;
-//            }
-//        }
+        Contrasena con =  buscar(x -> x.contrasena.equals("-1"));
+        if(con != null) {
+            con.asignar(contrasenia, time);
+            return contrasenas.indexOf(con);
+        }
         throw new Exception("No hay espacio para almacenar más contraseñas");
     }
     
-    public static int cambiarContraseña(String antigua, String nueva) throws Exception {
+    public static int cambiarContraseña(String antigua, String nueva, long time) throws Exception {
         if(nueva.length() != 4) throw new Exception("La contraseña tiene que tener obligatoriamente 4 caracteres");
-//        for (int i = 0; i < contrasenias.length; i++) {
-//            if(contrasenias[i].equals(antigua)) {
-//                contrasenias[i] = nueva;
-//                return i;
-//            }
-//        }
+        Contrasena con = buscar(x -> x.contrasena.equals(antigua));
+        if(con != null) {
+            con.asignar(nueva, time);
+            return contrasenas.indexOf(con);
+        }
         throw new Exception("No se encontro la ontraseña a cambiar");
     }
     
     public static int eliminar(String contrasenia) throws Exception{
-        for (int i = 0; i < contrasenias.length; i++) {
-            if(contrasenias[i].equals(contrasenia)) {
-                contrasenias[i] = "-1";
-                return i;
-            }
+        Contrasena con = buscar(x -> x.contrasena.equals(contrasenia));
+        if(con != null) {
+            con.contrasena = "-1";
+            return contrasenas.indexOf(con);
         }
         throw new Exception("No se encontro la ontraseña a eliminar");
     }
     
     public static void eliminarTodo() {
-        for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenias[i] = "-1";
+        for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.add(new Contrasena("-1", System.currentTimeMillis()));
     }
     
-    public static void cargarContrasenias(String s){
-        String[] sp = s.split(":");
-        eliminarTodo();
-        System.arraycopy(sp, 0, contrasenias, 0, CANT_CONTRASENIAS);
-    }
+//    public static void cargarContrasenias(String s){
+//        String[] sp = s.split(":");
+//        eliminarTodo();
+//        System.arraycopy(sp, 0, contrasenias, 0, CANT_CONTRASENIAS);
+//    }
 
-    public static final class Contrasena {
+    private static final class Contrasena {
         String contrasena;
         long timestap;
 
