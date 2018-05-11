@@ -23,21 +23,11 @@
  */
 package healdcheck;
 
-import java.util.ArrayList;
-import programa.MailSender;
-
 /**
  *
  * @author ws.duarte
  */
-public class HealdCheck {
-
-    private static ArrayList<Verificador> verificadores;
-    private static final int time = 1000, max = 10;
-
-    public static void empezarVerificador(String id) {
-        new Thread(new Verificador(time, max, new ReporteHub(),
-                () -> { try { new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo(); } catch (Exception e) {} }, id))
-                .start();
-    }
+@FunctionalInterface
+public interface Reporte {
+    public boolean Reportar(int time);
 }

@@ -414,6 +414,9 @@ void openWithKeypad(char customKey) {
 
   //Verification of input and appended value
   if (customKey) {
+    if(currentKey.equals("")){
+      Serial.println("00:");
+    }
     currentKey += String(customKey);
     Serial.println(currentKey);
   }
@@ -563,7 +566,7 @@ void processCommand(String command) {
   } else if (code == ENVIAR_TODAS ) {
     getAllPasswords();
   } else if (code == HC){
-    Serial.println(RESPUESTA); 
+    Serial.println(RESPUESTA + ":" + ID); 
   }
   else {
     Serial.println(OPERACION_ERROR + ":" + code);
