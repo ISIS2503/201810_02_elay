@@ -53,7 +53,7 @@ public class Disparador {
             lista.add(new LinkedList<Countent>());
         }
     }
-    private MqttClient sampleClient;
+    public static MqttClient sampleClient;
 
     public Disparador(Interfaz i) {
         this.interfaz = i;
@@ -75,7 +75,6 @@ public class Disparador {
                         imprimir(topic, message.toString());
                     } 
                 }
-
                 public void deliveryComplete(IMqttDeliveryToken token) {
                     System.out.println("Hola");
                 }

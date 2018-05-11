@@ -42,9 +42,7 @@ public class ReporteHub implements Reporte {
     private String json = null;
     private final String URL = "http://localhost:8181/healdcheck";
 
-    public ReporteHub() {
-
-    }
+    public ReporteHub() {  }
 
     @Override
     public boolean Reportar(int time) {

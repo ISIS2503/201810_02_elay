@@ -23,6 +23,10 @@
  */
 package programa;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 /**
  *
  * @author ws.duarte
@@ -30,30 +34,37 @@ package programa;
 public class ManejadorContrasenias {
     
     public static final int CANT_CONTRASENIAS = 20;
-    public static String[] contrasenias = new String[CANT_CONTRASENIAS]; 
+//    public static String[] contrasenias = new String[CANT_CONTRASENIAS]; 
+    public static List<Contrasena> contrasenas = new ArrayList<>(CANT_CONTRASENIAS);
     static {
-        for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenias[i] = "-1";
+        for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.add(new Contrasena("-1", System.currentTimeMillis()));  //contrasenias[i] = "-1";
     }
     
-    public static int agregarNuevaContrasenia(String contrasenia) throws Exception {
+    private static Contrasena buscar(Predicate<Contrasena> p) {
+        return contrasenas.stream().filter(p).findFirst().orElse(null);
+    }
+    
+    public static int agregarNuevaContrasenia(String contrasenia, long time) throws Exception {
         if(contrasenia.length() != 4) throw new Exception("La contraseña tiene que tener obligatoriamente 4 caracteres");
-        for(int i = 0; i < CANT_CONTRASENIAS; i++) {
-            if(contrasenias[i].equals("-1")) {
-                contrasenias[i] = contrasenia;
-                return i;
-            }
-        }
+        Contrasena con =  contrasenas.stream().filter(x -> x.contrasena.equals("-1")).findFirst().orElse(null);
+        if(con != null) con.asignar(contrasenia, time);
+//        for(int i = 0; i < CANT_CONTRASENIAS; i++) {
+//            if(contrasenias[i].equals("-1")) {
+//                contrasenias[i] = contrasenia;
+//                return i;
+//            }
+//        }
         throw new Exception("No hay espacio para almacenar más contraseñas");
     }
     
     public static int cambiarContraseña(String antigua, String nueva) throws Exception {
         if(nueva.length() != 4) throw new Exception("La contraseña tiene que tener obligatoriamente 4 caracteres");
-        for (int i = 0; i < contrasenias.length; i++) {
-            if(contrasenias[i].equals(antigua)) {
-                contrasenias[i] = nueva;
-                return i;
-            }
-        }
+//        for (int i = 0; i < contrasenias.length; i++) {
+//            if(contrasenias[i].equals(antigua)) {
+//                contrasenias[i] = nueva;
+//                return i;
+//            }
+//        }
         throw new Exception("No se encontro la ontraseña a cambiar");
     }
     
@@ -77,5 +88,17 @@ public class ManejadorContrasenias {
         System.arraycopy(sp, 0, contrasenias, 0, CANT_CONTRASENIAS);
     }
 
-    
+    public static final class Contrasena {
+        String contrasena;
+        long timestap;
+
+        public Contrasena(String contrasena, long timestap) {
+            asignar(contrasena, timestap);
+        }
+        
+        public void asignar(String contrasena, long timestap) {
+            this.contrasena = contrasena;
+            this.timestap = timestap;
+        }
+    }
 }
