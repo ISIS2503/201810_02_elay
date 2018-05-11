@@ -9,16 +9,19 @@ import ch.qos.logback.classic.util.ContextInitializer;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import dto.UserDTO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -93,35 +96,61 @@ public class UsuariosService {
         return Response.status(200).entity(response2.getBody()).build();
     }
 
+//    @POST
+//    @Produces({MediaType.TEXT_PLAIN})
+//    @Path("{name : \\d+}")
+//    public Response createUser(@PathParam("name") String name) throws UnirestException {
+//
+//        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
+//                .header("content-type", "application/json")
+//                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
+//                .asString();
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        String token = "";
+//        System.out.println(token);
+//        try {
+//            JsonNode node = mapper.readTree(response.getBody());
+//            token = node.get("access_token").asText();
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        //String jsonName = "{"name": name}";
+//        
+//        HttpResponse<String> response2 = Unirest.post("https://isis2503-jdtrujillom.auth0.com/api/v2/clients")
+//                .header("content-type", "application/json")
+//                .header("authorization", "Bearer " + token)
+//                .body("{\"name\":\"123\"}")
+//                .asString();
+//
+//        return Response.status(200).entity(response2.getBody()).build();
+//    }
+    
     @POST
-    @Produces({MediaType.TEXT_PLAIN})
-    @Path("{name : \\d+}")
-    public Response createUser(@PathParam("name") String name) throws UnirestException {
-
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        System.out.println(token);
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/add")
+    public Response add(UserDTO dto) throws Exception {
         
-        //String jsonName = "{"name": name}";
-        
-        HttpResponse<String> response2 = Unirest.post("https://isis2503-jdtrujillom.auth0.com/api/v2/clients")
+        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/dbconnections/signup")
                 .header("content-type", "application/json")
-                .header("authorization", "Bearer " + token)
-                .body("{\"name\":\"123\"}")
+                .body("{\"client_id\":\"Fm291VvLyWt5V48H5OQCUzn4dKO7NSVA\",\"email\":\""+dto.getCorreo()+"\",\"password\":\""+dto.getContraseña()+"\",\"connection\":\"Username-Password-Authentication\"}")
                 .asString();
-
-        return Response.status(200).entity(response2.getBody()).build();
+        
+        System.out.println("------------------>>>>>>>>>");
+        System.out.println(dto.getCorreo());
+        System.out.println(response.getBody().toString());
+        return Response.ok().entity("{\"Se agrego ususario\"}").status(Response.Status.ACCEPTED).build();
+    }
+    
+    @POST
+    @Path("/updatePassword")
+    public Response update(UserDTO dto) throws Exception {
+        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/dbconnections/change_password")
+                .header("content-type", "application/json")
+                .body("{\"client_id\":\"Fm291VvLyWt5V48H5OQCUzn4dKO7NSVA\",\"email\":\""+dto.getCorreo()+"\",\"password\":\"\",\"connection\":\"Username-Password-Authentication\"}")
+                .asString();
+        return Response.ok().entity("{\"Se le envio un link al correo para cambiar contraseña\"}").status(Response.Status.ACCEPTED).build();
     }
 }
