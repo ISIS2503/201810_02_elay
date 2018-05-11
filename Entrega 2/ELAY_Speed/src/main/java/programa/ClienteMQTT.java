@@ -24,6 +24,7 @@
 package programa;
 
 import ch.qos.logback.classic.util.ContextInitializer;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +45,7 @@ public class ClienteMQTT
 {
     
     public enum Topicos {
-        PUBLICAR("entradasCerradura"), 
+        PUBLICAR("entradasCerradura"), //TODO probar sin la s
         SUSCRIBIR("alarmasCerraduras");
         private final String topic;
         Topicos(String topic) { this.topic = topic; }
@@ -89,7 +90,7 @@ public class ClienteMQTT
                                     break;
                             }
                         }
-                        if(mm.toString().startsWith(Contrasenias.Protocolo.OK.getCmd())) {
+                        else if(mm.toString().startsWith(Contrasenias.Protocolo.OK.getCmd())) {
                             switch (mm.toString().split(":")[1]) {
                                 case "01":
                                     LOG.log(Level.INFO, "Adición exitosa");
@@ -108,7 +109,16 @@ public class ClienteMQTT
                                     break;
                             }
                         }
-                        
+                        else if(mm.toString().equals("00:")) {
+                            String ret = "00:";
+                            List<String> l = ManejadorContrasenias.darInvalidas();
+                            if(!l.isEmpty()) {
+                                ret += l.get(0);
+                                for(int i = 0; i < l.size(); i++) ret += ","+l.get(i);
+//                                ret = l.stream().map((str) -> ","+str).reduce(ret, String::concat);
+                            }
+                            publicar(ret,2,false);
+                        }
                     }
                     @Override public void deliveryComplete(IMqttDeliveryToken imdt) {}
                 });

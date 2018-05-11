@@ -21,13 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package procesadortopicos;
+package healdcheck;
+
+import java.util.List;
+import java.util.ArrayList;
+import procesadortopicos.Disparador;
 
 /**
  *
  * @author ws.duarte
  */
-@FunctionalInterface
-public interface Notificador {
-	public void notificar();
+public class ManejadorHealdCheck {
+    
+    private static final int time = 1000, max = 10;
+    private static List<ReporteCerradura> reportes = new ArrayList<>();
+    
+    public static void iniciarMedicion(String id) {
+        ReporteCerradura repor = new ReporteCerradura(id);
+        reportes.add(repor);
+        new Thread(new Verificador(time, max, repor, new NotificarCerradura(Disparador.ID), Disparador.ID)).start();
+    }
+    
+    public static void reportar(String id) {
+        ReporteCerradura reporte = reportes.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
+        if(reporte != null) reporte.reportar();
+    }
+    
+    public static void eliminar(String id) {
+        reportes.removeIf(r -> r.getId().equals(id));
+    }
+    
 }

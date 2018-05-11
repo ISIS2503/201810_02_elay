@@ -57,19 +57,31 @@ public class EnviarMensaje extends Application {
             String[] ss = darValues(rol, info);
             new MailSender("Mensaje de alerta " + info.get("alertaId").getAsInt(),
                     ss[0], ss[1]).start();
-        } catch (JsonSyntaxException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
         }
         return j;
-    }    
-    
+    }
+
     private String[] darValues(String rol, JsonObject msg) {
-        switch(rol) {
-            case "propietario": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()}; 
-            case "seguridad": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()+"\nTorre: "+msg.get("torre").getAsString()+"\nApartamento: "+msg.get("apto").getAsString()};
-            case "yale": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()+"\nTorre: "+msg.get("torre").getAsString()+"\nApartamento: "+msg.get("apto").getAsString()+"\n"+msg.get("idDispositivo").getAsString()};
-            case "administrador": return new String[]{"elay.arquisoft.201810@hotmail.com",msg.get("mensajeAlerta").getAsString()+"\nTorre "+msg.get("torre").getAsString()+"\nApartamento: "+msg.get("apto").getAsString()+"\nID Dispositivo: "+msg.get("idDispositivo").getAsString()};
-            default: return null;
+        switch (rol) {
+            case "propietario":
+                return new String[]{"elay.arquisoft.201810@hotmail.com", msg.get("mensajeAlerta").getAsString()};
+            case "seguridad":
+                return new String[]{"elay.arquisoft.201810@hotmail.com", msg.get("mensajeAlerta").getAsString() + "\nTorre: " + msg.get("torre").getAsString() + "\nApartamento: " + msg.get("apto").getAsString()};
+            case "yale":
+                return new String[]{"elay.arquisoft.201810@hotmail.com", msg.get("mensajeAlerta").getAsString() + "\nTorre: " + msg.get("torre").getAsString() + "\nApartamento: " + msg.get("apto").getAsString() + "\n" + msg.get("idDispositivo").getAsString()};
+            case "administrador":
+                return new String[]{"elay.arquisoft.201810@hotmail.com", msg.get("mensajeAlerta").getAsString() + "\nTorre " + msg.get("torre").getAsString() + "\nApartamento: " + msg.get("apto").getAsString() + "\nID Dispositivo: " + msg.get("idDispositivo").getAsString()};
+            default:
+                return null;
         }
+    }
+
+    @POST
+    @Path("healdcheck")
+    public String notificarHealCheck(String id) {
+         new MailSender("Mensaje de alerta ", "elay.arquisoft.201810@hotmail.com", "El hub se encuentra fuera de linea.\nId hub"+id).start();
+        return "{ \"mensaje\":\"Se perdió la conexión con el HUB: "+id+" \" }";
     }
 }

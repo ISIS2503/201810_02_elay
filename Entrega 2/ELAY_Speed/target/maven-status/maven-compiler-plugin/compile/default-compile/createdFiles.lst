@@ -6,10 +6,12 @@ healdcheck\Reporte.class
 programa\ClienteMQTT$Topicos.class
 programa\ManejadorContrasenias.class
 healdcheck\HealdCheck.class
+programa\ManejadorContrasenias$Contrasena.class
 programa\Main.class
 servicios\Contrasenias.class
 healdcheck\ReporteHub.class
 programa\ClienteMQTT$1.class
 programa\ClienteMQTT.class
 servicios\EnviarMensaje.class
+.netbeans_automatic_build
 healdcheck\Notificador.class

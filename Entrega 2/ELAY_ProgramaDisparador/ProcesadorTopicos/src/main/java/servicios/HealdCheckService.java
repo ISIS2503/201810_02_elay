@@ -45,7 +45,6 @@ public class HealdCheckService extends Application{
     
     @GET
     public String reportar() {
-        System.out.println("*****************************servicios.HealdCheckService.reportar()");
         return "OK:"+Disparador.ID;
     }
 }
