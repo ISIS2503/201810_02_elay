@@ -414,6 +414,9 @@ void openWithKeypad(char customKey) {
 
   //Verification of input and appended value
   if (customKey) {
+    if(currentKey.equals("")){
+      Serial.println("00:");
+    }
     currentKey += String(customKey);
     Serial.println(currentKey);
   }
