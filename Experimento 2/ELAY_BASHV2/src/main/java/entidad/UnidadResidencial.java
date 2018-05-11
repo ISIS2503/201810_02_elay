@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,42 +20,56 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Clase que modela las unidades residenciales. 
  * @author jd.trujillom
  */
 @Entity
 @Table(name = "UNIDADRESIDENCIAL")
 public class UnidadResidencial implements Serializable {
 
+    /**
+     * Id de la unidad residencial. Se autogenera en la base de datos. 
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
-    //@Column("direccion")
+    /**
+     * Atributo que modela la dirección en la que se encuentra ubicada la
+     * unidad residencial. 
+     */
+    @Column(name = "direccion")
     private String direccion;
-
-    //@Column("nombre")
+    
+    /**
+     * Atributo que modela el nombre de una unidad residencial.
+     */
+    @Column(name = "nombre")
     private String nombre;
 
-    //@Column("activado")
-    private boolean activado;
-
+    /**
+     * Asociación con las alarmas de una unidad residencial. 
+     */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "unidadResidencial")
     private List<Alarma> alarmas;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "unidadResidencial")
+    /**
+     * Asociaón que modela todos los inmuebles que pertenecen a una unidad residencial. 
+     */
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    //@JoinColumn(name = "unidadResidencial")
     private List<Inmueble> inmuebles;
 
-    public UnidadResidencial(String id, String direccion, String nombre, boolean activado, List<Alarma> alarmas, List<Inmueble> inmuebles) {
+    public UnidadResidencial(String id, String direccion, String nombre, List<Alarma> alarmas, List<Inmueble> inmuebles) {
         this.id = id;
         this.direccion = direccion;
         this.nombre = nombre;
-        this.activado = activado;
         this.alarmas = alarmas;
         this.inmuebles = inmuebles;
     }
+
+    
     
     public UnidadResidencial() {
         //Empty constructor
@@ -82,14 +97,6 @@ public class UnidadResidencial implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public boolean isActivado() {
-        return activado;
-    }
-
-    public void setActivado(boolean activado) {
-        this.activado = activado;
     }
 
     public List<Inmueble> getInmuebles() {

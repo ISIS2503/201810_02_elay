@@ -36,6 +36,7 @@ public class HubDTO {
     }
     
     public HubDTO(Hub hub){
+        this.id = hub.getId();
         this.activado = hub.isActivado();
         this.dispositivos = toDTODispositivosList(hub.getDispositivos());
         this.frecuenciaReporte = hub.getFrecuenciaReporte();
