@@ -40,6 +40,7 @@ public class Disparador {
 	public static ArrayList<LinkedList<Countent>> lista;
 	public Interfaz interfaz;
 	static {
+		
 		lista = new ArrayList<LinkedList<Countent>>();
 		for(int i = 0; i < 4; i++) lista.add(new LinkedList<Countent>());
 	}

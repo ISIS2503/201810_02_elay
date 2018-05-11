@@ -62,6 +62,8 @@ public class Contrasenias {
         
     }
     
+    public static final String MSG = "Operación realizada exitosamente.";
+    
     public Contrasenias() {
     }
     
@@ -70,8 +72,9 @@ public class Contrasenias {
         try {
         JsonObject info = new JsonParser().parse(j).getAsJsonObject();
         String contra = info.get("contrasenia").getAsString();
-        ClienteMQTT.publicar(Protocolo.AGREGAR.cmd+":"+ManejadorContrasenias.agregarNuevaContrasenia(contra)+":"+contra);
-        return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        long time = info.get("timestamp").getAsLong();
+        ClienteMQTT.publicar(Protocolo.AGREGAR.cmd+":"+ManejadorContrasenias.agregarNuevaContrasenia(contra, time)+":"+contra);
+        return "{ \"mensaje\":\""+MSG+"\" }";
         } catch(Exception e) {
             return error(e.getMessage());
         }
@@ -85,9 +88,11 @@ public class Contrasenias {
     public String modificar(String j) {
         try {
         JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        String contra = info.get("contraseniaNueva").getAsString();
-        ClienteMQTT.publicar(Protocolo.MODIFICAR.cmd+":"+ManejadorContrasenias.cambiarContraseña(info.get("contraseniaAntigua").getAsString(), contra)+":"+info.get("contraseniaNueva").getAsString());
-        return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        String contraNueva = info.get("contraseniaNueva").getAsString();
+        String contraAntigua = info.get("contraseniaAntigua").getAsString();
+        long time = info.get("timestamp").getAsLong();
+        ClienteMQTT.publicar(Protocolo.MODIFICAR.cmd+":"+ManejadorContrasenias.cambiarContraseña(contraAntigua, contraNueva, time)+":"+contraNueva);
+        return "{ \"mensaje\":\""+MSG+"\" }";
         } catch (Exception e) {
             return error(e.getMessage());
         }
@@ -98,7 +103,7 @@ public class Contrasenias {
         try {
         JsonObject info = new JsonParser().parse(j).getAsJsonObject();
         ClienteMQTT.publicar(Protocolo.ELIMINAR.cmd+":"+ManejadorContrasenias.eliminar(info.get("contrasenia").getAsString()));
-        return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        return "{ \"mensaje\":\""+MSG+"\" }";
         } catch (Exception e) {
             return error(e.getMessage());
         }
@@ -108,7 +113,7 @@ public class Contrasenias {
     @Path("/todo")
     public String eliminar() {
         ClienteMQTT.publicar(Protocolo.ELIMINAR_ALL.cmd+":");
-        return "{ \"mensaje\":\"Gabriel deje de joder. :)\" }";
+        return "{ \"mensaje\":\""+MSG+"\" }";
     }
     
     

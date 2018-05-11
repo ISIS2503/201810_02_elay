@@ -23,9 +23,12 @@
  */
 package programa;
 
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -76,11 +79,13 @@ public class ManejadorContrasenias {
         for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.add(new Contrasena("-1", System.currentTimeMillis()));
     }
     
-//    public static void cargarContrasenias(String s){
-//        String[] sp = s.split(":");
-//        eliminarTodo();
-//        System.arraycopy(sp, 0, contrasenias, 0, CANT_CONTRASENIAS);
-//    }
+    public static List<String> darInvalidas() {
+        List<String> ret = new ArrayList<>();
+        contrasenas.stream().filter(x -> new Timestamp(x.timestap).before(new Timestamp(System.currentTimeMillis()))).collect(Collectors.toList()).forEach((con) -> { ret.add(con.contrasena);  });
+        return ret;
+    }
+    
+    
 
     private static final class Contrasena {
         String contrasena;
