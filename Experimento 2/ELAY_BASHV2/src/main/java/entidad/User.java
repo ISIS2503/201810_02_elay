@@ -15,6 +15,8 @@ import javax.persistence.Id;
  */
 public class User {
     
+    private String id;
+    
     private String correo;
     
     private String nombre;
@@ -27,25 +29,37 @@ public class User {
     
     private List<String> roles;
 
-    public User(String correo, String fechaNacimiento, String usuario, String contraseña, String nombre, List<String> roles) {
+    public User(String id, String correo, String nombre, String usuario, String contraseña, String fechaNacimiento, List<String> roles) {
+        this.id = id;
         this.correo = correo;
-        this.fechaNacimiento = fechaNacimiento;
+        this.nombre = nombre;
         this.usuario = usuario;
         this.contraseña = contraseña;
-        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
         this.roles = roles;
     }
 
+   
     
     public User(){
-        
+        //Empty constructor
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
 
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String id) {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
 

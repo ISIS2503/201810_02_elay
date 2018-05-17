@@ -208,7 +208,7 @@ public class UnidadResidencialService {
      * alarmas
      * @return todas las alarmas de una unidad residencial.
      */
-    @GET
+        @GET
         @Produces({MediaType.APPLICATION_JSON})
         @Path("{nombre}/alarmas")
         @Secured({Role.seguridad_privada})

@@ -17,36 +17,59 @@ import java.util.List;
  */
 public class UserDTO {
     
+    public String id;
+    
     public String correo;
 
     public String fechaNacimiento;
 
     public String usuario;
     
-    public String contraseña;
+    public String contrasenia;
 
     public String nombre;
 
     public List<String> roles;
 
-    public UserDTO(String correo, String fechaNacimiento, String usuario, String contraseña, String nombre, List<String> roles) {
+    public UserDTO(String id, String correo, String fechaNacimiento, String usuario, String contrasenia, String nombre, List<String> roles) {
+        this.id = id;
         this.correo = correo;
         this.fechaNacimiento = fechaNacimiento;
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
         this.nombre = nombre;
         this.roles = roles;
+        
     }
 
 
     public UserDTO(User entity){
+        this.id = entity.getId();
        this.correo = entity.getCorreo();
         this.fechaNacimiento = entity.getFechaNacimiento();
         this.usuario = entity.getUsuario();
-        this.contraseña = contraseña;
+        this.contrasenia = entity.getContraseña();
         this.nombre = entity.getNombre();
         this.roles = entity.getRoles();
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+    
+    
     
     public UserDTO(){
         //Empty constructor
@@ -56,7 +79,7 @@ public class UserDTO {
         return correo;
     }
 
-    public void setCorreo(String id) {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
 
@@ -69,11 +92,11 @@ public class UserDTO {
     }
     
      public String getContraseña() {
-        return contraseña;
+        return contrasenia;
     }
 
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.contrasenia = contraseña;
     }
 
     public String getUsuario() {
@@ -102,21 +125,23 @@ public class UserDTO {
     
     public User toEntity(){
         User user = new User();
+        user.setId(this.id);
         user.setCorreo(this.correo);
         user.setFechaNacimiento(this.fechaNacimiento);
         user.setNombre(this.nombre);
         user.setUsuario(this.usuario);
-        user.setContraseña(this.contraseña);
+        user.setContraseña(this.contrasenia);
         return user;
     }
     
     public void toDTO(User user){
+        this.id = user.getId();
         this.correo = user.getCorreo();
         this.fechaNacimiento = user.getFechaNacimiento();
         this.nombre = user.getNombre();
         this.usuario = user.getUsuario();
         this.roles = user.getRoles();
-        this.contraseña = user.getContraseña();
+        this.contrasenia = user.getContraseña();
     }
 
     @Override

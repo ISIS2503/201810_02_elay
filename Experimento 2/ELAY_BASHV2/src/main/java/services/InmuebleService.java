@@ -314,6 +314,54 @@ public class InmuebleService {
 
         return lista;
     }
+    
+    
+        /**
+     * Obtiene todas las alarmas de una inmueble durante todo el
+     * tiempo de actividad en el sistema. Solo tiene acceso la seguridad
+     * privada.
+     *
+     * @param nombre de la unidad residencial de la cual se quieren obtener sus
+     * alarmas
+     * @return todas las alarmas de una unidad residencial.
+     */
+    @GET
+        @Produces({MediaType.APPLICATION_JSON})
+        @Path("{nombre}/alarmas")
+        @Secured({Role.seguridad_privada})
+        public Response getAlarmasInmuebles(@PathParam("nombre") String nombre, @QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento){
+         
+
+       UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
+        UnidadResidencial unidadResidencial = URP.find(nombre);
+        
+        //Excepción si la unidad residencial no existe
+        if (unidadResidencial == null) {
+            return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
+        }
+
+        //Busca al inmueble por su unidad residencial.
+        Inmueble buscado = null;
+        for (Inmueble inmueble : unidadResidencial.getInmuebles()) {
+            if (inmueble.getApartamento().equals(apartamento) && inmueble.getTorre().equals(torre)) {
+                buscado = inmueble;
+                //unidadResidencial.getInmuebles().remove(buscado);
+                break;
+            }
+        }
+         if (buscado == null) {
+            return Response.status(404).entity(new ErrorEdited("El inmueble con las caracteristicas descritas no existe")).build();
+         }
+
+
+        List<Alarma> alarmasEntity = buscado.getAlarmas();
+        List<AlarmaDTO> alarmas = toDTOAlarmaList(alarmasEntity);
+
+            GenericEntity<List<AlarmaDTO>> listEntity = alarmas != null? new GenericEntity<List<AlarmaDTO>>(alarmas) {
+        }: null;
+
+        return Response.status(200).entity(listEntity).build();
+    }
 
     private List<AlarmaDTO> toDTOAlarmaList(List<Alarma> entidades) {
         List<AlarmaDTO> lista = null;

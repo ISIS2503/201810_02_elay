@@ -30,7 +30,7 @@ import persistencia.UnidadResidencialPersistence;
 import auth.Secured;
 
 @Path("alarmas")
-@Secured
+@Secured({AuthorizationFilter.Role.yale})
 public class AlarmaService {
 
     @Context
