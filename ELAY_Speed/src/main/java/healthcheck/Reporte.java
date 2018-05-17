@@ -21,27 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package servicios;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+package healthcheck;
 
 /**
  *
  * @author ws.duarte
  */
-
-@Path("healdcheck")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-public class HealdCheckService {
-    
-    @POST
-    public void geistrarMonitoreo(String id) {
-        healdcheck.HealdCheck.empezarVerificador(id);
-    }
-    
+@FunctionalInterface
+public interface Reporte 
+{
+    public boolean Reportar(int time);
 }

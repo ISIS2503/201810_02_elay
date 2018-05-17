@@ -21,14 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package healthcheck;
+
+import java.util.ArrayList;
+import programa.MailSender;
 
 /**
  *
  * @author ws.duarte
  */
-@FunctionalInterface
-public interface Notificador {
+public class HealthCheck {
 
-    public void notificar();
+    private static ArrayList<Verificador> verificadores;
+    private static final int time = 1000, max = 10;
+
+    public static void empezarVerificador(String id) {
+        new Thread(new Verificador(time, max, new ReporteHub(),
+                () -> { try { new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo(); System.out.println("======================= El hub esta fuera de linea");} catch (Exception e) {} }, id))
+                .start();
+    }
 }

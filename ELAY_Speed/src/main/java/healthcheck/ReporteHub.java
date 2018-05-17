@@ -21,57 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package healthcheck;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import programa.ClienteMQTT;
 
 /**
  *
  * @author ws.duarte
  */
-public class NotificarCerradura implements Notificador{
+public class ReporteHub implements Reporte {
 
-    private String id;
+    private BufferedReader reader = null;
+    private String json = null;
+    private final String URL = "http://localhost:8181/healthcheck";
 
-    public NotificarCerradura(String id) {
-        this.id = id;
-    }
+    public ReporteHub() {  }
 
-    public String getId() {
-        return id;
-    }
-    
     @Override
-    public void notificar() {
+    public boolean Reportar(int time) {
+
+        HttpURLConnection connection = null;
         try {
-            URL url = new URL("http://localhost:8080/speed/healdcheck");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json");
-            con.setDoOutput(true);
-            OutputStream os = con.getOutputStream();
-            os.write(id.getBytes());
-            os.flush();
-            os.close();
-            int responseCode = con.getResponseCode();
-            System.out.println("Response Code :" + responseCode);
-            BufferedReader reader = null;
-            String json = null;
-            reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            URL resetEndpoint = new URL(URL);
+            connection = (HttpURLConnection) resetEndpoint.openConnection();
+            connection.setRequestMethod("GET");
+            Thread.sleep(time);
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder jsonSb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
                 jsonSb.append(line);
             }
             json = jsonSb.toString();
-            System.out.println(json);
-        } catch (IOException e) {
-        }
+            return  connection.getResponseCode() == 200 && json.startsWith("OK");
+        } catch (InterruptedException | IOException e) {
+            return false;
+        } 
     }
-    
 }

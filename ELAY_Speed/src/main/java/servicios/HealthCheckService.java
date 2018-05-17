@@ -21,35 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package servicios;
 
-import java.util.List;
-import java.util.ArrayList;
-import procesadortopicos.Disparador;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author ws.duarte
  */
-public class ManejadorHealdCheck {
+
+@Path("healthcheck")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class HealthCheckService {
     
-    private static final int time = 1000, max = 10;
-    private static List<ReporteCerradura> reportes = new ArrayList<>();
-    
-    public static void iniciarMedicion(String id) {
-        ReporteCerradura repor = new ReporteCerradura(id);
-        reportes.add(repor);
-        System.out.println("healdcheck.ManejadorHealdCheck.iniciarMedicion()");
-        new Thread(new Verificador(time, max, repor, new NotificarCerradura(Disparador.ID), Disparador.ID)).start();
-    }
-    
-    public static void reportar(String id) {
-        ReporteCerradura reporte = reportes.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
-        if(reporte != null) reporte.reportar();
-    }
-    
-    public static void eliminar(String id) {
-        reportes.removeIf(r -> r.getId().equals(id));
+    @POST
+    public void geistrarMonitoreo(String id) {
+        healthcheck.HealthCheck.empezarVerificador(id);
     }
     
 }

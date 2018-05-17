@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package healthcheck;
 
 /**
  *
@@ -59,7 +59,7 @@ public class Verificador implements Runnable {
             }
             if (actLost == cantLost) {
                 activo = false;
-                ManejadorHealdCheck.eliminar(((ReporteCerradura)reporte).getId());
+                ManejadorHealthCheck.eliminar(((ReporteCerradura)reporte).getId());
                 notificador.notificar();
             }
         }

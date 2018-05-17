@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package healthcheck;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

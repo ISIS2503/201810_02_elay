@@ -21,23 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
-
-import java.util.ArrayList;
-import programa.MailSender;
+package healthcheck;
 
 /**
  *
  * @author ws.duarte
  */
-public class HealdCheck {
+public class Verificador implements Runnable {
 
-    private static ArrayList<Verificador> verificadores;
-    private static final int time = 1000, max = 10;
+    private boolean activo;
+    private final int time;
+    private final int cantLost;
+    private int actLost;
+    private final Reporte reporte;
+    private final Notificador notificador;
+    private String id;
 
-    public static void empezarVerificador(String id) {
-        new Thread(new Verificador(time, max, new ReporteHub(),
-                () -> { try { new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo(); System.out.println("======================= El hub esta fuera de linea");} catch (Exception e) {} }, id))
-                .start();
+    public Verificador(int time, int cantLost, Reporte reporte, Notificador notificador, String id) {
+        activo = true;
+        actLost = 0;
+        this.time = time;
+        this.cantLost = cantLost;
+        this.reporte = reporte;
+        this.notificador = notificador;
+        this.id = id;
     }
+
+    @Override
+    public void run() {
+        while (activo) {
+            if (reporte.Reportar(time)) {
+                actLost = 0;
+            } else {
+                actLost++;
+            }
+            if (actLost == cantLost) {
+                activo = false;
+                notificador.notificar();
+            }
+        }
+    }
+
+    public void revivir() {
+        activo = true;
+        run();
+    }
+    
+    
+    
+    public Reporte darReporte() {
+        return reporte;
+    }
+
+    public String getId() {
+        return id;
+    }
+    
+    
+
 }

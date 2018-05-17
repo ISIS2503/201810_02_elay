@@ -37,7 +37,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import healdcheck.ManejadorHealdCheck;
+import healthcheck.ManejadorHealthCheck;
 
 /**
  *
@@ -76,9 +76,9 @@ public class Disparador {
                         new Batch(message.toString()).start();
                         imprimir(topic, message.toString());
                     } else if(message.toString().startsWith("HC:")) {
-                        ManejadorHealdCheck.reportar(message.toString().split(":")[1]);
+                        ManejadorHealthCheck.reportar(message.toString().split(":")[1]);
                     } else if(message.toString().startsWith("START:")){
-                        ManejadorHealdCheck.iniciarMedicion(message.toString().split(":")[1]);
+                        ManejadorHealthCheck.iniciarMedicion(message.toString().split(":")[1]);
                     }
                 }
 
@@ -97,7 +97,7 @@ public class Disparador {
 
     public final void post(String msg) {
         try {
-            URL url = new URL("http://localhost:8080/healdcheck");
+            URL url = new URL("http://localhost:8080/healthcheck");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");

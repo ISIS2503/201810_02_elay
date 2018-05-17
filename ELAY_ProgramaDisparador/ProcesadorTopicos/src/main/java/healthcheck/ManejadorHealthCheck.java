@@ -21,30 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package servicios;
+package healthcheck;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.ArrayList;
 import procesadortopicos.Disparador;
 
 /**
  *
  * @author ws.duarte
  */
-@Path("healdcheck")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-public class HealdCheckService extends Application{
-
-    public HealdCheckService() {
+public class ManejadorHealthCheck {
+    
+    private static final int time = 1000, max = 10;
+    private static List<ReporteCerradura> reportes = new ArrayList<>();
+    
+    public static void iniciarMedicion(String id) {
+        ReporteCerradura repor = new ReporteCerradura(id);
+        reportes.add(repor);
+        new Thread(new Verificador(time, max, repor, new NotificarCerradura(Disparador.ID), Disparador.ID)).start();
     }
     
-    @GET
-    public String reportar() {
-        return "OK:"+Disparador.ID;
+    public static void reportar(String id) {
+        ReporteCerradura reporte = reportes.stream().filter(r -> r.getId().equals(id)).findFirst().orElse(null);
+        if(reporte != null) reporte.reportar();
     }
+    
+    public static void eliminar(String id) {
+        reportes.removeIf(r -> r.getId().equals(id));
+    }
+    
 }

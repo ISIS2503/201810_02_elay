@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package healdcheck;
+package healthcheck;
 
 /**
  *
  * @author ws.duarte
  */
 @FunctionalInterface
-public interface Notificador {
-	public void notificar();
+public interface Reporte {
+    public boolean Reportar(int time);
 }
