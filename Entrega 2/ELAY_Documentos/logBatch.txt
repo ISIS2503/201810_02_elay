@@ -1,0 +1,1099 @@
+
+INFORMACIÓN:   13:43:24.061 [http-thread-pool::http-listener-1(1)] DEBUG c.i.c.c.thrift.ThriftClientFactory - Returning connection of localhost :9160 .
+
+INFORMACIÓN:   13:43:24.062 [http-thread-pool::http-listener-1(1)] DEBUG c.i.k.persistence.context.CacheBase - Node: entidad.UnidadResidencial$c9525d53-15fa-4350-ae57-7dd5634af9c6:: ADDED TO  Persistence Context
+
+INFORMACIÓN:   13:43:24.062 [http-thread-pool::http-listener-1(1)] DEBUG c.i.c.c.thrift.ThriftClientFactory - Returning connection of localhost :9160 .
+
+INFORMACIÓN:   13:43:24.063 [http-thread-pool::http-listener-1(1)] DEBUG c.i.k.persistence.context.CacheBase - Node: entidad.Alarma$ba8b1779-42c7-48da-a552-bb6ee29a7ff1:: ADDED TO  Persistence Context
+
+INFORMACIÓN:   13:43:24.063 [http-thread-pool::http-listener-1(1)] DEBUG c.i.k.p.PersistenceDelegator - Flushing following flush stack to database(s) (showing stack objects from top to bottom):
+[[entidad.UnidadResidencial$c9525d53-15fa-4350-ae57-7dd5634af9c6]entidad.UnidadResidencial$c9525d53-15fa-4350-ae57-7dd5634af9c6, [entidad.Inmueble$b9716c19-fcff-4615-9040-7bfb18bd5b8f]entidad.Inmueble$b9716c19-fcff-4615-9040-7bfb18bd5b8f, [entidad.Dispositivo$ELAY]entidad.Dispositivo$ELAY, [entidad.Alarma$ba8b1779-42c7-48da-a552-bb6ee29a7ff1]entidad.Alarma$ba8b1779-42c7-48da-a552-bb6ee29a7ff1]
+
+INFORMACIÓN:   13:43:24.063 [http-thread-pool::http-listener-1(1)] DEBUG c.i.k.p.PersistenceDelegator - Data persisted successfully for entity class entidad.Alarma.
+
+INFORMACIÓN:   13:43:24.064 [http-thread-pool::http-listener-1(1)] DEBUG c.i.c.c.thrift.ThriftClientFactory - Returning connection of localhost :9160 .
+
+INFORMACIÓN:   13:43:24.064 [http-thread-pool::http-listener-1(1)] INFO  c.i.c.cassandra.CassandraClientBase - Returning cql query  INSERT INTO "ALARMA"("alertaId","timestamp","mensajeAlerta","id","dispositivo","inmueble","unidadResidencial") VALUES(1,'1233456',null,'ba8b1779-42c7-48da-a552-bb6ee29a7ff1','ELAY','b9716c19-fcff-4615-9040-7bfb18bd5b8f','c9525d53-15fa-4350-ae57-7dd5634af9c6') .
+
+INFORMACIÓN:   13:44:00.308 [http-thread-pool::http-listener-1(4)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing query SELECT * FROM "UNIDADRESIDENCIAL" WHERE "nombre" = 'Las Aguas' LIMIT 1  ALLOW FILTERING
+
+INFORMACIÓN:   13:44:00.313 [http-thread-pool::http-listener-1(4)] ERROR c.i.c.cassandra.CassandraClientBase - Error during executing query SELECT * FROM "UNIDADRESIDENCIAL" WHERE "nombre" = 'Las Aguas' LIMIT 1  ALLOW FILTERING, Caused by: {} .
+com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30) [UnidadResidencialPersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:80) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.AutoExpandingBufferReadTransport.fill(AutoExpandingBufferReadTransport.java:37) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:151) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:284) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 75 common frames omitted
+
+ADVERTENCIA:   StandardWrapperValve[Jersey REST Service]: Servlet.service() for servlet Jersey REST Service threw exception
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:284)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.transport.AutoExpandingBufferReadTransport.fill(AutoExpandingBufferReadTransport.java:37)
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:151)
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)
+	at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896)
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883)
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598)
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056)
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280)
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926)
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062)
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257)
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377)
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200)
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761)
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30)
+	at services.AlarmaService.addAlarma(AlarmaService.java:80)
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703)
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229)
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160)
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593)
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159)
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573)
+	at java.lang.Thread.run(Thread.java:748)
+
+INFORMACIÓN:   13:44:00.317 [http-thread-pool::http-listener-1(4)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing native CQL query Caused by {}.
+javax.persistence.PersistenceException: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2071) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) ~[kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30) [UnidadResidencialPersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:80) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	... 62 common frames omitted
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.AutoExpandingBufferReadTransport.fill(AutoExpandingBufferReadTransport.java:37) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:151) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:284) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 75 common frames omitted
+
+INFORMACIÓN:   13:44:27.143 [http-thread-pool::http-listener-1(2)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing query SELECT * FROM "INMUEBLE" WHERE "torre" = 12 AND "apartamento" = 302 LIMIT 1  ALLOW FILTERING
+
+INFORMACIÓN:   13:44:27.147 [http-thread-pool::http-listener-1(2)] ERROR c.i.c.cassandra.CassandraClientBase - Error during executing query SELECT * FROM "INMUEBLE" WHERE "torre" = 12 AND "apartamento" = 302 LIMIT 1  ALLOW FILTERING, Caused by: {} .
+com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.InmueblePersistence.findInmuebleByTorreAndApartamento(InmueblePersistence.java:42) [InmueblePersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:81) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:140) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readStringBody(TBinaryProtocol.java:380) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:230) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 73 common frames omitted
+
+INFORMACIÓN:   13:44:27.150 [http-thread-pool::http-listener-1(2)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing native CQL query Caused by {}.
+javax.persistence.PersistenceException: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2071) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) ~[kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.InmueblePersistence.findInmuebleByTorreAndApartamento(InmueblePersistence.java:42) [InmueblePersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:81) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	... 62 common frames omitted
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:140) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readStringBody(TBinaryProtocol.java:380) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:230) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 73 common frames omitted
+
+ADVERTENCIA:   StandardWrapperValve[Jersey REST Service]: Servlet.service() for servlet Jersey REST Service threw exception
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:140)
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.protocol.TBinaryProtocol.readStringBody(TBinaryProtocol.java:380)
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:230)
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896)
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883)
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598)
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056)
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280)
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926)
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062)
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257)
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377)
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200)
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761)
+	at persistencia.InmueblePersistence.findInmuebleByTorreAndApartamento(InmueblePersistence.java:42)
+	at services.AlarmaService.addAlarma(AlarmaService.java:81)
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703)
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229)
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160)
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593)
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159)
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573)
+	at java.lang.Thread.run(Thread.java:748)
+
+INFORMACIÓN:   13:44:37.242 [http-thread-pool::http-listener-1(5)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing query SELECT * FROM "UNIDADRESIDENCIAL" WHERE "nombre" = 'Las Aguas' LIMIT 1  ALLOW FILTERING
+
+INFORMACIÓN:   13:44:37.246 [http-thread-pool::http-listener-1(5)] ERROR c.i.c.cassandra.CassandraClientBase - Error during executing query SELECT * FROM "UNIDADRESIDENCIAL" WHERE "nombre" = 'Las Aguas' LIMIT 1  ALLOW FILTERING, Caused by: {} .
+com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30) [UnidadResidencialPersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:80) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:140) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readStringBody(TBinaryProtocol.java:380) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:230) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 73 common frames omitted
+
+ADVERTENCIA:   StandardWrapperValve[Jersey REST Service]: Servlet.service() for servlet Jersey REST Service threw exception
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:140)
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.protocol.TBinaryProtocol.readStringBody(TBinaryProtocol.java:380)
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:230)
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896)
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883)
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598)
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056)
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280)
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926)
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062)
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257)
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377)
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200)
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761)
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30)
+	at services.AlarmaService.addAlarma(AlarmaService.java:80)
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703)
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229)
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160)
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593)
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159)
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573)
+	at java.lang.Thread.run(Thread.java:748)
+
+INFORMACIÓN:   13:44:37.250 [http-thread-pool::http-listener-1(5)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing native CQL query Caused by {}.
+javax.persistence.PersistenceException: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2071) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) ~[kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30) [UnidadResidencialPersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:80) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	... 62 common frames omitted
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:140) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readStringBody(TBinaryProtocol.java:380) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:230) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:286) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 73 common frames omitted
+
+INFORMACIÓN:   13:44:41.566 [http-thread-pool::http-listener-1(3)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing query SELECT * FROM "UNIDADRESIDENCIAL" WHERE "nombre" = 'Las Aguas' LIMIT 1  ALLOW FILTERING
+
+INFORMACIÓN:   13:44:41.569 [http-thread-pool::http-listener-1(3)] ERROR c.i.c.cassandra.CassandraClientBase - Error during executing query SELECT * FROM "UNIDADRESIDENCIAL" WHERE "nombre" = 'Las Aguas' LIMIT 1  ALLOW FILTERING, Caused by: {} .
+com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30) [UnidadResidencialPersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:80) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.AutoExpandingBufferReadTransport.fill(AutoExpandingBufferReadTransport.java:37) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:151) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:284) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 75 common frames omitted
+
+ADVERTENCIA:   StandardWrapperValve[Jersey REST Service]: Servlet.service() for servlet Jersey REST Service threw exception
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:284)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.transport.AutoExpandingBufferReadTransport.fill(AutoExpandingBufferReadTransport.java:37)
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:151)
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134)
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+	at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)
+	at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69)
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896)
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883)
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598)
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056)
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280)
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926)
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062)
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257)
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377)
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200)
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761)
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30)
+	at services.AlarmaService.addAlarma(AlarmaService.java:80)
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703)
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229)
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160)
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654)
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593)
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159)
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573)
+	at java.lang.Thread.run(Thread.java:748)
+
+INFORMACIÓN:   13:44:41.572 [http-thread-pool::http-listener-1(3)] ERROR c.i.c.cassandra.CassandraClientBase - Error while executing native CQL query Caused by {}.
+javax.persistence.PersistenceException: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2071) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase$CQLClient.executeQuery(CassandraClientBase.java:2280) ~[kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeSelectQuery(CassandraClientBase.java:926) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.thrift.ThriftClient.executeQuery(ThriftClient.java:1062) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.query.CassQuery.recursivelyPopulateEntities(CassQuery.java:257) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.fetch(QueryImpl.java:1377) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getResultList(QueryImpl.java:200) [kundera-core-3.5.jar:na]
+	at com.impetus.kundera.query.QueryImpl.getSingleResult(QueryImpl.java:761) [kundera-core-3.5.jar:na]
+	at persistencia.UnidadResidencialPersistence.find(UnidadResidencialPersistence.java:30) [UnidadResidencialPersistence.class:na]
+	at services.AlarmaService.addAlarma(AlarmaService.java:80) [AlarmaService.class:na]
+	at sun.reflect.GeneratedMethodAccessor106.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_171]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_171]
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory.lambda$static$0(ResourceMethodInvocationHandlerFactory.java:76) [jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:148) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:191) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$ResponseOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:200) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:103) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:493) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:415) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:104) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:272) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:316) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:298) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:268) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:289) ~[jersey-common.jar:na]
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:256) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:703) ~[jersey-server.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:416) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:370) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:389) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:342) ~[jersey-container-servlet-core.jar:na]
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:229) ~[jersey-container-servlet-core.jar:na]
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1622) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:258) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:160) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:654) ~[web-core.jar:na]
+	at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:593) ~[web-core.jar:na]
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:99) ~[web-glue.jar:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:159) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:371) ~[web-core.jar:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:238) ~[web-core.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:516) ~[kernel.jar:na]
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:213) ~[kernel.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:206) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:180) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:242) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:539) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:593) ~[nucleus-grizzly-all.jar:na]
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:573) ~[nucleus-grizzly-all.jar:na]
+	at java.lang.Thread.run(Thread.java:748) ~[na:1.8.0_171]
+Caused by: com.impetus.kundera.KunderaException: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2606) [kundera-cassandra-3.5.jar:na]
+	at com.impetus.client.cassandra.CassandraClientBase.executeCQLQuery(CassandraClientBase.java:2056) [kundera-cassandra-3.5.jar:na]
+	... 62 common frames omitted
+Caused by: org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.AutoExpandingBufferReadTransport.fill(AutoExpandingBufferReadTransport.java:37) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.readFrame(TFastFramedTransport.java:151) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TFastFramedTransport.read(TFastFramedTransport.java:134) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:69) ~[libthrift-0.9.2.jar:0.9.2]
+	at org.apache.cassandra.thrift.Cassandra$Client.recv_set_cql_version(Cassandra.java:1896) ~[cassandra-thrift-3.5.jar:3.5]
+	at org.apache.cassandra.thrift.Cassandra$Client.set_cql_version(Cassandra.java:1883) ~[cassandra-thrift-3.5.jar:3.5]
+	at com.impetus.client.cassandra.CassandraClientBase.execute(CassandraClientBase.java:2598) [kundera-cassandra-3.5.jar:na]
+	... 63 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_171]
+	at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:284) ~[na:1.8.0_171]
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345) ~[na:1.8.0_171]
+	at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127) ~[libthrift-0.9.2.jar:0.9.2]
+	... 75 common frames omitted

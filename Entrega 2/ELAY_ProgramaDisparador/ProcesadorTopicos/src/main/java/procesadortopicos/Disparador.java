@@ -61,7 +61,7 @@ public class Disparador {
         this.interfaz = i;
         try {
             String myTopic = "#";
-            sampleClient = new MqttClient("tcp://172.24.42.23:8083", "0");
+            sampleClient = new MqttClient("tcp://localhost:8083", "0");
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
             sampleClient.setCallback(new MqttCallback() {
@@ -77,7 +77,7 @@ public class Disparador {
                         imprimir(topic, message.toString());
                     } else if(message.toString().startsWith("HC:")) {
                         ManejadorHealdCheck.reportar(message.toString().split(":")[1]);
-                    } else if(message.toString().startsWith("STARD:")){
+                    } else if(message.toString().startsWith("START:")){
                         ManejadorHealdCheck.iniciarMedicion(message.toString().split(":")[1]);
                     }
                 }
@@ -372,7 +372,7 @@ public class Disparador {
     public static class HTTP {
 
         private static final String URL_SPEED = "http://172.24.42.80:8080/speed";
-        private static final String URL_BATCH = "http://172.24.42.67:8080/ProgrmaP/service/alarmas/";
+        private static final String URL_BATCH = "http://172.24.42.67:53385/ProgrmaP/service/alarmas/";
 
         public static void postSpeed(String rol, String msg) {
             try {
@@ -407,8 +407,10 @@ public class Disparador {
                 URL url = new URL(URL_BATCH);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
+
                 con.setRequestProperty("Content-Type", "application/json");
                 con.setDoOutput(true);
+                con.setRequestProperty("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTVUMTU6MjQ6NTQuOTI2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYzOTc4OTcsImV4cCI6MTUyNjQzMzg5N30.IGWbsk7mqgfqB-lidlAxBXlaB28MC_QaYsch0gbq74Dp1OGNg-OGooB3LhBKRpSoKn6P41nfh5KQ7V5ReRAUJrhFLWB_uNTPqrnFK0TmRBtTYoTuMtN6rOXwyJYotGG11e11so42VJXoo0RaZ4DLGUdvJs0ND5NJQaLcRlmrT9K-Jfi6fkJH6V7nMwZQ1DPrGLR_sbY2x1S_WN0-6PhJLi0sN_A7HWy98UBPXA6j-_aiUyqAHyoMhlrPWP6mKg5pKhNqVE3u7isaUPjS0VC1Fas8xvJOGeuJ95F1RjzEtHGADW8V6Yujh6euvQ9wMnVmh-vQTx79zCO8L7nxo_KIyA");
                 OutputStream os = con.getOutputStream();
                 os.write(msg.getBytes());
                 os.flush();

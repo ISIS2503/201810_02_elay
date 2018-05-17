@@ -37,7 +37,7 @@ public class HealdCheck {
 
     public static void empezarVerificador(String id) {
         new Thread(new Verificador(time, max, new ReporteHub(),
-                () -> { try { new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo(); } catch (Exception e) {} }, id))
+                () -> { try { new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo(); System.out.println("======================= El hub esta fuera de linea");} catch (Exception e) {} }, id))
                 .start();
     }
 }

@@ -1,0 +1,379 @@
+{
+	"info": {
+		"name": "UnidadResidencialCollection",
+		"_postman_id": "64943271-f644-f02a-fdf3-7ae0baf6e7e4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Calle 132 #123-91\",\n\t\"nombre\": \"LasAguas\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'LasAguas' ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'LasAguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						"'LasAguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'Las flores' ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'Las flores'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						"'Las flores'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'LasAguas' ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las nuevas Aguas\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'LasAguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						"'LasAguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'Las nuevas Aguas' ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las nuevas Aguas\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'Las nuevas Aguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						"'Las nuevas Aguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'Las flores'/desactivar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las nuevas Aguas\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/ProgrmaP/service/unidadesResidenciales/'Las flores'/desactivar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ProgrmaP",
+						"service",
+						"unidadesResidenciales",
+						"'Las flores'",
+						"desactivar"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

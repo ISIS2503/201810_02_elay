@@ -13,5 +13,4 @@ healdcheck\ReporteHub.class
 programa\ClienteMQTT$1.class
 programa\ClienteMQTT.class
 servicios\EnviarMensaje.class
-.netbeans_automatic_build
 healdcheck\Notificador.class

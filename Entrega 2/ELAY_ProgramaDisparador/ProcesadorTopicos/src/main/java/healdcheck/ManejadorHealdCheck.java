@@ -39,6 +39,7 @@ public class ManejadorHealdCheck {
     public static void iniciarMedicion(String id) {
         ReporteCerradura repor = new ReporteCerradura(id);
         reportes.add(repor);
+        System.out.println("healdcheck.ManejadorHealdCheck.iniciarMedicion()");
         new Thread(new Verificador(time, max, repor, new NotificarCerradura(Disparador.ID), Disparador.ID)).start();
     }
     
