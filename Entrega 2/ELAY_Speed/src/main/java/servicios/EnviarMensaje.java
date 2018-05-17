@@ -81,6 +81,7 @@ public class EnviarMensaje extends Application {
     @Path("healdcheck")
     public String notificarHealCheck(String id) {
          new MailSender("Mensaje de alerta ", "elay.arquisoft.201810@hotmail.com", "El hub se encuentra fuera de linea.\nId hub"+id).start();
+         System.out.println("================================== Se murio ");
         return "{ \"mensaje\":\"Se perdió la conexión con el HUB: "+id+" \" }";
     }
 }
