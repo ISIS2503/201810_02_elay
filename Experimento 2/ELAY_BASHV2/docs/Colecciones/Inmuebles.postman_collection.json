@@ -1,0 +1,499 @@
+{
+	"info": {
+		"name": "Inmuebles",
+		"_postman_id": "5349d2a1-d528-16dd-a3af-d87bd64c16e1",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crea la unidad residencial \"Las Aguas\" de forma exitosa para probar correctamente los inmuebles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTVUMTI6NDk6MDEuOTE2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYzODg1NDQsImV4cCI6MTUyNjQyNDU0NH0.W74bCa4EO_o_f9XGNY2MQ-E9TftN_QSB9sO-ignM21NweUYQofro_P7eZuUFOuGp2e9aRjTEQtk3Cpye_g5wrIT1VZOg0rzh-Zb8HX6cCanDdJbt3ZqqJG8WqsqDkGrr7vWEtIjU8qVbJgpOlVfeMrpSo-fvdv3yWM9HrTIuuFoNA1hpdqnFKjwhJXHmdtxBGbFwx2cK7-rmCn4NUePg7oz8Imqbn6keo_eBfPdM5Blvb8U7KRxwlD8aj02akJvxVCniXu-hKvnVF-lBJNySRFfJJAG0YWnTviKF0VP0FlZApsA1qsFHEkNtXxU07nJkv4yC8IMwnFNI_ZgseomitA"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las Aguas\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un inmueble en la unidad residencial \"Las Aguas\" para probar el API inmuebles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTVUMTQ6NTc6MjcuNzU2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYzOTYyNDksImV4cCI6MTUyNjQzMjI0OX0.VjJbnfJTqX--nd0_7HfLDhF2vMo9BHaWI3-vyTK_D0-teuIQgeAmc0aNdZ8JtcmYzLviyijywSJ4U_e-BX85_FTfjI4G_tq6xhFuMAMXoBAdj2NRYNEIUHInV_kRTrUAAANUCRlkYGpWEJfzTa1BiI-bN-c0l88X8mPiU1cYrnf_iBkNTuI3VNuYD6RCpsLpBjMFhqOjj49SEG5nikH3bxjwEXWJzdUfDsft4qDAswI98BYs8WatjcRKt03t4jMe7ookRXQWc0oHPGxpkbwQd_INhYzb9kPZfvYdRGPGGjg3dvMJvrZtf5ZyV0ae5KJvHgm1F_MiKJlXIMprM3QkAA"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"torre\": 12,\n\t\"apartamento\": 302\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Aguas'/crearInmueble",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Aguas'",
+						"crearInmueble"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Intenta crear un inmueble en 'Las aguas' pero las aguas ya tiene un inmueble con esas caracteristicas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae8dcd95-fa5a-476a-b506-a28a450816dd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTE6MTY6MjAuODcyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwMzczODIsImV4cCI6MTUyNjA3MzM4Mn0.S4o9srdFVWcaN3l5v5bpypf24sv9aMs1e0NDtPnz1EXKFwKRbNmlIjLnQpThGHdlbpBIBRTa265rbtnJnIVTAozVOM_M11EWu3PZGSXLT0dUV56M55X74YJlLpxnu6tOuVyjrA8DfhDxxASNtd2ms1RYswM8P85xyS1l5lNXBNaUepyuCXOgC_djGbtBaahwWxRtpLsMkXcryfFwAcpGl6dN3c4S4-CuT8ZP1gt_yFeZT5XSJjdRkGzp89DDqQTd98MoaC2kUK6aLvXq6dTvM8wEPNy3FmZ-3ESFfhpYM-l24TJad5BactliCcEqRKsnpaIyf0bwoC7bJTCbzLsomg"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"torre\": 12,\n\t\"apartamento\": 302\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Aguas'/crearInmueble",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Aguas'",
+						"crearInmueble"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene todos los inmuebles alojados en el sistema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2553b2c0-0f98-4f5b-8725-cb1f0a9f258d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTVUMTI6NDk6MDEuOTE2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYzODg1NDQsImV4cCI6MTUyNjQyNDU0NH0.W74bCa4EO_o_f9XGNY2MQ-E9TftN_QSB9sO-ignM21NweUYQofro_P7eZuUFOuGp2e9aRjTEQtk3Cpye_g5wrIT1VZOg0rzh-Zb8HX6cCanDdJbt3ZqqJG8WqsqDkGrr7vWEtIjU8qVbJgpOlVfeMrpSo-fvdv3yWM9HrTIuuFoNA1hpdqnFKjwhJXHmdtxBGbFwx2cK7-rmCn4NUePg7oz8Imqbn6keo_eBfPdM5Blvb8U7KRxwlD8aj02akJvxVCniXu-hKvnVF-lBJNySRFfJJAG0YWnTviKF0VP0FlZApsA1qsFHEkNtXxU07nJkv4yC8IMwnFNI_ZgseomitA"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/inmuebles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"inmuebles"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene el inmueble que acaba de crear",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64a84471-d05b-43cc-bc79-08c0472c78ff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTI6NDE6MDUuNjk2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDI0NjcsImV4cCI6MTUyNjA3ODQ2N30.paueP2-jkxqUyK9YMwChd878lZJ8Jpj8NvzAxTarcPPnsG2-evh4hkaHsWcK9eclqIcYP0tNuAqG0h24Xbjs_QP10nKyGbcyCAA__tfp0Ta_o2Z3cRy4wqw0L00HxNASUVW24sp5I70-zfhn9uBT1M26_QQt81MN0PstET6WUKhiOVonH_73b0zq6KjvYREjnq4BTmZDcnNk2LoERF9qiMbV9KZPT_qVHb_nhGdSDttKn8xs7PufdivYXoDErQGYfgWJopdLhedn20trEy8KQE6WIivdTSAcccMULyIYt2ul7m2e8tvGtCLCdyZvUUe1rCUqYt3W5irhBlKZfk7XyQ"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/inmuebles/buscar/'Las Aguas'/?torre=12&apartamento=302",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"inmuebles",
+						"buscar",
+						"'Las Aguas'",
+						""
+					],
+					"query": [
+						{
+							"key": "torre",
+							"value": "12",
+							"equals": true
+						},
+						{
+							"key": "apartamento",
+							"value": "302",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene todas las alarmas de un inmueble",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64a84471-d05b-43cc-bc79-08c0472c78ff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJzZWd1cmlkYWRfcHJpdmFkYSJdLCJuaWNrbmFtZSI6InNlZ3VyaWRhZCIsIm5hbWUiOiJzZWd1cmlkYWRAc2VndXJpZGFkLmNvbS5jbyIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci81NjcwMmU4NDhkYjY3YTAzOGRhNjNhNzYzZDIxMTUxNj9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRnNlLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDE4LTA1LTE1VDE1OjAwOjM1LjE5MFoiLCJlbWFpbCI6InNlZ3VyaWRhZEBzZWd1cmlkYWQuY29tLmNvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL2lzaXMyNTAzLWpkdHJ1amlsbG9tLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1YWY0ZWE0MjVkN2QxNjE3ZmQ3YzBiOGYiLCJhdWQiOiJGbTI5MVZ2THlXdDVWNDhINU9RQ1V6bjRkS083TlNWQSIsImlhdCI6MTUyNjM5NjQzNywiZXhwIjoxNTI2NDMyNDM3fQ.Tj_H4DHCaVDi2FGFFLnBzOPGpJfoXf1gIBYLB4A-lxwVky3E0kh9FNOYrwvpxNUMHTvIhM0gKp-lZ0isrd1f94Ou8MJ0Pt8oESqHhoLtnl1VH3E2OnKQVMdCxcaqzJDqSWf1YV5IhGf2CSxQMbrHr9AIhL9nqbcfzaZiC01fZgMcHzkffb389XafH-BvQ8ZII8sXVPITB-jhhBp5KveG6BBge38K2HWoEHKEkySCyBUf3VbvUb0Zmm1PAPzjyYhHDzYV4ApU6tIFgWcM4YAySB9URpGzG02dN4Vf9xzeHuy_d4VGeJqJdKb0svRR-Xa2U38L6OFs2EZrX4IXEcsi-g"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/inmuebles/'LasAguas'/alarmas?torre=12&apartamento=302",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"inmuebles",
+						"'LasAguas'",
+						"alarmas"
+					],
+					"query": [
+						{
+							"key": "torre",
+							"value": "12",
+							"equals": true
+						},
+						{
+							"key": "apartamento",
+							"value": "302",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene el inmueble que acaba de crear copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57050e47-f525-4133-90bc-505b82aa5a5e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTI6NDE6MDUuNjk2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDI0NjcsImV4cCI6MTUyNjA3ODQ2N30.paueP2-jkxqUyK9YMwChd878lZJ8Jpj8NvzAxTarcPPnsG2-evh4hkaHsWcK9eclqIcYP0tNuAqG0h24Xbjs_QP10nKyGbcyCAA__tfp0Ta_o2Z3cRy4wqw0L00HxNASUVW24sp5I70-zfhn9uBT1M26_QQt81MN0PstET6WUKhiOVonH_73b0zq6KjvYREjnq4BTmZDcnNk2LoERF9qiMbV9KZPT_qVHb_nhGdSDttKn8xs7PufdivYXoDErQGYfgWJopdLhedn20trEy8KQE6WIivdTSAcccMULyIYt2ul7m2e8tvGtCLCdyZvUUe1rCUqYt3W5irhBlKZfk7XyQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"torre\": 10,\n\t\"apartamento\": 505\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/inmuebles/actualizar/'Las Aguas'/?torre=12&apartamento=302",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"inmuebles",
+						"actualizar",
+						"'Las Aguas'",
+						""
+					],
+					"query": [
+						{
+							"key": "torre",
+							"value": "12",
+							"equals": true
+						},
+						{
+							"key": "apartamento",
+							"value": "302",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene el inmueble que acaba de crear copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64a84471-d05b-43cc-bc79-08c0472c78ff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTI6NDE6MDUuNjk2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDI0NjcsImV4cCI6MTUyNjA3ODQ2N30.paueP2-jkxqUyK9YMwChd878lZJ8Jpj8NvzAxTarcPPnsG2-evh4hkaHsWcK9eclqIcYP0tNuAqG0h24Xbjs_QP10nKyGbcyCAA__tfp0Ta_o2Z3cRy4wqw0L00HxNASUVW24sp5I70-zfhn9uBT1M26_QQt81MN0PstET6WUKhiOVonH_73b0zq6KjvYREjnq4BTmZDcnNk2LoERF9qiMbV9KZPT_qVHb_nhGdSDttKn8xs7PufdivYXoDErQGYfgWJopdLhedn20trEy8KQE6WIivdTSAcccMULyIYt2ul7m2e8tvGtCLCdyZvUUe1rCUqYt3W5irhBlKZfk7XyQ"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/inmuebles/buscar/'Las Aguas'/?torre=10&apartamento=505",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"inmuebles",
+						"buscar",
+						"'Las Aguas'",
+						""
+					],
+					"query": [
+						{
+							"key": "torre",
+							"value": "10",
+							"equals": true
+						},
+						{
+							"key": "apartamento",
+							"value": "505",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Elimina la unidad residencial recien actualizada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57050e47-f525-4133-90bc-505b82aa5a5e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTI6NDE6MDUuNjk2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDI0NjcsImV4cCI6MTUyNjA3ODQ2N30.paueP2-jkxqUyK9YMwChd878lZJ8Jpj8NvzAxTarcPPnsG2-evh4hkaHsWcK9eclqIcYP0tNuAqG0h24Xbjs_QP10nKyGbcyCAA__tfp0Ta_o2Z3cRy4wqw0L00HxNASUVW24sp5I70-zfhn9uBT1M26_QQt81MN0PstET6WUKhiOVonH_73b0zq6KjvYREjnq4BTmZDcnNk2LoERF9qiMbV9KZPT_qVHb_nhGdSDttKn8xs7PufdivYXoDErQGYfgWJopdLhedn20trEy8KQE6WIivdTSAcccMULyIYt2ul7m2e8tvGtCLCdyZvUUe1rCUqYt3W5irhBlKZfk7XyQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/inmuebles/eliminar/'Las Aguas'/?torre=12&apartamento=302",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"inmuebles",
+						"eliminar",
+						"'Las Aguas'",
+						""
+					],
+					"query": [
+						{
+							"key": "torre",
+							"value": "12",
+							"equals": true
+						},
+						{
+							"key": "apartamento",
+							"value": "302",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
