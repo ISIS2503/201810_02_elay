@@ -25,8 +25,10 @@ package servicios;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.util.function.Consumer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -39,19 +41,20 @@ import programa.ManejadorContrasenias;
  *
  * @author hs.hernandez
  */
-@Path("contrasenias")
+@Path("contrasenias") 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class Contrasenias {
 
     public enum Protocolo {
-        AGREGAR("01"), 
-        MODIFICAR("02"), 
-        ELIMINAR("03"), 
+        AGREGAR("01"),
+        MODIFICAR("02"),
+        ELIMINAR("03"),
         ELIMINAR_ALL("04"),
         OK("OK"),
         ERROR("ERROR");
         private final String cmd;
+
         Protocolo(String cmd) {
             this.cmd = cmd;
         }
@@ -59,66 +62,81 @@ public class Contrasenias {
         public String getCmd() {
             return cmd;
         }
-        
+
     }
-    
+
     public static final String MSG = "Operación realizada exitosamente.";
-    
+
     public Contrasenias() {
     }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String get() {
+        return ManejadorContrasenias.darTodas();
+    }
     
+    @GET
+    @Path("inv")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getInvalidas() {
+        String ret = ">>";
+        for(String s : ManejadorContrasenias.darInvalidas()) ret+=s+"\n";
+        return ret;
+    }
+    
+    
+
     @POST
     public String agregar(String j) {
         try {
-        JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        String contra = info.get("contrasenia").getAsString();
-        String dias = info.get("dias").getAsString();
-        String initTime = info.get("initTime").getAsString();
-        String endTime = info.get("endTime").getAsString();
-        ClienteMQTT.publicar(Protocolo.AGREGAR.cmd+":"+ManejadorContrasenias.agregarNuevaContrasenia(contra, ManejadorContrasenias.convertTime(initTime), ManejadorContrasenias.convertTime(endTime), ManejadorContrasenias.convertDays(dias) )+":"+contra);
-        return "{ \"mensaje\":\""+MSG+"\" }";
-        } catch(Exception e) {
+            JsonObject info = new JsonParser().parse(j).getAsJsonObject();
+            String contra = info.get("contrasenia").getAsString();
+            String dias = info.get("dias").getAsString();
+            String initTime = info.get("initTime").getAsString();
+            String endTime = info.get("endTime").getAsString();
+            ClienteMQTT.publicar(Protocolo.AGREGAR.cmd + ":" + ManejadorContrasenias.agregarNuevaContrasenia(contra, ManejadorContrasenias.convertTime(initTime), ManejadorContrasenias.convertTime(endTime), ManejadorContrasenias.convertDays(dias)) + ":" + contra);
+            return "{ \"mensaje\":\"" + MSG + "\" }";
+        } catch (Exception e) {
             return error(e.getMessage());
         }
     }
-    
+
     private String error(String msg) {
-        return "{ \"ERROR\":\" "+msg+" \" }";
+        return "{ \"ERROR\":\" " + msg + " \" }";
     }
-    
+
     @PUT
     public String modificar(String j) {
         try {
-        JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        String contraNueva = info.get("contraseniaNueva").getAsString();
-        String contraAntigua = info.get("contraseniaAntigua").getAsString();
-        String dias = info.get("dias").getAsString();
-        String initTime = info.get("initTime").getAsString();
-        String endTime = info.get("endTime").getAsString();
-        ClienteMQTT.publicar(Protocolo.MODIFICAR.cmd+":"+ManejadorContrasenias.cambiarContraseña(contraAntigua, contraNueva, ManejadorContrasenias.convertTime(initTime), ManejadorContrasenias.convertTime(endTime), ManejadorContrasenias.convertDays(dias))+":"+contraNueva);
-        return "{ \"mensaje\":\""+MSG+"\" }";
+            JsonObject info = new JsonParser().parse(j).getAsJsonObject();
+            String contraNueva = info.get("contraseniaNueva").getAsString();
+            String contraAntigua = info.get("contraseniaAntigua").getAsString();
+            String dias = info.get("dias").getAsString();
+            String initTime = info.get("initTime").getAsString();
+            String endTime = info.get("endTime").getAsString();
+            ClienteMQTT.publicar(Protocolo.MODIFICAR.cmd + ":" + ManejadorContrasenias.cambiarContraseña(contraAntigua, contraNueva, ManejadorContrasenias.convertTime(initTime), ManejadorContrasenias.convertTime(endTime), ManejadorContrasenias.convertDays(dias)) + ":" + contraNueva);
+            return "{ \"mensaje\":\"" + MSG + "\" }";
         } catch (Exception e) {
             return error(e.getMessage());
         }
     }
-    
+
     @DELETE
     public String eliminar(String j) {
         try {
-        JsonObject info = new JsonParser().parse(j).getAsJsonObject();
-        ClienteMQTT.publicar(Protocolo.ELIMINAR.cmd+":"+ManejadorContrasenias.eliminar(info.get("contrasenia").getAsString()));
-        return "{ \"mensaje\":\""+MSG+"\" }";
+            JsonObject info = new JsonParser().parse(j).getAsJsonObject();
+            ClienteMQTT.publicar(Protocolo.ELIMINAR.cmd + ":" + ManejadorContrasenias.eliminar(info.get("contrasenia").getAsString()));
+            return "{ \"mensaje\":\"" + MSG + "\" }";
         } catch (Exception e) {
             return error(e.getMessage());
         }
     }
-    
+
     @DELETE
     @Path("/todo")
     public String eliminar() {
-        ClienteMQTT.publicar(Protocolo.ELIMINAR_ALL.cmd+":");
-        return "{ \"mensaje\":\""+MSG+"\" }";
+        ClienteMQTT.publicar(Protocolo.ELIMINAR_ALL.cmd + ":");
+        return "{ \"mensaje\":\"" + MSG + "\" }";
     }
-    
-    
 }
