@@ -92,7 +92,7 @@ public class UnidadResidencialService {
         }
 
         //Verifica si una unidad residencial ya existe. 
-        UnidadResidencial urBuscada = URP.find(dto.getNombre());
+        UnidadResidencial urBuscada = URP.findByNombre(dto.getNombre());
 
         if (urBuscada != null) {
             return Response.status(500).entity(new ErrorEdited("La unidad residencial con el nombre dado ya existe.")).build();
@@ -133,7 +133,7 @@ public class UnidadResidencialService {
 
             //Instancia un persistence de la unidad residencial. 
             UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-            UnidadResidencial unidadAsociada = URP.find(nombre);
+            UnidadResidencial unidadAsociada = URP.findByNombre(nombre);
 
             //Lanza excepcion en caso de que no encuentre una unidad residencial
             if (unidadAsociada == null) {
@@ -188,7 +188,7 @@ public class UnidadResidencialService {
         public Response getUnidadResidencialPorNombre(@PathParam("nombre") String nombre) {
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
-        UnidadResidencial entity = URP.find(nombre);
+        UnidadResidencial entity = URP.findByNombre(nombre);
         if (entity == null) {
             return Response.status(404).entity(new ErrorEdited("La unidad residencial con el nombre " + nombre + " no existe")).build();
         }
@@ -215,7 +215,7 @@ public class UnidadResidencialService {
         public Response getAlarmasUnidadResidencial(@PathParam("nombre") String nombre) {
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
-        UnidadResidencial entity = URP.find(nombre);
+        UnidadResidencial entity = URP.findByNombre(nombre);
         if (entity == null) {
             return Response.status(404).entity(new ErrorEdited("La unidad residencial con el nombre " + nombre + " no existe")).build();
         }
@@ -250,7 +250,7 @@ public class UnidadResidencialService {
         }
 
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        UnidadResidencial nuevo = URP.find(nombre);
+        UnidadResidencial nuevo = URP.findByNombre(nombre);
 
         if (nuevo == null) {
             return Response.status(500).entity(new ErrorEdited("La unidad residencial con el nombre " + nombre + " no existe")).build();
@@ -281,13 +281,13 @@ public class UnidadResidencialService {
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
         //Busca el objeto y comprueba que la unidad residencial existe
-        UnidadResidencial entity = URP.find(nombre);
+        UnidadResidencial entity = URP.findByNombre(nombre);
         if (entity == null) {
             return Response.status(404).entity(new ErrorEdited("La unidad residencial con el nombre " + nombre + " no existe")).build();
         }
 
         //Elimina la unidad residencial de la base de datos
-        URP.delete(nombre);
+        URP.deleteByNombre(nombre);
 
         return Response.status(200).build();
     }

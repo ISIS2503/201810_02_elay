@@ -5,9 +5,8 @@
  */
 package entidad;
 
-import java.sql.Timestamp;
+
 import java.util.List;
-import javax.persistence.Id;
 
 /**
  *
@@ -23,18 +22,18 @@ public class User {
     
     private String usuario;
     
-    private String contraseña;
+    private String contrasenia;
     
     private String fechaNacimiento;
     
     private List<String> roles;
 
-    public User(String id, String correo, String nombre, String usuario, String contraseña, String fechaNacimiento, List<String> roles) {
+    public User(String id, String correo, String nombre, String usuario, String contrasenia, String fechaNacimiento, List<String> roles) {
         this.id = id;
         this.correo = correo;
         this.nombre = nombre;
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
         this.fechaNacimiento = fechaNacimiento;
         this.roles = roles;
     }
@@ -64,11 +63,11 @@ public class User {
     }
 
      public String getContraseña() {
-        return contraseña;
+        return contrasenia;
     }
 
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.contrasenia = contraseña;
     }
     
     public String getFechaNacimiento() {

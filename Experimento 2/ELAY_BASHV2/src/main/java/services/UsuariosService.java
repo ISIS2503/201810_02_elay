@@ -12,7 +12,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import dto.SeguridadPrivadaUserDTO;
+import dto.UnidadResidencialDTO;
 import dto.UserDTO;
+import entidad.ErrorEdited;
+import entidad.SeguridadPrivadaUser;
+import entidad.UnidadResidencial;
 import entidad.User;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -25,19 +30,18 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.PATCH;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
+import persistencia.UnidadResidencialPersistence;
 
 /**
  * Clase que modela a los usuarios almacenados en el sistema.
@@ -61,22 +65,8 @@ public class UsuariosService {
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAllUsers() throws UnirestException {
 
-        //Envia una peticiob a Auth0 para obtener el token de inicio de sesion. 
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
-        //Obtiene el token de el archivo Json
+        String token = getToken();
         ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         //Envia la nueva petici{on con todos los usuarios
         HttpResponse<String> response2 = Unirest.get("https://isis2503-jdtrujillom.auth0.com/api/v2/users")
@@ -140,23 +130,10 @@ public class UsuariosService {
     @Path("{correo}")
     public Response getUserByEmail(@PathParam("correo") String correo) throws UnirestException {
 
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
         ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String token = getToken();
 
         correo = correo.replace("@", "%40");
-        System.out.println("ARQUIIIIIIIIII:" + correo);
         HttpResponse<String> response2 = Unirest.get("https://isis2503-jdtrujillom.auth0.com/api/v2/users-by-email?email=" + correo)
                 .header("content-type", "application/json")
                 .header("authorization", "Bearer " + token)
@@ -199,41 +176,10 @@ public class UsuariosService {
         return Response.status(200).entity(userDTO).build();
     }
 
-//    @POST
-//    @Produces({MediaType.TEXT_PLAIN})
-//    @Path("{name : \\d+}")
-//    public Response createUser(@PathParam("name") String name) throws UnirestException {
-//
-//        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-//                .header("content-type", "application/json")
-//                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-//                .asString();
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        String token = "";
-//        System.out.println(token);
-//        try {
-//            JsonNode node = mapper.readTree(response.getBody());
-//            token = node.get("access_token").asText();
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        //String jsonName = "{"name": name}";
-//        
-//        HttpResponse<String> response2 = Unirest.post("https://isis2503-jdtrujillom.auth0.com/api/v2/clients")
-//                .header("content-type", "application/json")
-//                .header("authorization", "Bearer " + token)
-//                .body("{\"name\":\"123\"}")
-//                .asString();
-//
-//        return Response.status(200).entity(response2.getBody()).build();
-//    }
     /**
      * Crea un nuevo usuario en la base de datos.
      *
-     * @param dto con la informaci{on del usuario que se quiere crear
+     * @param dto con la información del usuario que se quiere crear
      * @return
      * @throws Exception
      */
@@ -243,20 +189,7 @@ public class UsuariosService {
     @Path("/add")
     public Response add(UserDTO dto) throws Exception {
 
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String token = getToken();
 
         JSONObject node = new JSONObject();
         node.put("email", dto.getCorreo());
@@ -272,7 +205,7 @@ public class UsuariosService {
     }
 
     /**
-     * Elimina un usuario con la contraseña pasada por parametro.
+     * Elimina un usuario con el id pasado por parametro.
      *
      * @param id del usuario que se quiere eliminar.
      * @return 200 si la eliminacion se llevó a cabo correctamente.
@@ -284,20 +217,7 @@ public class UsuariosService {
     @Path("{id}")
     public Response delete(@PathParam("id") String id) throws Exception {
 
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String token = getToken();
 
         id = id.replace("|", "%7c");
 
@@ -308,11 +228,81 @@ public class UsuariosService {
     }
 
     /**
-     * Actualiza el usuario cuyo id es pasado por parametro. 
-     * @param dto con la información con la que se quiere actualizar el dto. 
+     * Crea un nuevo usuario relacionado con la seguridad privada.
+     *
+     * @param spUser de la seguridad privada.
+     * @return el usuario creado en la base de datos de Auth0.
+     */
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("seguridadPrivada")
+    public Response crearSeguridadPrivada(SeguridadPrivadaUserDTO spUser) {
+
+        String token = getToken();
+
+        JSONObject node = new JSONObject();
+        JSONObject user_metadata = new JSONObject();
+
+        //Coloca el id de la unidad residencial en el metadata del usuario
+        user_metadata.put("idUnidadResidencial", spUser.getIdUnidadResidencial());
+
+        node.put("email", spUser.getCorreo());
+        node.put("connection", "Username-Password-Authentication");
+        node.put("password", spUser.getContraseña());
+        node.put("user_metadata", user_metadata);
+
+        HttpResponse<String> response2 = null;
+
+        try {
+            response2 = Unirest.post("https://isis2503-jdtrujillom.auth0.com/api/v2/users")
+                    .header("content-type", "application/json").header("authorization", "Bearer " + token)
+                    .body(node)
+                    .asString();
+        } catch (UnirestException ex) {
+            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return Response.ok().entity(response2.getBody()).status(Response.Status.ACCEPTED).build();
+
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("{idUsuarioSP}/unidadResidencial")
+    public Response getUnidadResidencialFromSecurity(@PathParam("idUsuarioSP") String idUsuario) {
+
+        JsonNode usuario = getUserOfAuth0(idUsuario);
+        
+        if(usuario == null)
+            return Response.status(500).entity(new ErrorEdited("El usuario con id" + idUsuario + " no existe")).build();
+        
+        JsonNode user_metadata = usuario.get("user_metadata");
+        String idUnidadResidencial = user_metadata.findValue("idUnidadResidencial").asText();
+        
+        if(idUnidadResidencial == null)
+            return Response.status(500).entity(new ErrorEdited(("El usuario no está asociado con ninguna unidad residencial"))).build();
+        
+        UnidadResidencialPersistence unidadResidencialPersistence = new UnidadResidencialPersistence();
+        UnidadResidencial unidadResidencial = unidadResidencialPersistence.find(idUnidadResidencial);
+        
+        if(unidadResidencial == null)
+            return Response.status(500).entity(new ErrorEdited(("La unidad residencial no existe"))).build();
+        
+        UnidadResidencialDTO unidadResidencialDTO = new UnidadResidencialDTO();
+        unidadResidencialDTO.toDTO(unidadResidencial);
+        
+        return Response.status(200).entity(unidadResidencialDTO).build();
+       
+    }
+
+    /**
+     * Actualiza el usuario cuyo id es pasado por parametro.
+     *
+     * @param dto con la información con la que se quiere actualizar el dto.
      * @param id del usuario que se quiere actualizar
-     * @return el usuario con la información actualizada. 
-     * @throws Exception 
+     * @return el usuario con la información actualizada.
+     * @throws Exception
      */
     @PATCH
     @Produces({MediaType.APPLICATION_JSON})
@@ -320,25 +310,12 @@ public class UsuariosService {
     @Path("{id}")
     public Response update(UserDTO dto, @PathParam("id") String id) throws Exception {
 
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String token = getToken();
 
         JSONObject node = new JSONObject();
         node.put("email", dto.getCorreo());
-        node.put("connection", "Username-Password-Authentication"); 
-        
+        node.put("connection", "Username-Password-Authentication");
+
         id = id.replace("|", "%7c");
 
         HttpResponse<String> response2 = Unirest.patch("https://isis2503-jdtrujillom.auth0.com/api/v2/users/" + id)
@@ -353,25 +330,12 @@ public class UsuariosService {
     @Path("changePassword/{id}")
     public Response changePassword(UserDTO dto, @PathParam("id") String id) throws Exception {
 
-        HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
-                .header("content-type", "application/json")
-                .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
-                .asString();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String token = "";
-        try {
-            JsonNode node = mapper.readTree(response.getBody());
-            token = node.get("access_token").asText();
-
-        } catch (IOException ex) {
-            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String token = getToken();
 
         JSONObject node = new JSONObject();
         node.put("password", dto.getContrasenia());
-        node.put("connection", "Username-Password-Authentication"); 
-        
+        node.put("connection", "Username-Password-Authentication");
+
         id = id.replace("|", "%7c");
 
         HttpResponse<String> response2 = Unirest.patch("https://isis2503-jdtrujillom.auth0.com/api/v2/users/" + id)
@@ -379,8 +343,7 @@ public class UsuariosService {
 
         return Response.ok().entity(response2.getBody()).status(Response.Status.ACCEPTED).build();
     }
-    
-    
+
     @POST
     @Path("/updatePassword")
     public Response update(UserDTO dto) throws Exception {
@@ -403,4 +366,53 @@ public class UsuariosService {
 
         return lista;
     }
+
+    /**
+     * Obtiene el token que da acceso a la base de datos de Auth0
+     *
+     * @return el token para acceder a la base de datos.
+     */
+    private String getToken() {
+        ObjectMapper mapper = new ObjectMapper();
+        String token = "";
+        try {
+
+            HttpResponse<String> response = Unirest.post("https://isis2503-jdtrujillom.auth0.com/oauth/token")
+                    .header("content-type", "application/json")
+                    .body("{\"grant_type\":\"client_credentials\",\"client_id\": \"25tCEjxZRjwnXlHunRcCA7o9A8jSHTuo\",\"client_secret\": \"TfUnvMc86IHEG6vaxcw6mVsFX7NV9fqSBonVuQGqTCT9mApY4OX3foyyxX-5se42\",\"audience\": \"https://isis2503-jdtrujillom.auth0.com/api/v2/\"}")
+                    .asString();
+
+            JsonNode node = mapper.readTree(response.getBody());
+            token = node.get("access_token").asText();
+
+        } catch (IOException ex) {
+            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnirestException ex) {
+            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return token;
+    }
+
+    private JsonNode getUserOfAuth0(String idUsuario) {
+        ObjectMapper mapper = new ObjectMapper();
+        String token = getToken();
+        idUsuario = idUsuario.replace("|", "%7c");     
+        JsonNode userNode = null;
+
+        try {
+            HttpResponse<String> response2 = Unirest.get("https://isis2503-jdtrujillom.auth0.com/api/v2/users/" + idUsuario)
+                    .header("content-type", "application/json")
+                    .header("authorization", "Bearer " + token)
+                    .asString();
+            userNode = mapper.readTree(response2.getBody());
+        } catch (IOException exception) {
+            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, exception);
+        } catch (UnirestException ex) {
+            Logger.getLogger(UsuariosService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return userNode;
+    }
+
 }

@@ -16,13 +16,13 @@ import javax.persistence.Query;
  *
  * @author jd.trujillom
  */
-public class UnidadResidencialPersistence extends Persistencer<UnidadResidencial, Long> {
+public class UnidadResidencialPersistence extends Persistencer<UnidadResidencial, String> {
 
     public UnidadResidencialPersistence() {
         this.entityClass = UnidadResidencial.class;
     }
 
-    public UnidadResidencial find(String nombre) {
+    public UnidadResidencial findByNombre(String nombre) {
         UnidadResidencial entity;
         String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.nombre = :nombre1";
         Query query = entityManager.createQuery(queryString).setParameter("nombre1", nombre);
@@ -34,7 +34,7 @@ public class UnidadResidencialPersistence extends Persistencer<UnidadResidencial
         return entity;
     }
 
-    public void delete(String nombre) {
+    public void deleteByNombre(String nombre) {
         UnidadResidencial entity;
         String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.nombre = :nombre1";
         Query query = entityManager.createQuery(queryString).setParameter("nombre1", nombre);

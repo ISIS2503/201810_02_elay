@@ -111,7 +111,7 @@ public class InmuebleService {
             UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
             //Verifica que la unidad residencial exista.
-            UnidadResidencial unidadResidencial = URP.find(nombre);
+            UnidadResidencial unidadResidencial = URP.findByNombre(nombre);
             if (unidadResidencial == null) {
                 return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
             }
@@ -150,7 +150,7 @@ public class InmuebleService {
             UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
 
             //Verifica que la unidad residencial exista.
-            UnidadResidencial unidadResidencial = URP.find(nombre);
+            UnidadResidencial unidadResidencial = URP.findByNombre(nombre);
             if (unidadResidencial == null) {
                 return Response.status(404).entity(new ErrorEdited("La unidad residencial con nombre " + nombre + " no existe")).build();
             }
@@ -233,7 +233,7 @@ public class InmuebleService {
         
         //Verifica la unidad residencial exista
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        UnidadResidencial unidadResidencial = URP.find(nombre);
+        UnidadResidencial unidadResidencial = URP.findByNombre(nombre);
         
         //Excepción si la unidad residencial no existe
         if (unidadResidencial == null) {
@@ -278,7 +278,7 @@ public class InmuebleService {
     public Response desactivarUnidadResidencialPorNombre(@PathParam("nombre") String nombre, @QueryParam("torre") int torre, @QueryParam("apartamento") int apartamento) {
         
         UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        UnidadResidencial unidadResidencial = URP.find(nombre);
+        UnidadResidencial unidadResidencial = URP.findByNombre(nombre);
         
         //Excepción si la unidad residencial no existe
         if (unidadResidencial == null) {
@@ -333,7 +333,7 @@ public class InmuebleService {
          
 
        UnidadResidencialPersistence URP = new UnidadResidencialPersistence();
-        UnidadResidencial unidadResidencial = URP.find(nombre);
+        UnidadResidencial unidadResidencial = URP.findByNombre(nombre);
         
         //Excepción si la unidad residencial no existe
         if (unidadResidencial == null) {
