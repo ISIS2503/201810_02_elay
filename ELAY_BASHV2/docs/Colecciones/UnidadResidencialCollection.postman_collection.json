@@ -1,0 +1,544 @@
+{
+	"info": {
+		"name": "UnidadResidencialCollection",
+		"_postman_id": "64943271-f644-f02a-fdf3-7ae0baf6e7e4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtiene existosamente todos las unidades residenciales",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMThUMTQ6NTM6MjEuOTQyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjY2NTUyMDQsImV4cCI6MTUyNjY5MTIwNH0.ssrFllvP078MfMNLMjEOwU91u7LuQBPBkWAeI2yy2nejTz7IBUEYcSuAX9RYdoUEkD2xCqswLXF5jb5y6Dxg93E-Qmgzx_jI1Kg0y1tdDMilwma5AKtvHifb5Tmxujz6XoTdKaT6mbHO5JSi56zmrNlFsBjZyS1iNWH53EvdfXFS8g4KaAH8QTfhD3HolloqIYQLcwdjJo0Lh7gkt5GMINNQth4lhDLy9PbMZh23gxhZxXF69mr7HklHmhk7IcTONYDmDVgB5nm14IjVe1g0vYlnTGanrRN17aRKim63WZ2tYqAfHsM1ob_5Jn_AOzWSHd1yFLtvMNIaFWlkc1giqg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "No obtiene a todas las unidades residenciales debido a el token pertenece a un propietatio (No autorizado)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "70682cdc-8302-4e69-bec0-667d4d367c9f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ1c2VyIl0sIm5pY2tuYW1lIjoicHJvcGlldGFyaW8iLCJuYW1lIjoicHJvcGlldGFyaW9AcHJvcGlldGFyaW8uY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzg4YTlkNzQyZmQ1MDNjMWE0YTM0NzBkNzcxNzc3MDg1P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGcHIucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMDE6MTc6MzUuNDI3WiIsImVtYWlsIjoicHJvcGlldGFyaW9AcHJvcGlldGFyaW8uY29tLmNvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL2lzaXMyNTAzLWpkdHJ1amlsbG9tLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1YWY0ZTkxZGUxZmVlMDY2NzAwOTYyM2IiLCJhdWQiOiJGbTI5MVZ2THlXdDVWNDhINU9RQ1V6bjRkS083TlNWQSIsImlhdCI6MTUyNjAwMTQ1NywiZXhwIjoxNTI2MDM3NDU3fQ.J15C26ZpsF5cLyFbxVN72IIfwIPgRgw6BuUoIci6mO_jmpnawrRCzRRndPsKroMDYB-v5Tw2qop66IOZAzTpR4xwOott2FbyBbWzByJ4E5cb0e63UFy_65jKIN7zXAIahD1ZEPe6aADT1LsKC8TfNN2KbVayi0t4v6t1ezlqaHFZn9d-HNQWlYJI8-JyE1pSd_-yzRW7PK7OhN-nuwSbK-JMMS_1uH9xaEWZywnKDhyHeh1fZNILDHzfp_ivKxKndPFavtOxdPoeWFkDwS9MNjXwtNgjCjmS2slt2HIAuanpOEDR5QVGhoOFXlioQL_u14trsygxd5RJIiwgpg6C7Q"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Crea la unidad residencial \"Las Aguas\" de forma exitosa copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTE6MTY6MjAuODcyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwMzczODIsImV4cCI6MTUyNjA3MzM4Mn0.S4o9srdFVWcaN3l5v5bpypf24sv9aMs1e0NDtPnz1EXKFwKRbNmlIjLnQpThGHdlbpBIBRTa265rbtnJnIVTAozVOM_M11EWu3PZGSXLT0dUV56M55X74YJlLpxnu6tOuVyjrA8DfhDxxASNtd2ms1RYswM8P85xyS1l5lNXBNaUepyuCXOgC_djGbtBaahwWxRtpLsMkXcryfFwAcpGl6dN3c4S4-CuT8ZP1gt_yFeZT5XSJjdRkGzp89DDqQTd98MoaC2kUK6aLvXq6dTvM8wEPNy3FmZ-3ESFfhpYM-l24TJad5BactliCcEqRKsnpaIyf0bwoC7bJTCbzLsomg"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las Aguas\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene exitosamente una unidad residencial por su nombre",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTE6MTY6MjAuODcyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwMzczODIsImV4cCI6MTUyNjA3MzM4Mn0.S4o9srdFVWcaN3l5v5bpypf24sv9aMs1e0NDtPnz1EXKFwKRbNmlIjLnQpThGHdlbpBIBRTa265rbtnJnIVTAozVOM_M11EWu3PZGSXLT0dUV56M55X74YJlLpxnu6tOuVyjrA8DfhDxxASNtd2ms1RYswM8P85xyS1l5lNXBNaUepyuCXOgC_djGbtBaahwWxRtpLsMkXcryfFwAcpGl6dN3c4S4-CuT8ZP1gt_yFeZT5XSJjdRkGzp89DDqQTd98MoaC2kUK6aLvXq6dTvM8wEPNy3FmZ-3ESFfhpYM-l24TJad5BactliCcEqRKsnpaIyf0bwoC7bJTCbzLsomg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"activado\": false,\n\t\"torre\": 12,\n\t\"apartamento\": 304\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Aguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Aguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "No obtiene las alarmas de una unidad residencial porque es un propietario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a87a819d-9ecc-4eb4-9d1f-1417ad18476e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJwcm9waWV0YXJpbyJdLCJuaWNrbmFtZSI6InByb3BpZXRhcmlvIiwibmFtZSI6InByb3BpZXRhcmlvQHByb3BpZXRhcmlvLmNvbS5jbyIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci84OGE5ZDc0MmZkNTAzYzFhNGEzNDcwZDc3MTc3NzA4NT9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRnByLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDE4LTA1LTExVDEyOjI0OjUyLjg4M1oiLCJlbWFpbCI6InByb3BpZXRhcmlvQHByb3BpZXRhcmlvLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFmNGU5MWRlMWZlZTA2NjcwMDk2MjNiIiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDE0OTQsImV4cCI6MTUyNjA3NzQ5NH0.qguos4JUOLtL2EWw4qQbrXA9dlxpYUhs7E1dvb6TlaZC9kEI130fEtWIEloAUMaXkoi2Bf8TpkY_uIc9X3PUd3wdRWqZa1jmZGPMaBmlVd0EX6oZN87OGBE5KpuhWzMyHGPl8gVV6GSszs_IJu586taYoSWtROk5-ktfCPVpEj-Ibr48lAQN8ijtanaEoPraNffO_89RqzaFJhsgSRvmZtHFdRCZdTMXXMW43OCRwqV-s1biY_wwCjeqbKDoyOc4wwH3g0ExBNjssdh6edLGkJEJ3xNNdL8sBNoYn3ui-68bi6oh95T3KXSNt0KUUuEI8h8aca1s76As_zcvvDSAVQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Aguas'/alarmas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Aguas'",
+						"alarmas"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene todas las alarmas de una unidad residencial desde el inicio de los tiempos copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a87a819d-9ecc-4eb4-9d1f-1417ad18476e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJzZWd1cmlkYWRfcHJpdmFkYSJdLCJuaWNrbmFtZSI6InNlZ3VyaWRhZCIsIm5hbWUiOiJzZWd1cmlkYWRAc2VndXJpZGFkLmNvbS5jbyIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci81NjcwMmU4NDhkYjY3YTAzOGRhNjNhNzYzZDIxMTUxNj9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRnNlLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDE4LTA1LTExVDEyOjI2OjE5LjE0NFoiLCJlbWFpbCI6InNlZ3VyaWRhZEBzZWd1cmlkYWQuY29tLmNvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL2lzaXMyNTAzLWpkdHJ1amlsbG9tLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1YWY0ZWE0MjVkN2QxNjE3ZmQ3YzBiOGYiLCJhdWQiOiJGbTI5MVZ2THlXdDVWNDhINU9RQ1V6bjRkS083TlNWQSIsImlhdCI6MTUyNjA0MTU4MSwiZXhwIjoxNTI2MDc3NTgxfQ.KPb1jxwWsfPorVvOVoDhIGbErKEKao9aFoTVXQW4EN1UwBk5ozLKwgi_L5COGr4OulXsQXUy0GLToToJf-fgMHlGcuRCg189vhoOGcV1UAVDlNMjh9ECIYniLoo2OqzwlB7NU-IW__l54sd2XliwjDEbgEn2_cVyS_YYsPqfnvCaYJ5A84Mh5k0_T6WloKglZ62og3Q_MZVkDDTzrpxw0s7qhjNXvfa815E8TRwVaeCwCfW0kwjfShLWzh3EhX7jwzc9kbNRx35tOCHEKpr3S16eqHKxJFDskNV4sayZe4HgE2F7p7cFLdQuc8u7x7-MjlfDaTED7T0vPys0Bs8DSQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Aguas'/alarmas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Aguas'",
+						"alarmas"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Se actualiza exitosamente una unidad residencial.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTI6NDE6MDUuNjk2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDI0NjcsImV4cCI6MTUyNjA3ODQ2N30.paueP2-jkxqUyK9YMwChd878lZJ8Jpj8NvzAxTarcPPnsG2-evh4hkaHsWcK9eclqIcYP0tNuAqG0h24Xbjs_QP10nKyGbcyCAA__tfp0Ta_o2Z3cRy4wqw0L00HxNASUVW24sp5I70-zfhn9uBT1M26_QQt81MN0PstET6WUKhiOVonH_73b0zq6KjvYREjnq4BTmZDcnNk2LoERF9qiMbV9KZPT_qVHb_nhGdSDttKn8xs7PufdivYXoDErQGYfgWJopdLhedn20trEy8KQE6WIivdTSAcccMULyIYt2ul7m2e8tvGtCLCdyZvUUe1rCUqYt3W5irhBlKZfk7XyQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las Nuevas Aguas\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Aguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Aguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene exitosamente la unidad residencial actualizada recientemente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTE6MTY6MjAuODcyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwMzczODIsImV4cCI6MTUyNjA3MzM4Mn0.S4o9srdFVWcaN3l5v5bpypf24sv9aMs1e0NDtPnz1EXKFwKRbNmlIjLnQpThGHdlbpBIBRTa265rbtnJnIVTAozVOM_M11EWu3PZGSXLT0dUV56M55X74YJlLpxnu6tOuVyjrA8DfhDxxASNtd2ms1RYswM8P85xyS1l5lNXBNaUepyuCXOgC_djGbtBaahwWxRtpLsMkXcryfFwAcpGl6dN3c4S4-CuT8ZP1gt_yFeZT5XSJjdRkGzp89DDqQTd98MoaC2kUK6aLvXq6dTvM8wEPNy3FmZ-3ESFfhpYM-l24TJad5BactliCcEqRKsnpaIyf0bwoC7bJTCbzLsomg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"activado\": false,\n\t\"torre\": 12,\n\t\"apartamento\": 304\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Nuevas Aguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Nuevas Aguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Elimina exitosamente la unidad residencial 'Las Nuevas Aguas'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTE6MTY6MjAuODcyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwMzczODIsImV4cCI6MTUyNjA3MzM4Mn0.S4o9srdFVWcaN3l5v5bpypf24sv9aMs1e0NDtPnz1EXKFwKRbNmlIjLnQpThGHdlbpBIBRTa265rbtnJnIVTAozVOM_M11EWu3PZGSXLT0dUV56M55X74YJlLpxnu6tOuVyjrA8DfhDxxASNtd2ms1RYswM8P85xyS1l5lNXBNaUepyuCXOgC_djGbtBaahwWxRtpLsMkXcryfFwAcpGl6dN3c4S4-CuT8ZP1gt_yFeZT5XSJjdRkGzp89DDqQTd98MoaC2kUK6aLvXq6dTvM8wEPNy3FmZ-3ESFfhpYM-l24TJad5BactliCcEqRKsnpaIyf0bwoC7bJTCbzLsomg"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Nuevas Aguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Nuevas Aguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "No obtiene la unidad residencial porque fue eliminada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5ebd0225-4cbe-4766-bf8d-4d35312dc78a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTE6MTY6MjAuODcyWiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwMzczODIsImV4cCI6MTUyNjA3MzM4Mn0.S4o9srdFVWcaN3l5v5bpypf24sv9aMs1e0NDtPnz1EXKFwKRbNmlIjLnQpThGHdlbpBIBRTa265rbtnJnIVTAozVOM_M11EWu3PZGSXLT0dUV56M55X74YJlLpxnu6tOuVyjrA8DfhDxxASNtd2ms1RYswM8P85xyS1l5lNXBNaUepyuCXOgC_djGbtBaahwWxRtpLsMkXcryfFwAcpGl6dN3c4S4-CuT8ZP1gt_yFeZT5XSJjdRkGzp89DDqQTd98MoaC2kUK6aLvXq6dTvM8wEPNy3FmZ-3ESFfhpYM-l24TJad5BactliCcEqRKsnpaIyf0bwoC7bJTCbzLsomg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"activado\": false,\n\t\"torre\": 12,\n\t\"apartamento\": 304\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/'Las Nuevas Aguas'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						"'Las Nuevas Aguas'"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene existosamente todos las unidades residenciales pero no encuentra ninguna",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0723b3f3-e1c2-4fc2-bb92-e52bb66797f0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTFUMTI6NDE6MDUuNjk2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYwNDI0NjcsImV4cCI6MTUyNjA3ODQ2N30.paueP2-jkxqUyK9YMwChd878lZJ8Jpj8NvzAxTarcPPnsG2-evh4hkaHsWcK9eclqIcYP0tNuAqG0h24Xbjs_QP10nKyGbcyCAA__tfp0Ta_o2Z3cRy4wqw0L00HxNASUVW24sp5I70-zfhn9uBT1M26_QQt81MN0PstET6WUKhiOVonH_73b0zq6KjvYREjnq4BTmZDcnNk2LoERF9qiMbV9KZPT_qVHb_nhGdSDttKn8xs7PufdivYXoDErQGYfgWJopdLhedn20trEy8KQE6WIivdTSAcccMULyIYt2ul7m2e8tvGtCLCdyZvUUe1rCUqYt3W5irhBlKZfk7XyQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direccion\": \"Cra 57a #38a-70\",\n\t\"nombre\": \"Las flores\",\n\t\"activado\": true\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:53385/ELAY_BASHV2/service/unidadesResidenciales/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53385",
+					"path": [
+						"ELAY_BASHV2",
+						"service",
+						"unidadesResidenciales",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
