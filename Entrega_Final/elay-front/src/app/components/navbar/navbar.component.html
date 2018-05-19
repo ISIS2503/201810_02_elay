@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #ffd300; color: #1a0700">
-  <a class="navbar-brand"> <b>ELAY</b></a>
+  <a class="navbar-brand"> <b>YALE</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,10 +7,10 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link cursor" style="color:#1a0700" *ngIf="!isAuthenticated()" (click)="login()">Iniciar sesión</a>
+        <a class="nav-link cursor" style="color:#1a0700" *ngIf="!isAuthenticated()" (click)="login()"><b>Iniciar sesión</b></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link cursor" style="color: #1a0700" *ngIf="isAuthenticated()" (click)="logout()">Cerrar sesión</a>
+        <a class="nav-link cursor" style="color: #1a0700" *ngIf="isAuthenticated()" (click)="logout()"><b>Cerrar sesión</b></a>
       </li>
     </ul>
   </div>
