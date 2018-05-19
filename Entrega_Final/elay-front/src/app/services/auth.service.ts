@@ -8,6 +8,8 @@ export class AuthService {
 
   userProfile: any;
 
+  idToken;
+
   auth0 = new auth0.WebAuth({
     clientID: 'Fm291VvLyWt5V48H5OQCUzn4dKO7NSVA',
     domain: 'isis2503-jdtrujillom.auth0.com',
@@ -23,6 +25,10 @@ export class AuthService {
     this.auth0.authorize();
   }
 
+  public token(): String {
+    return this.idToken;
+  } 
+ 
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
@@ -60,8 +66,13 @@ export class AuthService {
     return new Date().getTime() < expiresAt;
   }
 
+  public loadToken(): String {
+    return localStorage.getItem('id_token');
+  }
+
   public getProfile(cb): void {
     const accessToken = localStorage.getItem('access_token');
+    this.idToken = localStorage.getItem('id_token');
     console.log(accessToken);
     if (!accessToken) {
       throw new Error('Access Token must exist to fetch profile');
