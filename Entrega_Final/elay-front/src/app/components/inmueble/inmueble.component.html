@@ -3,11 +3,11 @@
         <br>
     </div>
     <div class="col-lg-12">
-            <a [routerLink]="['/mapa']">
-                <button type="button" class="btn btn-outline-dark volver">
-                  <i class="fas fa-arrow-left fa-2x"></i>
-                </button>
-              </a>
+        <a [routerLink]="['/mapa']">
+            <button type="button" class="btn btn-outline-dark volver">
+                <i class="fas fa-arrow-left fa-2x"></i>
+            </button>
+        </a>
     </div>
     <div class="col-lg-12">
         <h4 class="text-center">
@@ -15,17 +15,31 @@
             <b>Apartamento: </b>{{apto}}</h4>
         <br>
     </div>
-    <div *ngFor="let alarma of alarmas" style="background-color: red;color: white">
-        <div class="col-lg-4 text-center">
-            <p>
-                <b>Tipo: </b> {{alarma.alertaId}}
-            </p>
-            <p>
-                <b>Fecha: </b>{{alarma.timestamp}}</p>
-            <p *ngIf="alarma.mensajeAlerta">
-                <b>Mensaje: </b>{{alarma.mensajeAlerta}}
-            </p>
-
-        </div>
+    <div class="col-lg-12">
+        <h3>
+            Datos del contacto
+        </h3>
+        <p>
+            <b>Nombre: </b>Juan Peréz</p>
+        <p>
+            <b>Celular: </b>31312345678</p>
+        <p>
+            <b>Correo:</b>juanp@correo.com</p>
     </div>
+    <div *ngIf="alarmas" class="col-lg-12 text-center">
+        <h3>Historial de alarmas</h3>
+        <br>
+    </div>
+    <div class="col-lg-4 text-center" *ngFor="let alarma of alarmas" style="border-style: solid">
+        <p>
+            <b>Tipo: </b> {{alarma.alertaId}}
+        </p>
+        <p>
+            <b>Fecha: </b>{{alarma.timestamp}}</p>
+        <p *ngIf="alarma.mensajeAlerta">
+            <b>Mensaje: </b>{{alarma.mensajeAlerta}}
+        </p>
+    </div>
+
+
 </div>
