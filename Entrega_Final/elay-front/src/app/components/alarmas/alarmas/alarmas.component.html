@@ -6,6 +6,8 @@
   <div *ngFor="let alarma of alarmas" style="background-color: red;color: white" >
     <div *ngIf="alarma.alertaId==id" class="col-lg-4 text-center" >
       <p><b>Fecha: </b>{{alarma.timestamp}}</p>
+      <p><b>Apartamento: </b>{{alarma.aptoAlarma}}</p>
+      <p><b>Torre: </b>{{alarma.torreoAlarma}}</p>
       <p *ngIf="alarma.mensajeAlerta">
         <b>Mensaje: </b>{{alarma.mensajeAlerta}}
       </p>
