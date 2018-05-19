@@ -22,6 +22,10 @@ public class Alarma implements Serializable {
     private int alertaId;
 
     private String mensajeAlerta;
+    
+    private int aptoAlarma;
+    
+    private int torreAlarma;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private UnidadResidencial unidadResidencial;
@@ -32,11 +36,13 @@ public class Alarma implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private Dispositivo dispositivo;
 
-    public Alarma(String id, String timestamp, int alertaId, String mensajeAlerta, UnidadResidencial unidadResidencial, Inmueble inmueble, Dispositivo dispositivo) {
+    public Alarma(String id, String timestamp, int alertaId, String mensajeAlerta, int aptoAlarma, int torreAlarma, UnidadResidencial unidadResidencial, Inmueble inmueble, Dispositivo dispositivo) {
         this.id = id;
         this.timestamp = timestamp;
         this.alertaId = alertaId;
         this.mensajeAlerta = mensajeAlerta;
+        this.aptoAlarma = aptoAlarma;
+        this.torreAlarma = torreAlarma;
         this.unidadResidencial = unidadResidencial;
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
@@ -45,6 +51,24 @@ public class Alarma implements Serializable {
     public Alarma() {
 
     }
+
+    public int getAptoAlarma() {
+        return aptoAlarma;
+    }
+
+    public void setAptoAlarma(int aptoAlarma) {
+        this.aptoAlarma = aptoAlarma;
+    }
+
+    public int getTorreAlarma() {
+        return torreAlarma;
+    }
+
+    public void setTorreAlarma(int torreAlarma) {
+        this.torreAlarma = torreAlarma;
+    }
+    
+    
 
     public String getId() {
         return id;

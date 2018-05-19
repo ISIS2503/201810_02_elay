@@ -74,7 +74,7 @@ public class AlarmaService {
         InmueblePersistence inmueblePersistence = new InmueblePersistence();
         DispositivoPersistence dispositivoPersistence = new DispositivoPersistence();
 
-        AlarmaDTO alarma = new AlarmaDTO(null, dto.getTimestamp(), dto.getAlertaId(), dto.getMensajeAlerta());
+        AlarmaDTO alarma = new AlarmaDTO(null, dto.getTimestamp(), dto.getAlertaId(), dto.getMensajeAlerta(), dto.getApto(), dto.getTorre());
         Alarma entidad = alarma.toEntity();
 
         UnidadResidencial unidadResidencialBuscado = unidadResidencialPersistence.findByNombre(dto.getUnidadResidencial());

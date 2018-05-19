@@ -267,6 +267,11 @@ public class UsuariosService {
 
     }
 
+    /**
+     * 
+     * @param idUsuario
+     * @return 
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @Path("{idUsuarioSP}/unidadResidencial")
