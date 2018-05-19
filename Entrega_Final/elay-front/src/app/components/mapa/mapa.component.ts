@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { InmueblesService } from '../../services/inmuebles.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mapa',
@@ -7,9 +9,99 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapaComponent implements OnInit {
 
-  constructor() { }
+  inmuebles;
+  torre;
+  tipo = -1;
+  alarmas;
+  totalAlarmas;
 
-  ngOnInit() {
+  constructor(
+
+    private inmueblesService: InmueblesService
+
+  ) { }
+
+  getInmuebles() {
+    this.inmueblesService.getInmuebles().subscribe(data => {
+      this.inmuebles = data.inmuebles.sort(function (a, b) { return (a.torre + a.apartamento) - (b.torre + b.apartamento) });
+      this.totalAlarmas = data.alarmas;
+    });
   }
 
+  getAlarmas() {
+    this.inmueblesService.getAlarmas(123, 3, 704).subscribe(data => {
+      this.alarmas = data;
+    });
+  }
+
+  cambiarTipo(nuevo) {
+    this.tipo;
+
+  }
+
+  generarId(inmueble) {
+    return inmueble.torre + inmueble.apartamento;
+  }
+
+  imprimir(a, b) {
+    console.log(a);
+    console.log(b);
+  }
+
+  public actual = 'mapa';
+
+  show(tab, el) {
+
+    if (tab != this.actual) {
+
+      this.actual = tab;
+
+      this.actual = tab;
+      if (screen.width <= 991) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+
+    }
+
+  }
+
+  alertasData = [{
+    tipo: 'Puerta abierta por un largo tiempo',
+    id: 1,
+    alerta: 'alerta1'
+  },
+  {
+    tipo: 'Número de intentos excedido',
+    id: 2,
+    alerta: 'alerta2'
+  },
+  {
+    tipo: 'Acceso en horario no permitido',
+    id: 3,
+    alerta: 'alerta3'
+  },
+  {
+    tipo: 'Nivel de batería crítico',
+    id: 4,
+    alerta: 'alerta4'
+  },
+  {
+    tipo: 'Cerradura desconectada',
+    id: 5,
+    alerta: 'alerta5'
+  },
+  {
+    tipo: 'Hub desconectado',
+    id: 6,
+    alerta: 'alerta6'
+  }
+  ];
+
+
+  ngOnInit() {
+    window.scrollTo(0, 0);
+    this.getInmuebles();
+    this.getAlarmas();
+
+  }
 }

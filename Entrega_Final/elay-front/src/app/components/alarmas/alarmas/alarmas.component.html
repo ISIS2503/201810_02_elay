@@ -1,0 +1,16 @@
+<div class="row" *ngIf="alarmas">
+  <div class="col-lg-12">
+    <h4 class="text-center">{{tipo}}</h4>
+    <br>
+  </div>
+  <div *ngFor="let alarma of alarmas">
+    <div *ngIf="alarma.alertaId==id" class="col-lg-12 text-center">
+      <p><b>Id: </b>{{alarma.id}}</p>
+      <p><b>Fecha: </b></p>
+      <p *ngIf="alarma.mensajeAlerta">
+        <b>Mensaje: </b>{{alarma.mensajeAlerta}}
+      </p>
+
+    </div>
+  </div>
+</div>

@@ -1,3 +1,44 @@
-<p>
-  mapa works!
-</p>
+<div class="row" *ngIf="totalAlarmas">
+  <div class="col-lg-12" (click)=imprimir()>
+    <br>
+    <br>
+  </div>
+  <div class="col-lg-3">
+    <div class="dropdown">
+      <button class="btn btn-secondary" type="button" id="mapa" (click)="show('mapa', target)">Mapa del inmueble</button>
+      <br>
+      <br>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        Filtrar por tipo
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item cursor" *ngFor="let alerta of alertasData" id={{alerta.alerta}} (click)="show(alerta.alerta, target)">{{alerta.tipo}}</a>
+      </div>
+      <br>
+      <br>
+      <p>
+        <b>Total de alarmas: </b>{{totalAlarmas.length}}</p>
+    </div>
+  </div>
+  <div #target class="col-lg-8">
+    <div id="mapa" *ngIf="actual == 'mapa'">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4 class="text-center">Inmuebles de la unidad residencial - ELAY</h4>
+          <br>
+        </div>
+        <div class="col-3 text-center" *ngFor="let inmueble of inmuebles" id={{inmueble.torre}}{{inmueble.apartamento}} (click)=imprimir(inmueble.torre,inmueble.apartamento)>
+          <div>
+            <p>
+              {{inmueble.torre}}-{{inmueble.apartamento}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let alerta of alertasData">
+      <app-alarmas *ngIf="alerta.alerta==actual" [tipo]="alerta.tipo" [id]="alerta.id" [alarmas]="totalAlarmas"></app-alarmas>
+    </div>
+  </div>
+</div>
