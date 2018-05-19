@@ -17,8 +17,9 @@
       </div>
       <br>
       <br>
-      <p>
-        <b>Total de alarmas: </b>{{totalAlarmas.length}}</p>
+      <p *ngIf="actual == 'mapa'">
+        <b>Total de inmuebles: </b>{{inmuebles.length}}<br>
+        <b>Alarmas reportadas: </b>{{totalAlarmas.length}}</p>
     </div>
   </div>
   <div #target class="col-lg-8">
