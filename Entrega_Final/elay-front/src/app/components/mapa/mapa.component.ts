@@ -103,11 +103,16 @@ export class MapaComponent implements OnInit {
   }
   ];
 
+  interval;
 
   ngOnInit() {
     window.scrollTo(0, 0);
     this.getInmuebles();
     this.getAlarmas();
+    this.interval = setInterval(() => { 
+      this.getAlarmas();
+      console.log("actualizo"); 
+  }, 5000);
 
   }
 }

@@ -22,11 +22,11 @@
         <b>Alarmas reportadas: </b>{{totalAlarmas.length}}</p>
     </div>
   </div>
-  <div #target class="col-lg-8">
+  <div #target class="col-lg-9">
     <div id="mapa" *ngIf="actual == 'mapa'">
       <div class="row">
         <div class="col-lg-12">
-          <h4 class="text-center">Inmuebles de la unidad residencial - ELAY</h4>
+          <h4 class="text-center">Inmuebles de la unidad residencial "123"</h4>
           <br>
         </div>
         <div class="col-3 text-center" *ngFor="let inmueble of inmuebles" id={{inmueble.torre}}{{inmueble.apartamento}} (click)=imprimir(inmueble.torre,inmueble.apartamento)>

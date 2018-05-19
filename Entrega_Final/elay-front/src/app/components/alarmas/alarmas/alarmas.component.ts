@@ -13,7 +13,6 @@ export class AlarmasComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.alarmas);
   }
 
 }
