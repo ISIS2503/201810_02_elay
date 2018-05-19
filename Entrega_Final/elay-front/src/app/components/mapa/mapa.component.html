@@ -30,11 +30,11 @@
           <br>
         </div>
         <div class="col-3 text-center" *ngFor="let inmueble of inmuebles" id={{inmueble.torre}}{{inmueble.apartamento}} (click)=imprimir(inmueble.torre,inmueble.apartamento)>
-          <div >
+          <a [routerLink]="['inmueble/',123,'torre', inmueble.torre, 'apto', inmueble.apartamento]">
             <p style="border-style: solid;">
               {{inmueble.torre}}-{{inmueble.apartamento}}
             </p>
-          </div>
+          </a>
         </div>
       </div>
     </div>

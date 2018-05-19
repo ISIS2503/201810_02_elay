@@ -7,7 +7,7 @@ import { MapaComponent } from './components/mapa/mapa.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'inmueble/:inmu/torre/:tor/apto/:apt', component: InmuebleComponent},
+    { path: 'mapa/inmueble/:inmu/torre/:tor/apto/:apt', component: InmuebleComponent},
     { path: 'callback', component: CallbackComponent },
     { path: 'mapa', component: MapaComponent},
     { path: '**', redirectTo: '' }
