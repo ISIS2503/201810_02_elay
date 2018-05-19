@@ -23,12 +23,9 @@
  */
 package programa;
 
-import ch.qos.logback.classic.util.ContextInitializer;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -54,13 +51,13 @@ public class ClienteMQTT
     
     public static ClienteMQTT CLIENTE = new ClienteMQTT();
     static long time = System.currentTimeMillis();
-    public final Logger LOG =  Logger.getLogger(ClienteMQTT.class.getName());
+    public static final Logger LOG =  Logger.getLogger(ClienteMQTT.class.getName());
     
-    private MqttClient cliente;
-    public ClienteMQTT() {
-        if(cliente == null) {
+    public static class Connection extends Thread {
+        @Override
+        public void run() {
             try {
-                cliente = new MqttClient("tcp://172.24.42.23:8083","0");
+             cliente = new MqttClient("tcp://172.24.42.23:8083","0");
                 MqttConnectOptions op = new MqttConnectOptions();
                 op.setCleanSession(true);
                 op.setConnectionTimeout(100000);
@@ -123,12 +120,20 @@ public class ClienteMQTT
                     @Override public void deliveryComplete(IMqttDeliveryToken imdt) {}
                 });
                 cliente.connect(op);
-                cliente.subscribe(new String[]{Topicos.SUSCRIBIR.topic,"estado"}, new int[]{1,1});
-            } catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
+                cliente.subscribe(new String[]{Topicos.SUSCRIBIR.topic,"estado"}, new int[]{0,0});
+                } catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
+        }
+        
+    }
+    
+    private static MqttClient cliente;
+    public ClienteMQTT() {
+        if(cliente == null) {
+            new Connection().start();
         }
     }
     
-    private void reportar(String msg) {
+    private static void reportar(String msg) {
         LOG.log(Level.SEVERE, msg);
     }
     
@@ -143,11 +148,18 @@ public class ClienteMQTT
     }
     
     public static void publicar(String topic, String msg, int QoS, boolean retain) {
-        try { CLIENTE.cliente.publish(topic, msg.getBytes(), QoS, retain); } 
+        try { 
+            if(!cliente.isConnected()) cliente.connect();
+            CLIENTE.cliente.publish(topic, msg.getBytes(), QoS, retain); 
+        } 
         catch (MqttException ex) { Logger.getLogger(ClienteMQTT.class.getName()).log(Level.SEVERE, null, ex); }
     }
     
     public static ClienteMQTT getCLIENTE() {
         return CLIENTE;
+    }
+    
+    public static boolean isConnected() {
+        return CLIENTE.cliente.isConnected();
     }
 }

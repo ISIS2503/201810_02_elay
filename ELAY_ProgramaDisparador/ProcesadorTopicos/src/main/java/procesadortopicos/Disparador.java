@@ -47,7 +47,10 @@ public class Disparador {
 
     public static ArrayList<LinkedList<Countent>> lista;
     public Interfaz interfaz;
-    public static final String ID = "1";
+    public static final String ID = "333";    
+    public static final String UNIDAD_RESIDENCIAL = "123"; 
+    public static final String TORRE = "3";
+    public static final String APTO = "704";
 
     static {
         lista = new ArrayList<LinkedList<Countent>>();
@@ -67,13 +70,14 @@ public class Disparador {
             sampleClient.setCallback(new MqttCallback() {
                 public void connectionLost(Throwable cause) {
                     System.out.println("Se perdió la conexión");
+                    
                 }
 
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     System.out.println(topic + " >> " + message.toString());
                     if (p(t -> t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"), topic)) {
-                        new Speed(topic.split("/")[0], message.toString()).start();
-                        new Batch(message.toString()).start();
+//                        new Speed(topic.split("/")[0], message.toString()).start();
+//                        new Batch(message.toString()).start();
                         imprimir(topic, message.toString());
                     } else if(message.toString().startsWith("HC:")) {
                         ManejadorHealthCheck.reportar(message.toString().split(":")[1]);
@@ -83,10 +87,10 @@ public class Disparador {
                 }
 
                 public void deliveryComplete(IMqttDeliveryToken token) {
-                    System.out.println("Hola");
+                    
                 }
             });
-            post(ID);
+            post(ID+":"+UNIDAD_RESIDENCIAL+":"+TORRE+":"+APTO);
             sampleClient.connect(connOpts);
             sampleClient.subscribe(myTopic, 1);
 
@@ -100,7 +104,7 @@ public class Disparador {
             URL url = new URL("http://localhost:8080/healthcheck");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Content-Type", "text/plain");
             con.setDoOutput(true);
             OutputStream os = con.getOutputStream();
             os.write(msg.getBytes());

@@ -79,24 +79,20 @@ public class ManejadorContrasenias {
     public static int eliminar(String contrasenia) throws Exception {
         Contrasena con = buscar(x -> x.contrasena.equals(contrasenia));
         if (con != null) {
-            con.contrasena = "-1";
+            con.reset();
             return contrasenas.indexOf(con);
         }
         throw new Exception("No se encontro la ontraseña a eliminar");
     }
 
     public static void eliminarTodo() {
-        contrasenas.forEach((con) -> {
-            con.contrasena = "-1";
-        });
+        contrasenas.forEach((con) -> { con.reset(); });
 //         for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.get(i).contrasena = "-1";//contrasenas.add(new Contrasena("-1", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis())));
     }
 
     public static List<String> darInvalidas() {
         List<String> ret = new ArrayList<>();
-        contrasenas.stream().filter(x -> !x.contrasena.equals("-1") && (!between(LocalTime.now(), x.hi, x.hf) || !x.dias[new Date().getDay()])  ).collect(Collectors.toList()).forEach((con) -> {
-            ret.add(con.contrasena);
-        });
+        contrasenas.stream().filter(x -> !x.contrasena.equals("-1") && (!between(LocalTime.now(), x.hi, x.hf) || !x.dias[new Date().getDay()])  ).collect(Collectors.toList()).forEach((con) -> { ret.add(con.contrasena); });
         return ret;
     }
 
@@ -127,8 +123,7 @@ public class ManejadorContrasenias {
         contrasenas.forEach((con) -> {
             ret.add(con.toString());
         });
-        String r = "";
-        return ret.stream().map((s) -> s + "\n").reduce(r, String::concat);
+        return ret.stream().map((s) -> s + "\n").reduce("", String::concat);
     }
 
     private static final class Contrasena {
@@ -147,6 +142,13 @@ public class ManejadorContrasenias {
             this.hi = hi;
             this.hf = hf;
             this.dias = dias;
+        }
+        
+        public void reset() {
+            this.contrasena = "-1";
+            this.hi = LocalTime.now();
+            this.hf = LocalTime.now();
+            this.dias = new boolean[7];
         }
 
         @Override

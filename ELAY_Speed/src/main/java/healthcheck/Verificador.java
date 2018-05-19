@@ -50,13 +50,16 @@ public class Verificador implements Runnable {
     @Override
     public void run() {
         while (activo) {
-            if (reporte.Reportar(time)) {
+            boolean b = reporte.Reportar(time);
+            System.out.println("========== healthcheck.Verificador.run(): "+b);
+            if (b) {
                 actLost = 0;
             } else {
                 actLost++;
             }
             if (actLost == cantLost) {
                 activo = false;
+                System.out.println("================================ Notificar");
                 notificador.notificar();
             }
         }

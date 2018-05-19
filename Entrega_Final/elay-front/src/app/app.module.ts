@@ -13,17 +13,21 @@ import { AuthService} from './services/auth.service';
 import { InmueblesService} from './services/inmuebles.service';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AlarmasComponent } from './components/alarmas/alarmas/alarmas.component';
+import { HomeComponent } from './components/home/home.component';
+import { CallbackComponent} from './callback/callback.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     NavbarComponent,
     LoginComponent,
     MapaComponent,
     InmuebleComponent,
     FilterPipe,
-    AlarmasComponent
+    AlarmasComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,

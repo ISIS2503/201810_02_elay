@@ -1,0 +1,91 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Contrasenas",
+		"_postman_id": "59e353d9-5b95-9e45-a553-318925991825",
+		"description": "Servición de manejo de las contraseñas desde Speed\nIncluye: \n- Eliminación\n- Creación\n- Moificación ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CrearContrasena",
+			"request": {
+				"url": "http://localhost:8080/contrasenias/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"contrasenia\":\"1243\",\r\n\t\"dias\":\"DLMIJVS\",\r\n\t\"initTime\":\"10:00:00\",\r\n\t\"endTime\":\"23:00:00\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "ModificarContrasena",
+			"request": {
+				"url": "http://localhost:8080/contrasenias/",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"contraseniaNueva\":\"3421\",\r\n\t\"contraseniaAntigua\":\"1243\",\r\n\t\"dias\":\"DLMIJVS\",\r\n\t\"initTime\":\"10:00:00\",\r\n\t\"endTime\":\"23:00:00\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarContrasena",
+			"request": {
+				"url": "http://localhost:8080/contrasenias/",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"contrasenia\":\"3421\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarTodas",
+			"request": {
+				"url": "http://localhost:8080/contrasenias/todo",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"contrasenia\":\"1243\",\r\n\t\"dias\":\"DLMIJVS\",\r\n\t\"initTime\":\"10:00:00\",\r\n\t\"endTime\":\"23:00:00\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -50,9 +50,7 @@ public class Verificador implements Runnable {
     @Override
     public void run() {
         while (activo) {
-            boolean ret = reporte.Reportar(time);
-            System.out.println("=============================================: "+ret);
-            if (ret) {
+            if (reporte.Reportar(time)) {
                 actLost = 0;
             } else {
                 actLost++;
