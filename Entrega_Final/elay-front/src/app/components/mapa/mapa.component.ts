@@ -15,6 +15,7 @@ export class MapaComponent implements OnInit {
   tipo = -1;
   alarmas;
   totalAlarmas;
+  inmu;
 
   constructor(
 
@@ -27,12 +28,6 @@ export class MapaComponent implements OnInit {
     this.inmueblesService.getInmuebles().subscribe(data => {
       this.inmuebles = data.inmuebles.sort(function (a, b) { return (a.torre + a.apartamento) - (b.torre + b.apartamento) });
       this.totalAlarmas = data.alarmas;
-    });
-  }
-
-  getAlarmas() {
-    this.inmueblesService.getAlarmas(123, 3, 704).subscribe(data => {
-      this.alarmas = data;
     });
   }
 
@@ -108,9 +103,9 @@ export class MapaComponent implements OnInit {
   ngOnInit() {
     window.scrollTo(0, 0);
     this.getInmuebles();
-    this.getAlarmas();
+
     this.interval = setInterval(() => { 
-      this.getAlarmas();
+      this.getInmuebles();
       console.log("actualizo"); 
   }, 5000);
 

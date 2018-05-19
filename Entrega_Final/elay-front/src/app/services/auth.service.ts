@@ -50,6 +50,10 @@ export class AuthService {
     });
   }
 
+  public userProfi(): any {
+    return this.userProfile;
+  }
+
   private setSession(authResult): void {
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());

@@ -26,6 +26,8 @@ export class InmueblesService {
     });
   }
 
+  
+
   getInmuebles() {
     this.createAuthenticationHeaders();
     return this.http.get('http://172.24.42.67:53385/ELAY_BASHV2/service/users/auth0|5aff5d29e1fee066700b1a9e/unidadResidencial', this.options).map(res => res.json());
