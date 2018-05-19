@@ -30,8 +30,8 @@
           <br>
         </div>
         <div class="col-3 text-center" *ngFor="let inmueble of inmuebles" id={{inmueble.torre}}{{inmueble.apartamento}} (click)=imprimir(inmueble.torre,inmueble.apartamento)>
-          <div>
-            <p>
+          <div >
+            <p style="border-style: solid;">
               {{inmueble.torre}}-{{inmueble.apartamento}}
             </p>
           </div>
