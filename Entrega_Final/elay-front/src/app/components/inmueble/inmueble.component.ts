@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InmueblesService } from '../../services/inmuebles.service';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-inmueble',
@@ -9,22 +11,29 @@ import { InmueblesService } from '../../services/inmuebles.service';
 export class InmuebleComponent implements OnInit {
   
   profile:any;
-  @Input() torre;
-  @Input() apto;
 
   alarmas;
-
-  constructor(private inmueblesService: InmueblesService) { }
+  currentUrl;
+  torre;
+  apto;
+  inmue;
 
   getAlarmas() {
-    this.inmueblesService.getAlarmas(123, this.torre, this.apto).subscribe(data => {
+    this.inmueblesService.getAlarmas(this.inmue, this.torre, this.apto).subscribe(data => {
       this.alarmas = data;
     });
   }
 
 
+  constructor(private inmueblesService: InmueblesService, private location: Location, private activatedRoute: ActivatedRoute) { }
+
+  
   ngOnInit() {
-    this.getAlarmas
+    this.currentUrl = this.activatedRoute.snapshot.params;
+    this.inmue = this.currentUrl.inmu;
+    this.torre = this.currentUrl.tor;
+    this.apto = this.currentUrl.apt;
+    this.getAlarmas();
   }
 
 }
