@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-inmueble',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./inmueble.component.css']
 })
 export class InmuebleComponent implements OnInit {
+  
+  profile:any;
 
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
+    if (this.auth.userProfile) {
+      this.profile = this.auth.userProfile;
+    } else {
+      this.auth.getProfile((err, profile) => {
+        this.profile = profile;
+      });
+    }
   }
 
 }

@@ -9,17 +9,20 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { MapaComponent } from './components/mapa/mapa.component';
 import { InmuebleComponent } from './components/inmueble/inmueble.component';
-import { AuthService} from './services/auth.service';
+import { AuthService } from './services/auth.service';
+import { HomeComponent } from './components/home/home.component';
+import { CallbackComponent} from './callback/callback.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     NavbarComponent,
     LoginComponent,
     MapaComponent,
     InmuebleComponent,
-
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
