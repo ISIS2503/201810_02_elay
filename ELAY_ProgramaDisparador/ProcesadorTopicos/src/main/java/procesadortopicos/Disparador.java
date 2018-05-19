@@ -40,6 +40,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import healthcheck.ManejadorHealthCheck;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,10 +83,12 @@ public class Disparador {
                         Logger.getLogger(Disparador.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                    System.out.println(topic + " >> " + message.toString());
+                public void messageArrived(String topic, MqttMessage m) throws Exception {
+                    String message = m.toString().trim();
+                    System.out.println(topic + " >> " + message);
                     if (p(t -> t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"), topic)) {
-                        new Speed(topic.split("/")[0], message.toString()).start();
+                        System.out.println("==================== "+message);
+                        new Speed(topic.split("/")[0], message).start();
                         new Batch(message.toString()).start();
                         imprimir(topic, message.toString());
                     } else if(message.toString().startsWith("HC:")) {
@@ -140,6 +144,7 @@ public class Disparador {
     }
 
     private void imprimir(String topic, String msg) {
+        System.out.println("------------>>>>>>--------------------->>>>>> ");
         JsonObject elmPrin = new JsonParser().parse(msg).getAsJsonObject();
         JsonObject info = elmPrin.get("info").getAsJsonObject();
         add(topic, new Countent(elmPrin.get("timestamp").getAsString(), new Countent.Info(info.get("alertaId").getAsString(),
@@ -410,13 +415,19 @@ public class Disparador {
                 }
                 json = jsonSb.toString();
                 System.out.println(json);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ProtocolException ex) {
+                System.out.println(">>>>>>>>>>>>>>>>>>>--:................:::\n"+ex.getMessage());
+                Logger.getLogger(Disparador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(Disparador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Disparador.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         public static void postBatch(String msg) {
             try {
+                System.out.println(msg);
                 URL url = new URL(URL_BATCH);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
@@ -456,13 +467,19 @@ public class Disparador {
             + "\"realm\": \"Username-Password-Authentication\"\n"
             + "}";
 
+    static boolean ya = false;
+    static String token = "";
     public static String generarToken() {
+        if(ya) {
+            return token;
+        }
         try {
             URL url = new URL("https://isis2503-jdtrujillom.auth0.com/oauth/token");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
             con.setDoOutput(true);
+            System.out.println(msg);
             OutputStream os = con.getOutputStream();
             os.write(msg.getBytes());
             os.flush();
@@ -478,7 +495,8 @@ public class Disparador {
                 jsonSb.append(line);
             }
             json = jsonSb.toString();
-            return new JsonParser().parse(json).getAsJsonObject().get("id_token").getAsString();
+            ya = true;
+            return token = new JsonParser().parse(json).getAsJsonObject().get("id_token").getAsString();
         } catch (JsonSyntaxException | IOException e) {
             e.printStackTrace();
             return "";

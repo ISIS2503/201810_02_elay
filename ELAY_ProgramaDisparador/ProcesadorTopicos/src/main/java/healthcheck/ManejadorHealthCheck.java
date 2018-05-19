@@ -32,7 +32,7 @@ import java.util.ArrayList;
  */
 public class ManejadorHealthCheck {
     
-    private static final int time = 1000, max = 10;
+    private static final int time = 10000, max = 5;
     private static List<ReporteCerradura> reportes = new ArrayList<>();
     
     public static void iniciarMedicion(String id) {

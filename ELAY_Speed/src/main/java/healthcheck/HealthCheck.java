@@ -43,7 +43,7 @@ import programa.ClienteMQTT.Connection;
 public class HealthCheck {
 
     private static ArrayList<Verificador> verificadores;
-    private static final int time = 1000, max = 10;
+    private static final int time = 10000, max = 5;
 
     //A:idAlarma:idDispositivo:unidadResidencial:torre:apto
     private final static String ID_ALARMA = "8";
