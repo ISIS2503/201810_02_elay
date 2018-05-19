@@ -1,4 +1,4 @@
-<div class="row" *ngIf="totalAlarmas">
+<div class="row" *ngIf="isAuthenticated() && totalAlarmas">
   <div class="col-lg-12" (click)=imprimir()>
     <br>
     <br>

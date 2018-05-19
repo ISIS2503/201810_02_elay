@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InmueblesService } from '../../services/inmuebles.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-mapa',
@@ -17,7 +18,8 @@ export class MapaComponent implements OnInit {
 
   constructor(
 
-    private inmueblesService: InmueblesService
+    private inmueblesService: InmueblesService,
+    private as: AuthService
 
   ) { }
 
@@ -46,6 +48,10 @@ export class MapaComponent implements OnInit {
   imprimir(a, b) {
     console.log(a);
     console.log(b);
+  }
+
+  isAuthenticated(){
+    return this.as.isAuthenticated();
   }
 
   public actual = 'mapa';

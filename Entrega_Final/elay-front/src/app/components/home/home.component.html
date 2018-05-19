@@ -1,6 +1,16 @@
-<h4 *ngIf="auth.isAuthenticated()">
-  You are logged in!
-</h4>
-<h4 *ngIf="!auth.isAuthenticated()">
-  You are not logged in! Please <a (click)="auth.login()">Log In</a> to continue.
-</h4>
+<div class="row text-center">
+  <div class="col-lg-12">
+    <br>
+  </div>
+  <div class="col-lg-12 text-center">
+    <h4 *ngIf="auth.isAuthenticated()" class="text-center">
+      You are logged in!
+    </h4>
+    <h4 *ngIf="!auth.isAuthenticated()" style="text-align: center">
+      No has iniciado sesión<br>
+      Por favor,  <a (click)="auth.login()" class="cursor"><b>Iniciar sesión</b></a>.
+     
+    </h4>
+
+  </div>
+</div>
