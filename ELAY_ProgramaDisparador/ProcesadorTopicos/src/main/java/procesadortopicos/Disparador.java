@@ -37,7 +37,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import healthcheck.ManejadorHealthCheck;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -70,14 +74,18 @@ public class Disparador {
             sampleClient.setCallback(new MqttCallback() {
                 public void connectionLost(Throwable cause) {
                     System.out.println("Se perdió la conexión");
-                    
+                    try {
+                        Thread.sleep(3000);
+                        sampleClient.connect();
+                    } catch (InterruptedException |MqttException ex) {
+                        Logger.getLogger(Disparador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     System.out.println(topic + " >> " + message.toString());
                     if (p(t -> t.startsWith("propietario") || t.startsWith("seguridad") || t.startsWith("administrador") || t.startsWith("yale"), topic)) {
-//                        new Speed(topic.split("/")[0], message.toString()).start();
-//                        new Batch(message.toString()).start();
+                        new Speed(topic.split("/")[0], message.toString()).start();
+                        new Batch(message.toString()).start();
                         imprimir(topic, message.toString());
                     } else if(message.toString().startsWith("HC:")) {
                         ManejadorHealthCheck.reportar(message.toString().split(":")[1]);
@@ -101,7 +109,7 @@ public class Disparador {
 
     public final void post(String msg) {
         try {
-            URL url = new URL("http://localhost:8080/healthcheck");
+            URL url = new URL("http://172.24.42.80:8080/healthcheck");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "text/plain");
@@ -376,7 +384,7 @@ public class Disparador {
     public static class HTTP {
 
         private static final String URL_SPEED = "http://172.24.42.80:8080/speed";
-        private static final String URL_BATCH = "http://172.24.42.67:53385/ProgrmaP/service/alarmas/";
+        private static final String URL_BATCH = "http://172.24.42.67:53385/ELAY_BASHV2/service/alarmas/";
 
         public static void postSpeed(String rol, String msg) {
             try {
@@ -384,6 +392,7 @@ public class Disparador {
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
                 con.setRequestProperty("Content-Type", "application/json");
+                
                 con.setDoOutput(true);
                 OutputStream os = con.getOutputStream();
                 os.write(msg.getBytes());
@@ -411,10 +420,9 @@ public class Disparador {
                 URL url = new URL(URL_BATCH);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
-
                 con.setRequestProperty("Content-Type", "application/json");
                 con.setDoOutput(true);
-                con.setRequestProperty("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5VSkNRVUkyUmpOQk9UZzRNekk0TkRNelFUY3hNamhGT0VVek5UWTJOREl4TUVZMFJUZ3pPUSJ9.eyJodHRwOi8vZWxheS9yb2xlcyI6WyJ5YWxlIl0sIm5pY2tuYW1lIjoiYWRtaW5pc3RyYWRvciIsIm5hbWUiOiJhZG1pbmlzdHJhZG9yQHlhbGUuY29tLmNvIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA5NjFlYzliMGU0MjBhMjJmYjgxZWRhZDliOTgxYmY0P3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGYWQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMDUtMTVUMTU6MjQ6NTQuOTI2WiIsImVtYWlsIjoiYWRtaW5pc3RyYWRvckB5YWxlLmNvbS5jbyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9pc2lzMjUwMy1qZHRydWppbGxvbS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFlMWE2YTE0MWFhY2QxZGFhOGE3MDU0IiwiYXVkIjoiRm0yOTFWdkx5V3Q1VjQ4SDVPUUNVem40ZEtPN05TVkEiLCJpYXQiOjE1MjYzOTc4OTcsImV4cCI6MTUyNjQzMzg5N30.IGWbsk7mqgfqB-lidlAxBXlaB28MC_QaYsch0gbq74Dp1OGNg-OGooB3LhBKRpSoKn6P41nfh5KQ7V5ReRAUJrhFLWB_uNTPqrnFK0TmRBtTYoTuMtN6rOXwyJYotGG11e11so42VJXoo0RaZ4DLGUdvJs0ND5NJQaLcRlmrT9K-Jfi6fkJH6V7nMwZQ1DPrGLR_sbY2x1S_WN0-6PhJLi0sN_A7HWy98UBPXA6j-_aiUyqAHyoMhlrPWP6mKg5pKhNqVE3u7isaUPjS0VC1Fas8xvJOGeuJ95F1RjzEtHGADW8V6Yujh6euvQ9wMnVmh-vQTx79zCO8L7nxo_KIyA");
+                con.setRequestProperty("Authorization", "Bearer "+generarToken());
                 OutputStream os = con.getOutputStream();
                 os.write(msg.getBytes());
                 os.flush();
@@ -434,6 +442,46 @@ public class Disparador {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    private static String msg = "{\n"
+            + "\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\n"
+            + "\"username\": \"administrador@yale.com.co\",\n"
+            + "\"password\": \"Administrador.\",\n"
+            + "\"audience\": \"uniandes.edu.co/elay\", \n"
+            + "\"scope\": \"openid\",\n"
+            + "\"client_id\": \"Fm291VvLyWt5V48H5OQCUzn4dKO7NSVA\", \n"
+            + "\"client_secret\": \"ZcmR8xtKS8KNpFTASw46_tGc8izsOjTF6VdkECkDUQuAqgjdTbIHVFKc_t6R8q2_\", \n"
+            + "\"realm\": \"Username-Password-Authentication\"\n"
+            + "}";
+
+    public static String generarToken() {
+        try {
+            URL url = new URL("https://isis2503-jdtrujillom.auth0.com/oauth/token");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+            OutputStream os = con.getOutputStream();
+            os.write(msg.getBytes());
+            os.flush();
+            os.close();
+            int responseCode = con.getResponseCode();
+            System.out.println("Response Code :" + responseCode);
+            BufferedReader reader = null;
+            String json = null;
+            reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            StringBuilder jsonSb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                jsonSb.append(line);
+            }
+            json = jsonSb.toString();
+            return new JsonParser().parse(json).getAsJsonObject().get("id_token").getAsString();
+        } catch (JsonSyntaxException | IOException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 }
