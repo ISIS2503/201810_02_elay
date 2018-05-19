@@ -77,24 +77,29 @@ export class MapaComponent implements OnInit {
     alerta: 'alerta2'
   },
   {
-    tipo: 'Acceso en horario no permitido',
+    tipo: 'Presencia detectada',
     id: 3,
     alerta: 'alerta3'
   },
   {
-    tipo: 'Nivel de batería crítico',
+    tipo: 'Acceso en horario no permitido',
     id: 4,
     alerta: 'alerta4'
   },
   {
-    tipo: 'Cerradura desconectada',
+    tipo: 'Nivel de batería crítico',
     id: 5,
     alerta: 'alerta5'
   },
   {
+    tipo: 'Cerradura desconectada',
+    id: 7,
+    alerta: 'alerta7'
+  },
+  {
     tipo: 'Hub desconectado',
-    id: 6,
-    alerta: 'alerta6'
+    id: 8,
+    alerta: 'alerta8'
   }
   ];
 
