@@ -23,8 +23,15 @@
  */
 package healthcheck;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import programa.ClienteMQTT;
 import programa.MailSender;
+import programa.ClienteMQTT.Connection;
 
 /**
  *
@@ -35,9 +42,67 @@ public class HealthCheck {
     private static ArrayList<Verificador> verificadores;
     private static final int time = 1000, max = 10;
 
-    public static void empezarVerificador(String id) {
+    //A:idAlarma:idDispositivo:unidadResidencial:torre:apto
+    private final static String ID_ALARMA = "8";
+
+    public static void empezarVerificador(final String id) {
+        System.out.println(">>>>>>>>>>>>>> " + id);
+        final String[] data = id.split(":");//ID+":"+UNIDAD_RESIDENCIAL+":"+TORRE+":"+APTO
+        final String alerta = "A:" + ID_ALARMA + ":" + data[0] + ":" + data[1] + ":" + data[2] + ":" + data[3];
         new Thread(new Verificador(time, max, new ReporteHub(),
-                () -> { try { new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").enviarCorreo(); } catch (Exception e) {} }, id))
-                .start();
+                () -> {
+                    try {
+                        System.out.println("El hub se encuentra desconectado: " + id + "\nAlerta Enviada: " + alerta);
+                        new MailSender("Hub fuera de linea", "elay.arquisoft.201810@hotmail.com", "El hub esta fuera de linea").start();
+
+//                    ClienteMQTT.publicar(ClienteMQTT.Topicos.SUSCRIBIR.getTopic(), alerta, 2, false );
+                      new Thread(new Notificar(System.currentTimeMillis()+":"+ID_ALARMA+":El hub está fuera de linea:"+data[0]+":"+data[2]+":"+data[3]+":"+data[1])).start();
+                    } catch (Exception e) {
+                    }
+                }, data[0])).start();
+    }
+
+    public static class Notificar implements Runnable {
+        private String msg;
+        public Notificar(String msg) {
+            String[] data = msg.split(":");
+            this.msg = "{\n"
+                    + "\"timestamp\": \""+data[0]+"\",\n"
+                    + "\"alertaID\": "+data[1]+",\n"
+                    + "\"mensajeAlera\": \""+data[2]+"\",\n"
+                    + "\"idDispositivo\": \""+data[3]+"\",\n"
+                    + "\"torre\": "+data[4]+",\n"
+                    + "\"apto\": "+data[5]+",\n"
+                    + "\"unidadResidencial\": \""+data[6]+"\"\n"
+                    + "}";
+        }
+        @Override
+        public void run() {
+            try {
+                URL url = new URL("http://localhost:8080/healthcheck");
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setRequestProperty("Content-Type", "text/plain");
+                con.setDoOutput(true);
+                OutputStream os = con.getOutputStream();
+                os.write(msg.getBytes());
+                os.flush();
+                os.close();
+                int responseCode = con.getResponseCode();
+                System.out.println("Response Code :" + responseCode);
+                BufferedReader reader = null;
+                String json = null;
+                reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                StringBuilder jsonSb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    jsonSb.append(line);
+                }
+                json = jsonSb.toString();
+                System.out.println(json);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

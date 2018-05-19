@@ -94,9 +94,7 @@ public class ManejadorContrasenias {
 
     public static List<String> darInvalidas() {
         List<String> ret = new ArrayList<>();
-        contrasenas.stream().filter(x -> !x.contrasena.equals("-1") && (!between(LocalTime.now(), x.hi, x.hf) || !x.dias[new Date().getDay()])  ).collect(Collectors.toList()).forEach((con) -> {
-            ret.add(con.contrasena);
-        });
+        contrasenas.stream().filter(x -> !x.contrasena.equals("-1") && (!between(LocalTime.now(), x.hi, x.hf) || !x.dias[new Date().getDay()])  ).collect(Collectors.toList()).forEach((con) -> { ret.add(con.contrasena); });
         return ret;
     }
 
@@ -127,8 +125,7 @@ public class ManejadorContrasenias {
         contrasenas.forEach((con) -> {
             ret.add(con.toString());
         });
-        String r = "";
-        return ret.stream().map((s) -> s + "\n").reduce(r, String::concat);
+        return ret.stream().map((s) -> s + "\n").reduce("", String::concat);
     }
 
     private static final class Contrasena {

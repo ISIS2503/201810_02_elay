@@ -8,9 +8,10 @@ healthcheck\Verificador.class
 programa\ManejadorContrasenias$Contrasena.class
 programa\Main.class
 servicios\Contrasenias.class
-programa\ClienteMQTT$1.class
 healthcheck\Notificador.class
 programa\ClienteMQTT.class
 servicios\EnviarMensaje.class
 healthcheck\Reporte.class
+programa\ClienteMQTT$Connection$1.class
+programa\ClienteMQTT$Connection.class
 healthcheck\ReporteHub.class

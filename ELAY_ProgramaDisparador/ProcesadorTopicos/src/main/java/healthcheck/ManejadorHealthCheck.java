@@ -25,7 +25,6 @@ package healthcheck;
 
 import java.util.List;
 import java.util.ArrayList;
-import procesadortopicos.Disparador;
 
 /**
  *
@@ -39,7 +38,7 @@ public class ManejadorHealthCheck {
     public static void iniciarMedicion(String id) {
         ReporteCerradura repor = new ReporteCerradura(id);
         reportes.add(repor);
-        new Thread(new Verificador(time, max, repor, new NotificarCerradura(Disparador.ID), Disparador.ID)).start();
+        new Thread(new Verificador(time, max, repor, new NotificarCerradura(id), id)).start();
     }
     
     public static void reportar(String id) {

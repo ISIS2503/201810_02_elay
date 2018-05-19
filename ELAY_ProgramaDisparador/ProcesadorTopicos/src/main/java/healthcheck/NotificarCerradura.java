@@ -29,6 +29,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import procesadortopicos.Disparador;
 
 /**
  *
@@ -37,6 +41,7 @@ import java.net.URL;
 public class NotificarCerradura implements Notificador{
 
     private String id;
+    public static final String ID_ALARMA = "7";   
 
     public NotificarCerradura(String id) {
         this.id = id;
@@ -49,6 +54,10 @@ public class NotificarCerradura implements Notificador{
     @Override
     public void notificar() {
         try {
+            //A:idAlarma:idDispositivo:unidadResidencial:torre:apto
+            final String alerta = "A:"+ID_ALARMA+":"+id+":"+Disparador.UNIDAD_RESIDENCIAL+":"+Disparador.TORRE+":"+Disparador.APTO;
+            System.out.println("================================ Se perdió la conexión con la cerradura: "+id+"\nEnvio de alerta: "+alerta);   
+            Disparador.sampleClient.publish("alarmasCerradura", alerta.getBytes(), 2, false);
             URL url = new URL("http://localhost:8080/speed/healdcheck");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -70,7 +79,8 @@ public class NotificarCerradura implements Notificador{
             }
             json = jsonSb.toString();
             System.out.println(json);
-        } catch (IOException e) {
+        } catch (IOException | MqttException ex) {
+            Logger.getLogger(NotificarCerradura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
