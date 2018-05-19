@@ -10,7 +10,9 @@ export class AppComponent {
   title = 'app';
 
   constructor(public auth: AuthService){
+    console.log('Llamando desde el app.component');
     auth.handleAuthentication();
+    
   }
 
 }

@@ -33,6 +33,14 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
+        
+          this.getProfile((err, profile) => {
+            this.userProfile = profile;
+            console.log(this.getIdUnidadResidencial());
+          });
+        
+          
+        
         this.router.navigate(['/mapa']);
       } else if (err) {
         this.router.navigate(['/home']);
@@ -88,5 +96,9 @@ export class AuthService {
     });
 
   }
+
+  public getIdUnidadResidencial(){
+      return this.userProfile['http://elay/user_metadata'].idUnidadResidencial;
+  };
 
 }
