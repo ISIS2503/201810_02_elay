@@ -6,6 +6,7 @@ programa\ClienteMQTT$Topicos.class
 programa\ManejadorContrasenias.class
 healthcheck\Verificador.class
 programa\ManejadorContrasenias$Contrasena.class
+healthcheck\HealthCheck$Notificar.class
 programa\Main.class
 servicios\Contrasenias.class
 healthcheck\Notificador.class

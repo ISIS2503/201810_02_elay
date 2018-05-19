@@ -25,7 +25,6 @@ package servicios;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import java.util.function.Consumer;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -137,6 +136,7 @@ public class Contrasenias {
     @Path("/todo")
     public String eliminar() {
         ClienteMQTT.publicar(Protocolo.ELIMINAR_ALL.cmd + ":");
+        ManejadorContrasenias.eliminarTodo();
         return "{ \"mensaje\":\"" + MSG + "\" }";
     }
 }

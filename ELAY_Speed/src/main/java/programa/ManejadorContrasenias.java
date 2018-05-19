@@ -79,16 +79,14 @@ public class ManejadorContrasenias {
     public static int eliminar(String contrasenia) throws Exception {
         Contrasena con = buscar(x -> x.contrasena.equals(contrasenia));
         if (con != null) {
-            con.contrasena = "-1";
+            con.reset();
             return contrasenas.indexOf(con);
         }
         throw new Exception("No se encontro la ontraseña a eliminar");
     }
 
     public static void eliminarTodo() {
-        contrasenas.forEach((con) -> {
-            con.contrasena = "-1";
-        });
+        contrasenas.forEach((con) -> { con.reset(); });
 //         for(int i = 0; i < CANT_CONTRASENIAS; i++) contrasenas.get(i).contrasena = "-1";//contrasenas.add(new Contrasena("-1", new Time(System.currentTimeMillis()), new Time(System.currentTimeMillis())));
     }
 
@@ -144,6 +142,13 @@ public class ManejadorContrasenias {
             this.hi = hi;
             this.hf = hf;
             this.dias = dias;
+        }
+        
+        public void reset() {
+            this.contrasena = "-1";
+            this.hi = LocalTime.now();
+            this.hf = LocalTime.now();
+            this.dias = new boolean[7];
         }
 
         @Override
