@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { InmueblesService } from '../../services/inmuebles.service';
 
 @Component({
   selector: 'app-inmueble',
@@ -8,11 +9,22 @@ import { Component, OnInit } from '@angular/core';
 export class InmuebleComponent implements OnInit {
   
   profile:any;
+  @Input() torre;
+  @Input() apto;
 
-  constructor() { }
+  alarmas;
+
+  constructor(private inmueblesService: InmueblesService) { }
+
+  getAlarmas() {
+    this.inmueblesService.getAlarmas(123, this.torre, this.apto).subscribe(data => {
+      this.alarmas = data;
+    });
+  }
+
 
   ngOnInit() {
-   
+    this.getAlarmas
   }
 
 }
